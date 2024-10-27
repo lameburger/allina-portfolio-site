@@ -52,8 +52,8 @@ body, .name-overlay, .link-container {
     left: 50%;
     transform: translateX(-50%);
     z-index: 3;
-    width: 50%;
-    height: 100px;
+    width: 70%;
+    height: 15%;
     background-image: url('/public/images/signed.png');
     background-size: contain;
     background-position: center;
