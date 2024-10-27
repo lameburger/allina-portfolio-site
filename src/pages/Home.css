@@ -1,0 +1,123 @@
+/* Reset for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ensuring the entire document fills the viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    position: relative;
+    flex-direction: column;
+}
+
+/* Centered image settings */
+.centered-image {
+    background-image: url('/public/images/background.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 80%;
+    height: 80%;
+    max-width: 600px;
+    max-height: 600px;
+    position: relative;
+}
+
+/* Import the custom font */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
+
+/* Apply Cormorant Garamond */
+body, .name-overlay, .link-container {
+    font-family: 'Cormorant Garamond', serif;
+}
+
+/* Styling for name overlay as a background image */
+.name-overlay {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    width: 50%;
+    height: 100px;
+    background-image: url('/public/images/signed.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Adjust size for mobile devices */
+@media (max-width: 768px) {
+    .name-overlay {
+        width: 70%;
+    }
+}
+
+@media (max-width: 480px) {
+    .name-overlay {
+        width: 90%;
+    }
+}
+
+/* Link container to position links on inner edges below .centered-image */
+.link-container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 390px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 2.5em;
+    letter-spacing: -5px;
+    z-index: 15; /* Higher z-index to ensure links are on top */
+    position: relative;
+}
+
+/* Adjust margin-top for mobile devices */
+@media (max-width: 500px) {
+    .link-container {
+        margin-top: -40px;
+    }
+}
+
+.link-container a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer; /* Ensures pointer on hover */
+}
+
+/* Fade transition overlay */
+.fade-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 5; /* Lower z-index than .link-container */
+    animation: fadeOut 0.8s forwards;
+}
+
+/* Keyframes for fade-out effect */
+@keyframes fadeOut {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

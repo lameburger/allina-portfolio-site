@@ -1,0 +1,167 @@
+/* Scroll Selector Styling */
+.scroll-selector {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px 20px;
+    margin: 20px 0;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    border-bottom: 2px solid #ddd;
+}
+
+.scroll-tab {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2em;
+    padding: 8px 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+    letter-spacing: -2px;
+}
+
+.scroll-tab.active {
+    color: #333;
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+}
+
+.scroll-tab:hover {
+    color: #333;
+}
+
+/* Remove default scroll styling for a cleaner look */
+.scroll-selector::-webkit-scrollbar {
+    display: none;
+}
+
+/* General Styles */
+body {
+    font-family: 'Cormorant Garamond', serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.portfolio-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Corner Icon Styling */
+.corner-icon {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: auto;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+/* Black Transition Effect */
+.black-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 1000;
+    animation: fadeToBlack 0.5s forwards;
+}
+
+@keyframes fadeToBlack {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.empty-message {
+    font-size: 1.5em;
+    color: #999;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Gallery Item Styling */
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+}
+
+.gallery-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    text-align: center;
+}
+
+.gallery-image {
+    width: 100%;
+    max-width: 800px;
+    filter: grayscale(100%);
+    transition: filter 1s ease, opacity 1s ease;
+}
+
+.gallery-item.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gallery-item.show .gallery-image {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.image-caption {
+    font-size: 1.9em;
+    margin-top: 10px;
+    color: #666;
+    letter-spacing: -2px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Scroll Selector Responsive Styles */
+    .scroll-selector {
+        padding: 10px; /* Smaller padding on mobile */
+    }
+
+    .scroll-tab {
+        font-size: 1.5em; /* Smaller font size on mobile */
+        padding: 6px 10px; /* Reduce padding for smaller screens */
+    }
+
+    .gallery-image {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scroll-selector {
+        padding: 5px; /* Further reduce padding on very small screens */
+    }
+
+    .scroll-tab {
+        font-size: 1.3em; /* Even smaller font size on extra small screens */
+        padding: 5px 8px;
+    }
+
+    .gallery-image {
+        max-width: 100%;
+    }
+}

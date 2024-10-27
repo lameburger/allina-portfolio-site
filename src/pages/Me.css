@@ -1,0 +1,161 @@
+/* Import the custom font */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
+
+body, .me-container {
+    font-family: 'Cormorant Garamond', serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Position the icon in the top left corner */
+/* Position the icon in the top left corner */
+.corner-icon {
+    position: fixed;
+    top: 2vh; /* Responsive top margin */
+    left: 2vw; /* Responsive left margin */
+    width: 6vw; /* Width adjusts based on viewport width */
+    max-width: 80px; /* Limit maximum width on larger screens */
+    height: auto;
+    z-index: 10; /* Ensures it stays above other content */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .corner-icon {
+        width: 8vw; /* Slightly larger on medium-sized devices */
+        max-width: 60px; /* Reduced max width */
+    }
+}
+
+@media (max-width: 480px) {
+    .corner-icon {
+        width: 10vw; /* Larger size on small screens */
+        max-width: 50px; /* Further reduce max width */
+    }
+}
+
+/* Main content container */
+.me-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Description styling with square-like dimensions and letter spacing */
+.description {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 10px 0 30px;
+    max-width: 500px; /* Set a fixed width for square-like dimensions */
+    max-height: 500px; /* Set a height to make it appear square */
+    line-height: 1.4;
+    letter-spacing: -2px; /* Adjust letter spacing */
+    text-align: justify; /* Align text to fit evenly in the block */
+    overflow: hidden; /* Ensure it fits within the height */
+    display: -webkit-box;
+    -webkit-line-clamp: 10; /* Limits the text to a certain number of lines */
+    -webkit-box-orient: vertical;
+}
+
+/* Profile Image: Keep it minimal and centered */
+/* Responsive Profile Image */
+.profile-image {
+    margin-top: 50px;
+    width: 500px;
+    height: 500px;
+    max-width: 50vw; /* Adjusts with viewport width */
+    max-height: 50vh; /* Adjusts with viewport height */
+    margin-bottom: 20px;
+}
+
+/* Further adjustments for larger and smaller screens */
+@media (max-width: 768px) {
+    .profile-image {
+        max-width: 500px; /* Increases size on tablets */
+        max-height: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-image {
+        max-width: 300px; /* Even larger for smaller mobile screens */
+        max-height: 300px;
+    }
+}
+
+.icon-image {
+    width: 24px; /* Adjust as needed */
+    height: 24px; /* Adjust as needed */
+    transition: transform 0.3s;
+}
+
+.icon-image:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.social-links {
+    display: flex;
+    gap: 45px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.social-links a {
+    color: black;
+    font-size: 2em;
+    transition: color 0.3s;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    color: #0690DB;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .description {
+        max-width: 300px;
+        max-height: 300px;
+    }
+    .social-links a {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    .description {
+        max-width: 300px;
+        max-height: 300px;
+        letter-spacing: -2px;
+    }
+    .social-links a {
+        font-size: 1.2em;
+    }
+}
+
+/* Transition overlay */
+.fade-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black; /* Black fade effect */
+    z-index: 9999;
+    animation: fadeOut 0.8s forwards; /* Adjust duration for fade effect */
+}
+
+/* Keyframes for fade-out effect */
+@keyframes fadeOut {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
