@@ -10,14 +10,14 @@ function Portfolio() {
 
     const categories = {
         paintings: [
-            { src: '/works/fly.JPG', caption: 'fly guy' },
-            { src: '/works/painting.jpg', caption: 'melodrama' },
-            { src: '/works/painting4.jpg', caption: 'a cowboy' },
-            { src: '/works/work1.png', caption: 'more melodrama' },
-            { src: '/works/work2.png', caption: 'ghouly' },
-            { src: '/works/work3.png', caption: 'this would look good in front of a garbage bin' },
-            { src: '/works/work4.png', caption: 'shoulders' },
-            { src: '/works/work5.png', caption: 'hollow' }
+            { src: '/works/fly.JPG', caption: 'Cycle', description: "Faced with imposing limits, the fly is an uncomfortable confrontation. With short life spans (my lecture professor just shouted poppycock because a link was broken) the life cycle of a fly inspired this hostile and uncomfortable presentation of a fly.", size: "29.5 x 40 inches", materials: "Acrylic on canvas", width: "40%" },
+            { src: '/works/painting.jpg', caption: 'Pruning', description: "Inspired by Sylvia Plath's fig tree in the Bell Jar, Pruning is a vivid reimaging of limitations. With potential futures lying before, all with different landscapes depicted in contrasting textures, this piece wanted to capture the tension between deciding how we select our paths. While some choices may seem mutually exclusive, Pruning attempts to depict a vivid environment where they balance with each other and thrive off each other.", size: "32 x 18 inches", materials: "Acrylic on Canvas", width: "40%" },
+            { src: '/works/painting4.jpg', caption: 'Cowboy', description: " Although cowboys may have found themselves obsolete with the invention of barbed wire, they live on the American zeitgeist. Existing beyond the bounds of their historical input, Cowboys and their culture have achieved a mythical status within pop culture. Capturing that energy required a exaggerated canvas spanning 48 inches by 36 inches.", size: "48 x 36 inches", materials: "Acrylic on canvas", width: "25%" },
+            { src: '/works/work1.png', caption: 'Return', description: " A collage of sensations exaggerated by time. When memories return more vivid and vibrant upon recollection, Return calls a bright and wonderous sense.", size: "11.5 x 8 inches", materials: "Colored Pencil on Illustration Board", width: "40%" },
+            { src: '/works/work2.png', caption: 'ghouly', description: "Waiting for Allina to send", size: "32 x 24 inches", materials: "Wax, cold water dye, muslin cloth", width: "40%" },
+            { src: '/works/work3.png', caption: 'this would look good in front of a garbage bin', description: "Waiting for Allina to send", size: "12 x 24 inches", materials: "Acrylic on Canvas", width: "55%" },
+            { src: '/works/work4.png', caption: 'shoulders', description: "Waiting for Allina to send", size: "11.5 x 8 inches", materials: "Colored Pencil on Paper", width: "50%" },
+            { src: '/works/work5.png', caption: 'hollow', description: "Waiting for Allina to send", size: "18 x 12 inches", materials: "Linoleum Print, Speedball ink, Illustration Board", width: "50%" }
         ],
         spaces: [],
         projections: []
@@ -32,7 +32,7 @@ function Portfolio() {
                     entry.target.classList.remove('show');
                 }
             });
-        }, { threshold: 0.3 });
+        }, { threshold: 0.5 });
 
         const galleryItems = galleryRef.current.querySelectorAll('.gallery-item');
         galleryItems.forEach((item) => observer.observe(item));
@@ -55,8 +55,7 @@ function Portfolio() {
                     onClick={handleIconClick}
                     style={{ cursor: 'pointer' }}
                 />
-                
-                {/* Horizontal scrollable section selector */}
+
                 <div className="scroll-selector">
                     {["Paintings", "Spaces", "Projections"].map((category, index) => (
                         <button
@@ -70,16 +69,24 @@ function Portfolio() {
                 </div>
 
                 <div className="gallery" ref={galleryRef}>
-                    {categories[selectedCategory].length > 0 ? (
-                        categories[selectedCategory].map((item, index) => (
-                            <div key={index} className="gallery-item">
-                                <img src={item.src} alt={item.caption} className="gallery-image" />
+                    {categories[selectedCategory].map((item, index) => (
+                        <div key={index} className="gallery-item">
+                            <img
+                                src={item.src}
+                                alt={item.caption}
+                                className="gallery-image"
+                                style={{ width: item.width || "80%" }} // Apply specified width or default to 80%
+                            />
+                            <div className="description-container">
                                 <p className="image-caption">{item.caption}</p>
+                                <p className="description-text">{item.description}</p>
+                                <p className="details">
+                                    <em>Size:</em> {item.size} <br />
+                                    <em>Materials:</em> {item.materials}
+                                </p>
                             </div>
-                        ))
-                    ) : (
-                        <p className="empty-message">No content available in this section.</p>
-                    )}
+                        </div>
+                    ))}
                 </div>
             </div>
 

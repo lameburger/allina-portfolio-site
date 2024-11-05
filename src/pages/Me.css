@@ -3,10 +3,19 @@
 
 body, .me-container {
     font-family: 'Cormorant Garamond', serif;
+    font-weight: bold;
     color: black;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+}
+
+.divider {
+    width: 20%; /* Slightly narrower than the container for visual balance */
+    margin: 20px auto; /* Center it and add spacing */
+    border: none;
+    border-top: 2px solid black; /* Light, thin line */
+    opacity: 0.8; /* Slight transparency for subtlety */
 }
 
 /* Position the icon in the top left corner */
@@ -50,7 +59,6 @@ body, .me-container {
 /* Description styling with square-like dimensions and letter spacing */
 .description {
     font-size: 1.5em;
-    font-weight: bold;
     margin: 10px 0 30px;
     max-width: 500px; /* Set a fixed width for square-like dimensions */
     max-height: 500px; /* Set a height to make it appear square */
