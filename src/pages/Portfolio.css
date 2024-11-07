@@ -84,7 +84,7 @@ body {
 
 /* Gallery Layout */
 .gallery {
-    padding-top: 100px;
+    padding-top: 5%;
     display: flex;
     flex-direction: column;
     gap: 60px;
@@ -165,44 +165,66 @@ body {
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     /* Stacked layout for mobile */
+    .gallery {
+        padding-top: 50%; 
+        padding-left: 0%; /* Minimized side padding */
+        padding-right: 0%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .gallery-item {
         flex-direction: column;
         height: auto;
         text-align: center;
+        padding: 10px;
+        margin: 10px 2%; /* Reduced side margins for less whitespace */
+        max-width: 96%; /* Wider container width for mobile */
     }
 
-    /* Increase image size on mobile to override specified width */
+    /* Ensure the image is responsive and fits within the screen width */
     .gallery-image {
-        width: 100% !important; /* Force width to 90% on mobile, overriding JavaScript-specified width */
+        width: 100% !important; /* Full width to reduce side whitespace */
         max-width: 100%;
-        margin-bottom: 20px; /* Space below the image */
+        margin-bottom: 10px;
     }
 
-    /* Smaller font size for mobile descriptions */
+    /* Description container with minimal side margins */
     .description-container {
-        max-width: 100%;
-        padding: 15px;
-        text-align: center;
-        margin: 0 auto;
+        max-width: 96%; /* Nearly full width on mobile */
+        margin: 0 auto; 
+        padding: 8px;
+        font-size: 1em;
+        line-height: 1.5;
+        letter-spacing: -0.5px;
+        text-align: justify;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: none;
+        -webkit-box-orient: vertical;
     }
 
     .image-caption {
-        font-size: 1.2em; /* Slightly smaller for mobile */
+        font-size: 1em;
+        margin: 5px 0; /* Smaller margin for caption */
     }
 
     .description-text,
     .details {
-        font-size: 0.85em; /* Smaller font size for mobile */
+        font-size: 0.85em;
+        margin: 5px 0; /* Reduced spacing for mobile */
     }
 
     /* Adjust scroll selector styling for mobile */
     .scroll-tab {
         font-size: 1em;
-        padding: 5px 8px;
+        padding: 4px 6px; /* Smaller padding */
         letter-spacing: -0.5px;
     }
 
     .scroll-selector {
         padding: 5px 10px;
+        margin: 10px 0; /* Reduced margin above/below scroll selector */
     }
 }
