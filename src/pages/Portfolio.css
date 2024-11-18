@@ -93,6 +93,7 @@ body {
     overflow-y: auto;
     max-height: 100vh;
     scroll-snap-type: y mandatory;
+    padding-bottom: 500px;
 }
 
 /* Gallery Item Styling */
