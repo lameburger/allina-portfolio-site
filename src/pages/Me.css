@@ -19,7 +19,6 @@ body, .me-container {
 }
 
 /* Position the icon in the top left corner */
-/* Position the icon in the top left corner */
 .corner-icon {
     position: fixed;
     top: 2vh; /* Responsive top margin */
@@ -33,15 +32,15 @@ body, .me-container {
 /* Adjustments for smaller screens */
 @media (max-width: 768px) {
     .corner-icon {
-        width: 8vw; /* Slightly larger on medium-sized devices */
-        max-width: 60px; /* Reduced max width */
+        width: 8vw;
+        max-width: 60px;
     }
 }
 
 @media (max-width: 480px) {
     .corner-icon {
-        width: 10vw; /* Larger size on small screens */
-        max-width: 50px; /* Further reduce max width */
+        width: 10vw;
+        max-width: 50px;
     }
 }
 
@@ -56,55 +55,56 @@ body, .me-container {
     text-align: center;
 }
 
-/* Description styling with square-like dimensions and letter spacing */
+/* Description styling */
 .description {
     font-size: 1.5em;
     margin: 10px 0 30px;
-    max-width: 500px; /* Set a fixed width for square-like dimensions */
-    max-height: 500px; /* Set a height to make it appear square */
+    max-width: 500px;
     line-height: 1.4;
-    letter-spacing: -2px; /* Adjust letter spacing */
-    text-align: justify; /* Align text to fit evenly in the block */
-    overflow: hidden; /* Ensure it fits within the height */
-    display: -webkit-box;
-    -webkit-line-clamp: 10; /* Limits the text to a certain number of lines */
-    -webkit-box-orient: vertical;
+    letter-spacing: -2px;
+    text-align: justify; /* Align text for readability */
+    overflow: visible; /* Allow content to display fully */
+    height: auto; /* Let the content expand naturally */
 }
 
-/* Profile Image: Keep it minimal and centered */
-/* Responsive Profile Image */
+/* Profile Image */
 .profile-image {
     margin-top: 50px;
     width: 500px;
-    height: 500px;
+    height: auto;
     max-width: 50vw; /* Adjusts with viewport width */
     max-height: 50vh; /* Adjusts with viewport height */
     margin-bottom: 20px;
 }
 
-/* Further adjustments for larger and smaller screens */
+/* Further adjustments for smaller screens */
 @media (max-width: 768px) {
+    .description {
+        max-width: 305px;
+    }
     .profile-image {
-        max-width: 500px; /* Increases size on tablets */
-        max-height: 500px;
+        max-width: 500px;
     }
 }
 
 @media (max-width: 480px) {
+    .description {
+        max-width: 305px;
+        letter-spacing: -2px;
+    }
     .profile-image {
-        max-width: 300px; /* Even larger for smaller mobile screens */
-        max-height: 300px;
+        max-width: 300px;
     }
 }
 
 .icon-image {
-    width: 24px; /* Adjust as needed */
-    height: 24px; /* Adjust as needed */
+    width: 24px;
+    height: 24px;
     transition: transform 0.3s;
 }
 
 .icon-image:hover {
-    transform: scale(1.1); /* Slightly enlarge on hover */
+    transform: scale(1.1);
 }
 
 .social-links {
@@ -124,23 +124,14 @@ body, .me-container {
 .social-links a:hover {
     color: #0690DB;
 }
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
-    .description {
-        max-width: 300px;
-        max-height: 300px;
-    }
     .social-links a {
         font-size: 1.3em;
     }
 }
 
 @media (max-width: 480px) {
-    .description {
-        max-width: 300px;
-        max-height: 300px;
-        letter-spacing: -2px;
-    }
     .social-links a {
         font-size: 1.2em;
     }
@@ -153,9 +144,9 @@ body, .me-container {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: black; /* Black fade effect */
+    background-color: black;
     z-index: 9999;
-    animation: fadeOut 0.8s forwards; /* Adjust duration for fade effect */
+    animation: fadeOut 0.8s forwards;
 }
 
 /* Keyframes for fade-out effect */
