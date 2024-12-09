@@ -30,11 +30,9 @@ html, body {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    width: 80%;
-    height: 80%;
-    max-width: 600px;
-    max-height: 600px;
-    position: relative;
+    width: 40vw; /* Scale relative to viewport */
+    max-width: 500px; /* Prevent it from growing too large */
+    aspect-ratio: 1 / 1; /* Keep it square */
 }
 
 /* Import the custom font */
@@ -45,79 +43,75 @@ body, .name-overlay, .link-container {
     font-family: 'Cormorant Garamond', serif;
 }
 
-/* Styling for name overlay as a background image */
+/* Styling for name overlay */
 .name-overlay {
-    position: absolute;
-    top: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-    width: 70%;
-    height: 15%;
+    position: relative; /* Relative to container */
+    width: 40vw; /* Scale relative to viewport */
+    max-width: 500px; /* Prevent it from growing too large */
+    aspect-ratio: 7 / 2; /* Proportional to its original size */
     background-image: url('/public/images/signed.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    margin-bottom: -20px; /* Adjust spacing to align above the centered image */
 }
 
-/* Adjust size for mobile devices */
+/* Adjust for mobile devices */
 @media (max-width: 768px) {
+    .centered-image {
+        width: 70vw;
+    }
     .name-overlay {
-        width: 70%;
+        width: 60vw;
+    }
+    .link-container {
+        width: 70vw;
     }
 }
 
 @media (max-width: 480px) {
+    .centered-image {
+        width: 80vw;
+    }
     .name-overlay {
-        width: 90%;
+        width: 70vw;
+    }
+    .link-container {
+        width: 80vw;
+        font-size: 1.8em; /* Scale down for smaller screens */
     }
 }
 
-/* Link container to position links on inner edges below .centered-image */
+/* Link container aligned inside centered image width */
 .link-container {
     display: flex;
     justify-content: space-between;
-    width: 80%;
-    max-width: 390px;
+    width: 50%; /* Match the width of centered image */
+    max-width: 600px; /* Prevent it from growing too large */
     margin-top: 10px;
     font-weight: bold;
-    font-size: 2.5em;
+    font-size: 2em;
     letter-spacing: -5px;
-    z-index: 15; /* Higher z-index to ensure links are on top */
     position: relative;
-}
-
-/* Adjust margin-top for mobile devices */
-@media (max-width: 500px) {
-    .link-container {
-        margin-top: -40px;
-    }
+    z-index: 15; /* Ensure links are above other elements */
+    padding-right: 20px; /* Move "My Work" inward */
+    padding-left: 10px; /* Optional: Adjust "Me" positioning */
 }
 
 .link-container a {
     text-decoration: none;
     color: black;
     cursor: pointer; /* Ensures pointer on hover */
+    flex-basis: auto; /* Allow the links to adjust dynamically */
+    text-align: center; /* Center the text inside their respective halves */
 }
 
-/* Fade transition overlay */
-.fade-transition {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    z-index: 5; /* Lower z-index than .link-container */
-    animation: fadeOut 0.8s forwards;
+/* Specific adjustment for the "My Work" link */
+.link-container a:last-child {
+    margin-right: 20%; /* Move "My Work" inward */
 }
 
-/* Keyframes for fade-out effect */
-@keyframes fadeOut {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+/* Optional adjustment for "Me" link */
+.link-container a:first-child {
+    margin-left: 21%; /* Move "Me" slightly inward */
 }
