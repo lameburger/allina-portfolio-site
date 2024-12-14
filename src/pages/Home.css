@@ -1,3 +1,5 @@
+/* Updated CSS for placing links at the inner boundaries of the image */
+
 /* Reset for all elements */
 * {
     margin: 0;
@@ -86,16 +88,15 @@ body, .name-overlay, .link-container {
 .link-container {
     display: flex;
     justify-content: space-between;
-    width: 50%; /* Match the width of centered image */
-    max-width: 600px; /* Prevent it from growing too large */
+    align-items: center;
+    width: 100%; /* Span the entire width below the image */
+    max-width: 500px; /* Match centered-image width */
     margin-top: 10px;
     font-weight: bold;
-    font-size: 2em;
-    letter-spacing: -5px;
+    font-size: 1.8em;
+    letter-spacing: -4px;
     position: relative;
     z-index: 15; /* Ensure links are above other elements */
-    padding-right: 20px; /* Move "My Work" inward */
-    padding-left: 10px; /* Optional: Adjust "Me" positioning */
 }
 
 .link-container a {
@@ -103,15 +104,35 @@ body, .name-overlay, .link-container {
     color: black;
     cursor: pointer; /* Ensures pointer on hover */
     flex-basis: auto; /* Allow the links to adjust dynamically */
-    text-align: center; /* Center the text inside their respective halves */
 }
 
-/* Specific adjustment for the "My Work" link */
-.link-container a:last-child {
-    margin-right: 20%; /* Move "My Work" inward */
-}
-
-/* Optional adjustment for "Me" link */
+/* Adjusted specific positioning with responsive scaling for "Me" and "My Work" links */
 .link-container a:first-child {
-    margin-left: 21%; /* Move "Me" slightly inward */
+    margin-left: 17%; /* Default scaling for larger screens */
+}
+
+.link-container a:last-child {
+    margin-right: 18%; /* Default scaling for larger screens */
+}
+
+/* Adjust for tablet devices */
+@media (max-width: 768px) {
+    .link-container a:first-child {
+        margin-left: 18%; /* Adjust for smaller screen sizes */
+    }
+
+    .link-container a:last-child {
+        margin-right: 18%; /* Adjust for smaller screen sizes */
+    }
+}
+
+/* Adjust for mobile devices */
+@media (max-width: 480px) {
+    .link-container a:first-child {
+        margin-left: 24%; /* Default scaling for larger screens */
+    }
+    
+    .link-container a:last-child {
+        margin-right: 25%; /* Default scaling for larger screens */
+    }
 }
