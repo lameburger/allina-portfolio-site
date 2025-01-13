@@ -36,7 +36,7 @@ body {
     height: 100vh;
     background-color: black;
     z-index: 1000;
-    animation: fadeToBlack 0.5s forwards; /* Adjust duration for fade effect */
+    animation: fadeToBlack 0.5s forwards;
 }
 
 @keyframes fadeToBlack {
@@ -93,7 +93,7 @@ body {
     overflow-y: auto;
     max-height: 100vh;
     scroll-snap-type: y mandatory;
-    padding-bottom: 500px;
+    padding-bottom: 100px; /* Increased padding for better scrolling space */
 }
 
 /* Gallery Item Styling */
@@ -101,15 +101,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px; /* Space between image and description */
+    gap: 30px;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     text-align: left;
     scroll-snap-align: center;
     padding: 20px;
-    max-width: 90%; /* Centers the gallery item in the viewport */
-    margin: 0 auto; /* Center the whole gallery item */
+    max-width: 90%;
+    margin: 0 auto;
 }
 
 .gallery-item.show {
@@ -122,7 +122,7 @@ body {
     max-width: 100%;
     filter: grayscale(100%);
     transition: filter 1s ease, opacity 1s ease;
-    width: var(--image-width, 50%); /* Default width for desktop */
+    width: var(--image-width, 50%);
 }
 
 .gallery-item.show .gallery-image {
@@ -167,8 +167,8 @@ body {
 @media (max-width: 768px) {
     /* Stacked layout for mobile */
     .gallery {
-        padding-top: 50%; 
-        padding-left: 0%; /* Minimized side padding */
+        padding-top: 10%; /* Adjusted padding to make scrolling smoother */
+        padding-left: 0%;
         padding-right: 0%;
         display: flex;
         flex-direction: column;
@@ -180,21 +180,19 @@ body {
         height: auto;
         text-align: center;
         padding: 10px;
-        margin: 10px 2%; /* Reduced side margins for less whitespace */
-        max-width: 96%; /* Wider container width for mobile */
+        margin: 10px 2%;
+        max-width: 96%;
     }
 
-    /* Ensure the image is responsive and fits within the screen width */
     .gallery-image {
-        width: 100% !important; /* Full width to reduce side whitespace */
+        width: 100% !important;
         max-width: 100%;
         margin-bottom: 10px;
     }
 
-    /* Description container with minimal side margins */
     .description-container {
-        max-width: 96%; /* Nearly full width on mobile */
-        margin: 0 auto; 
+        max-width: 96%;
+        margin: 0 auto;
         padding: 8px;
         font-size: 1em;
         line-height: 1.5;
@@ -208,24 +206,24 @@ body {
 
     .image-caption {
         font-size: 1em;
-        margin: 5px 0; /* Smaller margin for caption */
+        margin: 5px 0;
     }
 
     .description-text,
     .details {
         font-size: 0.85em;
-        margin: 5px 0; /* Reduced spacing for mobile */
+        margin: 5px 0;
     }
 
     /* Adjust scroll selector styling for mobile */
     .scroll-tab {
         font-size: 1em;
-        padding: 4px 6px; /* Smaller padding */
+        padding: 4px 6px;
         letter-spacing: -0.5px;
     }
 
     .scroll-selector {
         padding: 5px 10px;
-        margin: 10px 0; /* Reduced margin above/below scroll selector */
+        margin: 10px 0;
     }
 }
