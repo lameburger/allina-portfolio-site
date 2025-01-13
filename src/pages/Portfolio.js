@@ -149,13 +149,13 @@ function Portfolio() {
             { src: '/works/work5.png', caption: 'Rings', description: "While seasons change, trees hold fast firmly watching everything around them change. Unmoving themselves, this removed experience of time and change inspired a hand carved linoleum print.", size: "Size: 18 x 12 inches", materials: "Materials: Linoleum Print, Speedball ink, Illustration Board", width: "30%" }
         ],
         projections: [
-            { 
-                src: '/works/kateanderson.mov', 
-                caption: 'Kate Anderson Projection', 
-                description: 'A projection work by Kate Anderson, featuring an experimental narrative captured through video.',
-                width: '50%',
-                video: true // Flag indicating it's a video that needs autoPlay
-            }
+            // { 
+            //     src: '/works/kateanderson.mov', 
+            //     caption: 'Kate Anderson Projection', 
+            //     description: 'A projection work by Kate Anderson, featuring an experimental narrative captured through video.',
+            //     width: '50%',
+            //     video: true // Flag indicating it's a video that needs autoPlay
+            // }
         ]
     };
     
