@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Portfolio.css';
 
 const ImageGallery = () => {
+    const [showDescription, setShowDescription] = useState(false);
     const images = [
         { src: 'works/1.mp4', heading: 'Paper Module' },
         { src: 'works/1.png', heading: 'Above' },
@@ -24,14 +25,7 @@ const ImageGallery = () => {
             }}
         >
             {/* Image Section */}
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0',
-                    width: '100%',
-                }}
-            >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0', width: '100%' }}>
                 {images.map((image, index) => (
                     <div
                         key={index}
@@ -41,7 +35,6 @@ const ImageGallery = () => {
                             height: 'auto',
                             maxWidth: '900px',
                             margin: '0 auto',
-                            padding: '0',
                             display: 'flex',
                             justifyContent: 'center',
                         }}
@@ -52,14 +45,12 @@ const ImageGallery = () => {
                                 autoPlay
                                 loop
                                 muted
+                                playsInline
                                 style={{
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'cover',
-                                    margin: '0',
-                                    padding: '0',
-                                    marginTop: image.pushDown ? '0px' : '0',
-                                    pointerEvents: 'none', // Disable clicks
+                                    pointerEvents: 'none',
                                 }}
                             />
                         ) : (
@@ -70,8 +61,6 @@ const ImageGallery = () => {
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'cover',
-                                    margin: '0',
-                                    padding: '0',
                                 }}
                             />
                         )}
@@ -94,40 +83,39 @@ const ImageGallery = () => {
                 ))}
             </div>
 
-            {/* Text Section */}
-            <div
-                style={{
-                    maxWidth: '900px',
-                    textAlign: 'justify',
-                    fontFamily: 'Aptos, sans-serif',
-                    fontSize: 'clamp(1em, 1.5vw, 1.2em)',
-                    lineHeight: '1.8',
-                    color: '#333',
-                    backgroundColor: '#f9f9f9',
-                    padding: '20px',
-                    borderRadius: '8px',
-                    margin: '20px auto',
-                }}
+            {/* Toggle Description Button */}
+            <button
+                className="toggle-description"
+                onClick={() => setShowDescription(!showDescription)}
             >
-                <p>
-                    Forming a structural narrative, through the translation of the rudimentary forms originating from a rotary phone.
-                </p>
-                <p>
-                    Compiling selections of textures and form, I created a collage. Hoping to create a wild and erratic pattern to inspire my structure, I rearranged excerpts from each photo until I discovered a grasshopper inspired arrangement. The collage was then translated into a 3D model. With 14 internal walls creating a monoplaner grid to support each piece of the collage at its designated height.
-                </p>
-                <p>
-                    This structure was then prescribed a cage, something to house and contain its form and spirit. With a desire to create a passive “hedge” that might mimic a canopy allowing air and light to travel through, I began a process of creating a paper form to repeat and create modules for each face of this cage. Using a 5”x 7” piece of paper, I made cuts and folds, encouraging the paper to mimic the bends of the coils on a rotary phone. This form generated the desired path for air and light to travel through in expected and unexpected ways.
-                </p>
-                <p>
-                    With a finalized paper module, I wanted to create a wooden frame that would impose the most minimal impact while showcasing the natural and organic shapes of the paper form. Creating a form with triangles and diamonds provided the most desirable result in showcasing the form of the paper first and the wooden frame as a backdrop to it. The top half of the diamond meets its bottom half at an angle allowing gravity to do the heavy lifting while still promoting more diversity in the form. The diamond shape is imposed upon its inverse in negative space, allowing further passivity, in its cage.
-                </p>
-                <p>
-                    All that was left to finish the enclosure was a roof. In order to challenge myself to learn the basics of Rhino with greater depth, I first made a repeating scale inspired pattern, furthering the original coil motif from the phone. After completing the texture, I wanted to create an interruption that would draw the eye to the center to bring the focus to the center of the paper collage model within it. This interruption in the pattern would serve to promote a second look. The flat piece needed dimension, wanting to maintain a low profile, I carried previous motifs from the paper model to create elongated crescents that would push the overall direction and movement of the piece. From different angles the roof provides a new experience and shape, promoting the regenerative and energized forms that first inspired my model.
-                </p>
-            </div>
+                {showDescription ? "Hide Description" : "See Description"}
+            </button>
+
+            {/* Hidden Text Section */}
+            {showDescription && (
+                <section className="text-section">
+                    <h2 className="text-section-title">Structural Narrative</h2>
+                    <p>
+                        Forming a structural narrative, through the translation of the rudimentary forms originating from a rotary phone.
+                    </p>
+                    <p>
+                        Compiling selections of textures and form, I created a collage. Hoping to create a wild and erratic pattern to inspire my structure, I rearranged excerpts from each photo until I discovered a grasshopper-inspired arrangement. The collage was then translated into a 3D model, with 14 internal walls creating a monoplaner grid to support each piece of the collage at its designated height.
+                    </p>
+                    <p>
+                        This structure was then prescribed a cage, something to house and contain its form and spirit. With a desire to create a passive “hedge” that might mimic a canopy allowing air and light to travel through, I began a process of creating a paper form to repeat and create modules for each face of this cage. Using a 5”x 7” piece of paper, I made cuts and folds, encouraging the paper to mimic the bends of the coils on a rotary phone. This form generated the desired path for air and light to travel through in expected and unexpected ways.
+                    </p>
+                    <p>
+                        With a finalized paper module, I wanted to create a wooden frame that would impose the most minimal impact while showcasing the natural and organic shapes of the paper form. Creating a form with triangles and diamonds provided the most desirable result in showcasing the form of the paper first and the wooden frame as a backdrop to it. The top half of the diamond meets its bottom half at an angle allowing gravity to do the heavy lifting while still promoting more diversity in the form. The diamond shape is imposed upon its inverse in negative space, allowing further passivity, in its cage.
+                    </p>
+                    <p>
+                        All that was left to finish the enclosure was a roof. In order to challenge myself to learn the basics of Rhino with greater depth, I first made a repeating scale-inspired pattern, furthering the original coil motif from the phone. After completing the texture, I wanted to create an interruption that would draw the eye to the center to bring the focus to the center of the paper collage model within it. This interruption in the pattern would serve to promote a second look. The flat piece needed dimension, and wanting to maintain a low profile, I carried previous motifs from the paper model to create elongated crescents that would push the overall direction and movement of the piece. From different angles, the roof provides a new experience and shape, promoting the regenerative and energized forms that first inspired my model.
+                    </p>
+                </section>
+            )}
         </div>
     );
 };
+
 function Portfolio() {
     const [selectedCategory, setSelectedCategory] = useState("structures");
     const [isTransitioning, setIsTransitioning] = useState(false);
@@ -136,7 +124,7 @@ function Portfolio() {
 
     const categories = {
         structures: [
-            //{ src: '/works/phone.png', caption: 'Collage model, ARCH 108', description: "", width: "40%" },
+            // Additional structure items can be added here.
         ],
         art: [
             { src: '/works/fly.JPG', caption: 'Cycle', description: "Faced with imposing limits, the fly is an uncomfortable confrontation. With short life spans the life cycle of a fly inspired this hostile and uncomfortable presentation of a fly.", size: "Size: 29.5 x 40 inches", materials: "Acrylic on canvas", width: "40%" },
@@ -149,16 +137,9 @@ function Portfolio() {
             { src: '/works/work5.png', caption: 'Rings', description: "While seasons change, trees hold fast firmly watching everything around them change. Unmoving themselves, this removed experience of time and change inspired a hand carved linoleum print.", size: "Size: 18 x 12 inches", materials: "Materials: Linoleum Print, Speedball ink, Illustration Board", width: "30%" }
         ],
         projections: [
-            // { 
-            //     src: '/works/kateanderson.mov', 
-            //     caption: 'Kate Anderson Projection', 
-            //     description: 'A projection work by Kate Anderson, featuring an experimental narrative captured through video.',
-            //     width: '50%',
-            //     video: true // Flag indicating it's a video that needs autoPlay
-            // }
+            // Projections items can be added here.
         ]
     };
-    
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -206,27 +187,47 @@ function Portfolio() {
                 </div>
 
                 <div className="gallery" ref={galleryRef}>
-                    {categories[selectedCategory].map((item, index) => (
-                        <div key={index} className="gallery-item">
-                            <img
-                                src={item.src}
-                                alt={item.caption}
-                                className="gallery-image"
-                                style={{ width: item.width || "80%" }} // Apply specified width or default to 80%
-                            />
-                            <div className="description-container">
-                                <p className="image-caption">{item.caption}</p>
-                                <p className="description-text">{item.description}</p>
-                                <p className="details">
-                                    {item.size} <br />
-                                    {item.materials}
+                    {selectedCategory === 'projections' ? (
+                        <div className="projections-container">
+                            <div className="projection-info">
+                                <h2>Prairie Tide</h2>
+                                <p>
+                                    Imposing movement reminiscent of the ocean that once covered Kansas, a permeable reflection into the history of the prairie.
                                 </p>
                             </div>
+                            <video
+                                src="/works/projection.mp4"
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="projection-video"
+                            />
                         </div>
-                    ))}
+                    ) : (
+                        <>
+                            {categories[selectedCategory].map((item, index) => (
+                                <div key={index} className="gallery-item">
+                                    <img
+                                        src={item.src}
+                                        alt={item.caption}
+                                        className="gallery-image"
+                                        style={{ width: item.width || "80%" }}
+                                    />
+                                    <div className="description-container">
+                                        <p className="image-caption">{item.caption}</p>
+                                        <p className="description-text">{item.description}</p>
+                                        <p className="details">
+                                            {item.size} <br />
+                                            {item.materials}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
 
-                    {/* Add the ImageGallery component here for the spaces category */}
-                    {selectedCategory === 'structures' && <ImageGallery />}
+                            {selectedCategory === 'structures' && <ImageGallery />}
+                        </>
+                    )}
                 </div>
             </div>
 
