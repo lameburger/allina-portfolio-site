@@ -239,6 +239,7 @@ body {
 /* Structures specific gallery styling - align with navigation */
 .gallery.structures-gallery {
     padding-top: 90px;
+    padding-right: 280px; /* Add right padding to prevent overlap with sidebar */
 }
 
 /* Structural Narrative Header Styling */
@@ -797,6 +798,11 @@ body {
     /* Hide project selector on mobile */
     .project-selector {
         display: none;
+    }
+
+    /* Remove right padding on mobile since sidebar is hidden */
+    .gallery.structures-gallery {
+        padding-right: 20px;
     }
 
     .scroll-selector {
