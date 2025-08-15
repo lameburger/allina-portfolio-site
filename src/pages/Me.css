@@ -61,7 +61,7 @@ body, .me-container {
     margin: 10px 0 30px;
     max-width: 500px;
     line-height: 1.4;
-    letter-spacing: -2px;
+    letter-spacing: 0.5px;
     text-align: justify; /* Align text for readability */
     overflow: visible; /* Allow content to display fully */
     height: auto; /* Let the content expand naturally */
@@ -73,7 +73,6 @@ body, .me-container {
     width: 500px;
     height: auto;
     max-width: 50vw; /* Adjusts with viewport width */
-    max-height: 50vh; /* Adjusts with viewport height */
     margin-bottom: 20px;
 }
 
@@ -90,7 +89,7 @@ body, .me-container {
 @media (max-width: 480px) {
     .description {
         max-width: 305px;
-        letter-spacing: -2px;
+        letter-spacing: 0.3px;
     }
     .profile-image {
         max-width: 300px;
