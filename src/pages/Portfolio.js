@@ -293,6 +293,17 @@ function Portfolio() {
             
             setActiveImage(currentActive);
             setVisitedImages(currentVisited);
+            
+            // Auto-scroll navigation to active item
+            if (currentActive) {
+                const navElement = document.querySelector(`[data-nav-item="${currentActive}"]`);
+                if (navElement) {
+                    navElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -363,7 +374,7 @@ function Portfolio() {
                         { display: "Coursework", value: "structures" },
                         { display: "Art", value: "art" },
                         { display: "Projections", value: "projections" },
-                        { display: "Professional Work", value: "professional" }
+                        { display: "Professional", value: "professional" }
                     ].map((category, index) => (
                         <button
                             key={index}
@@ -389,6 +400,7 @@ function Portfolio() {
                                 {project.images.map((imageTitle) => (
                                     <p 
                                         key={imageTitle} 
+                                        data-nav-item={imageTitle}
                                         className={`image-title ${
                                             (activeImage === imageTitle && activeProject === project.id) || 
                                             visitedImages.has(imageTitle) ? 'active' : ''
@@ -1138,7 +1150,7 @@ function Portfolio() {
                                                 }}>
                                                     <h1 style={{
                                                         fontFamily: 'Helvetica, Arial, sans-serif',
-                                                        fontSize: 'clamp(3em, 6vw, 5em)',
+                                                        fontSize: 'clamp(2em, 4vw, 3.5em)',
                                                         fontWeight: 'bold',
                                                         color: '#333',
                                                         letterSpacing: '-0.08em',

@@ -69,6 +69,7 @@ body {
     position: fixed;
     right: 20px;
     top: 105px;
+    bottom: 20px;
     transform: none;
     display: flex;
     flex-direction: column;
@@ -78,6 +79,15 @@ body {
     z-index: 10;
     background: none;
     border: none;
+    overflow-y: auto;
+    max-height: calc(100vh - 125px);
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.project-selector::-webkit-scrollbar {
+    display: none;
 }
 
 /* Project Navigation Item */
@@ -239,7 +249,6 @@ body {
 /* Structures specific gallery styling - align with navigation */
 .gallery.structures-gallery {
     padding-top: 90px;
-    padding-right: 280px; /* Add right padding to prevent overlap with sidebar */
 }
 
 /* Structural Narrative Header Styling */
@@ -798,11 +807,6 @@ body {
     /* Hide project selector on mobile */
     .project-selector {
         display: none;
-    }
-
-    /* Remove right padding on mobile since sidebar is hidden */
-    .gallery.structures-gallery {
-        padding-right: 20px;
     }
 
     .scroll-selector {
