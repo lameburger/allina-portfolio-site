@@ -76,6 +76,32 @@ body, .me-container {
     margin-bottom: 20px;
 }
 
+/* Mom Image Container */
+.mom-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Mom Image */
+.mom-image {
+    width: 300px;
+    height: auto;
+    max-width: 40vw; /* Smaller than profile image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Gentle shadow */
+}
+
+/* Mom Image Caption */
+.mom-caption {
+    font-size: 0.8em;
+    color: #666;
+    margin: 8px 0 0 0;
+    align-self: flex-start;
+    font-style: italic;
+    font-weight: normal;
+}
+
 /* Further adjustments for smaller screens */
 @media (max-width: 768px) {
     .description {
@@ -83,6 +109,12 @@ body, .me-container {
     }
     .profile-image {
         max-width: 500px;
+    }
+    .mom-image {
+        max-width: 350px;
+    }
+    .mom-caption {
+        font-size: 0.75em;
     }
 }
 
@@ -93,6 +125,12 @@ body, .me-container {
     }
     .profile-image {
         max-width: 300px;
+    }
+    .mom-image {
+        max-width: 250px;
+    }
+    .mom-caption {
+        font-size: 0.7em;
     }
 }
 

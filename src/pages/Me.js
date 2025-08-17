@@ -38,7 +38,7 @@ function Me() {
                 onClick={handleIconClick}
                 style={{ cursor: 'pointer' }}
             />
-            <img src="/images/allina.png" alt="Profile" className="profile-image" />
+            <img src="/images/me.JPEG" alt="Profile" className="profile-image" />
             <p className="description">
                 {greeting}. My name is Allina and I am currently an Honors student at the University of Kansas studying architecture. My motivation and energy to create is fueled by a desire to share.
                 <br /><br />
@@ -46,7 +46,11 @@ function Me() {
             </p>
             <hr className="divider" />
             <div className="description">
-                <p>If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but started my own indie rock band. My favorite movies include <em>Moonrise Kingdom</em>, <em>Minari</em>, and <em>Scott Pilgrim vs. the World</em>. I have too many baby photos (love you mom).</p>
+                <p>If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but started my own indie rock band. My favorite movies include <em>Moonrise Kingdom</em>, <em>Minari</em>, and <em>Scott Pilgrim vs. the World</em>. I have too many baby photos.</p>
+            </div>
+            <div className="mom-image-container">
+                <img src="/images/mom.jpg" alt="Baby photo" className="mom-image" />
+                <p className="mom-caption">(i love you mom)</p>
             </div>
             <div className="social-links">
                 <a href="https://www.instagram.com/allina.dough/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">

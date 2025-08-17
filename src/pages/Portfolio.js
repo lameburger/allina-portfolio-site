@@ -868,7 +868,7 @@ function Portfolio() {
                                                             }}
                                                         />
                                                         <img
-                                                            src="/enclosure/2.png"
+                                                            src="/enclosure/2.JPEG"
                                                             alt="Ideation 2"
                                                             style={{
                                                                 width: '100%',
