@@ -234,7 +234,7 @@ function Portfolio() {
         { 
             id: 'enclosure', 
             title: 'Enclosure',
-            images: ['For Roger', 'Ideation', 'The Bowtie', 'Up Close', 'Aerial', 'Walking Down', 'Wider View']
+            images: ['For Roger', 'Ideation', 'The Bowtie', 'Aerial', 'Up Close', 'Walking Down', 'Wider View']
         },
         { 
             id: 'tiny-home', 
@@ -972,36 +972,6 @@ function Portfolio() {
 
                                                 {/* Up Close */}
                                                 <div 
-                                                    data-image="Up Close"
-                                                    style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        maxWidth: '900px',
-                                                        width: '100%'
-                                                    }}
-                                                >
-                                                    <h3 className="mobile-only-heading" style={{
-                                                        fontFamily: 'Cormorant Garamond, serif',
-                                                        fontSize: '1.5em',
-                                                        color: '#333',
-                                                        marginBottom: '20px',
-                                                        fontStyle: 'italic',
-                                                        display: 'none'
-                                                    }}>Up Close</h3>
-                                                    <img
-                                                        src="/enclosure/6.JPEG"
-                                                        alt="Up Close"
-                                                        style={{
-                                                            width: '100%',
-                                                            height: 'auto',
-                                                            objectFit: 'contain'
-                                                        }}
-                                                    />
-                                                </div>
-
-                                                {/* Aerial */}
-                                                <div 
                                                     data-image="Aerial"
                                                     style={{
                                                         display: 'flex',
@@ -1020,8 +990,38 @@ function Portfolio() {
                                                         display: 'none'
                                                     }}>Aerial</h3>
                                                     <img
-                                                        src="/enclosure/7.JPEG"
+                                                        src="/enclosure/6.JPEG"
                                                         alt="Aerial"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            objectFit: 'contain'
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                {/* Aerial */}
+                                                <div 
+                                                    data-image="Up Close"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 className="mobile-only-heading" style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic',
+                                                        display: 'none'
+                                                    }}>Up Close</h3>
+                                                    <img
+                                                        src="/enclosure/7.JPEG"
+                                                        alt="Up Close"
                                                         style={{
                                                             width: '100%',
                                                             height: 'auto',
