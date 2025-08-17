@@ -6,11 +6,11 @@ const ImageGallery = () => {
     const [showDescription, setShowDescription] = useState(false);
     const images = [
         { src: 'works/1.mp4', heading: 'Paper Module' },
-        { src: 'works/1.png', heading: 'Above' },
+        { src: 'works/4.png', heading: 'Core' },
         { src: 'works/2.mp4', heading: 'Above, Subtracted' },
         { src: 'works/oops.jpg', heading: 'Corner' },
         { src: 'works/3.mp4', heading: 'Shoulder', pushDown: true },
-        { src: 'works/4.png', heading: 'Core' },
+        { src: 'works/1.png', heading: 'Above' },
         { src: 'works/4.mp4', heading: 'Inside' },
     ];
 
@@ -161,7 +161,7 @@ const DatacenterGallery = () => {
                     textAlign: 'left',
                     fontStyle: 'italic'
                 }}>
-                    Example Work
+                    Self-lead project
                 </p>
             </div>
             
@@ -224,7 +224,7 @@ function Portfolio() {
         { 
             id: 'structural-narrative', 
             title: 'Structural Narrative',
-            images: ['Paper Module', 'Above', 'Above, Subtracted', 'Corner', 'Shoulder', 'Core', 'Inside']
+            images: ['Paper Module', 'Core', 'Above, Subtracted', 'Corner', 'Shoulder', 'Above', 'Inside']
         },
         { 
             id: 'motion-capture', 
@@ -239,7 +239,7 @@ function Portfolio() {
         { 
             id: 'tiny-home', 
             title: 'Tiny Home',
-            images: ['Tiny Scan', 'Tiny Render']
+            images: ['Tiny Render']
         }
     ];
 
@@ -816,8 +816,9 @@ function Portfolio() {
                                                             margin: 0,
                                                             textAlign: 'left'
                                                         }}>
-                                                            <em style={{ fontSize: '0.9em', color: '#999' }}>[explainer]</em><br/><br/>
-                                                            Roger Shimomura's childhood was interrupted by his internment at the Minidoka Camp. His perceptions of belonging and home has always been estranged throughout his life. Feeling foreign in every setting, Roger Shimomura was often defined by his appearance and inflated stereotypes of his people, villainized by wartime propaganda. While every system fought to make him smaller, he found the energy to create boldly in spite of it all. Creating massive quantities of work that work to challenge old ideals and to keep this discussion ever present, Roger Shimomura is not a passive man, he is one who takes action. A space for Roger Shimomura is one that must be unrestrictive and open to discussion.
+                                                            Roger Shimomura is an American artist and Lawrence local. While designing a studio and gallery to host an hypothetical artist in residence for him I based my design on what I believed he would value most.
+                                                            <br/><br/>
+                                                            Roger Shimomura's childhood was interrupted by his internment at the Minidoka Camp. His perceptions of belonging and home have always been estranged throughout his life. Feeling foreign in every setting, Roger Shimomura was often defined by his appearance and inflated stereotypes of his people, villainized by wartime propaganda. While every system fought to make him smaller, he found the energy to create boldly in spite of it all. Roger Shimomura is not a passive man, he is one who takes action. A space for Roger Shimomura is one that must be unrestrictive and open to discussion.
                                                             <br/><br/>
                                                             In designing a space to house Roger Shimomura as an artist in residence at the University of Kansas, one thing remained at the top of mind: a bold sense of identity.
                                                         </p>
@@ -862,17 +863,17 @@ function Portfolio() {
                                                             alt="Ideation 1"
                                                             style={{
                                                                 width: '100%',
-                                                                height: 'auto',
-                                                                objectFit: 'contain'
+                                                                height: '250px',
+                                                                objectFit: 'cover'
                                                             }}
                                                         />
                                                         <img
-                                                            src="/enclosure/2.JPEG"
+                                                            src="/enclosure/2.png"
                                                             alt="Ideation 2"
                                                             style={{
                                                                 width: '100%',
-                                                                height: 'auto',
-                                                                objectFit: 'contain'
+                                                                height: '250px',
+                                                                objectFit: 'cover'
                                                             }}
                                                         />
                                                         <img
@@ -880,8 +881,8 @@ function Portfolio() {
                                                             alt="Ideation 3"
                                                             style={{
                                                                 width: '100%',
-                                                                height: 'auto',
-                                                                objectFit: 'contain'
+                                                                height: '250px',
+                                                                objectFit: 'cover'
                                                             }}
                                                         />
                                                         <img
@@ -889,8 +890,8 @@ function Portfolio() {
                                                             alt="Ideation 4"
                                                             style={{
                                                                 width: '100%',
-                                                                height: 'auto',
-                                                                objectFit: 'contain'
+                                                                height: '250px',
+                                                                objectFit: 'cover'
                                                             }}
                                                         />
                                                     </div>
@@ -908,7 +909,7 @@ function Portfolio() {
                                                             margin: 0,
                                                             textAlign: 'left'
                                                         }}>
-                                                            As a medium of investigating Roger Shimomura's work, I invested in the principle of Molecular diffusion, whereas molecules move from restricted spaces to more open ones. With visitors entering in the smallest point in the building would be guided into the open space of gallery to allow for a narrative and optimistic viewing experience. Through this intention, <strong>I found my bowtie motif</strong>.
+                                                            As a medium of investigating Roger Shimomura's work, I invested in the principle of Molecular diffusion, whereas molecules move from restricted spaces to more open ones. When things are tense and we feel compacted, as Roger experienced at the Minidoka Camp, I wanted an optimistic outcome; to break free. Visitors entering in the smallest point in the building would be guided into the open space of the gallery to allow for a narrative and optimistic viewing experience. In a quiet, humble approach, a visitor is propelled onward into the art. Through this intention, <strong>I found my bowtie motif</strong>.
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1121,62 +1122,42 @@ function Portfolio() {
                                         }}>
                                             {/* Tiny Home Header */}
                                             <div 
-                                                data-image="Tiny Scan"
-                                                className="figure-study-header"
                                                 style={{
                                                     display: 'flex',
+                                                    flexDirection: 'column',
                                                     alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    gap: '40px',
                                                     width: '100%',
                                                     marginBottom: '60px',
                                                     paddingBottom: '60px'
                                                 }}
                                             >
-                                                <img
-                                                    src="/tinyhome/tinyscan.jpg"
-                                                    alt="Tiny Scan"
-                                                    style={{
-                                                        width: '300px',
-                                                        height: 'auto',
-                                                        objectFit: 'contain',
-                                                        flexShrink: 0
-                                                    }}
-                                                />
-                                                <div style={{
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    alignItems: 'flex-start'
+                                                <h1 style={{
+                                                    fontFamily: 'Helvetica, Arial, sans-serif',
+                                                    fontSize: 'clamp(2em, 4vw, 3.5em)',
+                                                    fontWeight: 'bold',
+                                                    color: '#333',
+                                                    letterSpacing: '-0.08em',
+                                                    margin: 0,
+                                                    textAlign: 'center',
+                                                    marginBottom: '20px'
                                                 }}>
-                                                    <h1 style={{
+                                                    Tiny Home Render
+                                                </h1>
+                                                <div style={{
+                                                    maxWidth: '500px',
+                                                    textAlign: 'center'
+                                                }}>
+                                                    <p style={{
                                                         fontFamily: 'Helvetica, Arial, sans-serif',
-                                                        fontSize: 'clamp(2em, 4vw, 3.5em)',
-                                                        fontWeight: 'bold',
-                                                        color: '#333',
-                                                        letterSpacing: '-0.08em',
-                                                        margin: 0,
-                                                        textAlign: 'left',
-                                                        whiteSpace: 'nowrap'
+                                                        fontSize: '0.8em',
+                                                        fontWeight: 300,
+                                                        color: '#666',
+                                                        lineHeight: '1.4',
+                                                        margin: 0
                                                     }}>
-                                                        Tiny Home Render
-                                                    </h1>
-                                                    <div style={{
-                                                        marginTop: '20px',
-                                                        maxWidth: '500px'
-                                                    }}>
-                                                        <p style={{
-                                                            fontFamily: 'Helvetica, Arial, sans-serif',
-                                                            fontSize: '0.8em',
-                                                            fontWeight: 300,
-                                                            color: '#666',
-                                                            lineHeight: '1.4',
-                                                            margin: 0,
-                                                            textAlign: 'left'
-                                                        }}>
-                                                            <em style={{ fontSize: '0.9em', color: '#999' }}>Rhino, Spring 2025</em><br/><br/>
-                                                            Developing and practicing 3-D visualization skills with a Tiny Home accessorized with an elevated front porch and garage.
-                                                        </p>
-                                                    </div>
+                                                        <em style={{ fontSize: '0.9em', color: '#999' }}>Rhino, Spring 2025</em><br/><br/>
+                                                        Developing and practicing 3-D visualization skills with a Tiny Home accessorized with an elevated front porch and garage.
+                                                    </p>
                                                 </div>
                                             </div>
 
