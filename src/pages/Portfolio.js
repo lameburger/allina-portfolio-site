@@ -234,7 +234,7 @@ function Portfolio() {
         { 
             id: 'enclosure', 
             title: 'Enclosure',
-            images: ['For Roger', 'Ideation', 'The Bowtie', 'Aerial', 'Up Close', 'Walking Down', 'Wider View']
+            images: ['For Roger', 'Ideation', 'The Bowtie', 'Up Close', 'Aerial', 'Walking Down']
         },
         { 
             id: 'tiny-home', 
@@ -1060,35 +1060,7 @@ function Portfolio() {
                                                     />
                                                 </div>
 
-                                                {/* Wider View */}
-                                                <div 
-                                                    data-image="Wider View"
-                                                    style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        maxWidth: '900px',
-                                                        width: '100%'
-                                                    }}
-                                                >
-                                                    <h3 className="mobile-only-heading" style={{
-                                                        fontFamily: 'Cormorant Garamond, serif',
-                                                        fontSize: '1.5em',
-                                                        color: '#333',
-                                                        marginBottom: '20px',
-                                                        fontStyle: 'italic',
-                                                        display: 'none'
-                                                    }}>Wider View</h3>
-                                                    <img
-                                                        src="/enclosure/9.JPEG"
-                                                        alt="Wider View"
-                                                        style={{
-                                                            width: '100%',
-                                                            height: 'auto',
-                                                            objectFit: 'contain'
-                                                        }}
-                                                    />
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
