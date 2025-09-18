@@ -9,8 +9,6 @@ const ImageGallery = () => {
         { src: 'works/4.png', heading: 'Core' },
         { src: 'works/2.mp4', heading: 'Above, Subtracted' },
         { src: 'works/oops.jpg', heading: 'Corner' },
-        { src: 'works/3.mp4', heading: 'Shoulder', pushDown: true },
-        { src: 'works/1.png', heading: 'Above' },
         { src: 'works/4.mp4', heading: 'Inside' },
     ];
 
@@ -95,7 +93,7 @@ const ImageGallery = () => {
     );
 };
 
-// DatacenterGallery Component
+// Professional Experience Components
 const DatacenterGallery = () => {
     const [currentImage, setCurrentImage] = useState(1);
     const [isHovered, setIsHovered] = useState(false);
@@ -123,12 +121,12 @@ const DatacenterGallery = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            padding: '20px 20px 0px 20px',
+            padding: '60px 20px 60px 20px',
             maxWidth: '900px',
             margin: '0 auto'
         }}>
             <div style={{
-                marginBottom: '5px',
+                marginBottom: '30px',
                 width: '100%'
             }}>
                 <h1 style={{
@@ -138,7 +136,7 @@ const DatacenterGallery = () => {
                     color: '#333',
                     letterSpacing: '-0.05em',
                     margin: 0,
-                    marginBottom: '10px',
+                    marginBottom: '15px',
                     textAlign: 'left'
                 }}>
                     JHET Architects Internship
@@ -148,7 +146,7 @@ const DatacenterGallery = () => {
                     fontSize: '1.2em',
                     color: '#666',
                     margin: 0,
-                    marginBottom: '5px',
+                    marginBottom: '8px',
                     textAlign: 'left'
                 }}>
                     Freshman Year Summer (2025)
@@ -170,7 +168,7 @@ const DatacenterGallery = () => {
                 style={{
                     position: 'relative',
                     width: '100%',
-                    marginBottom: '0px',
+                    marginBottom: '30px',
                     cursor: window.innerWidth > 768 ? 'pointer' : 'default'
                 }}
                 onMouseEnter={window.innerWidth > 768 ? handleMouseEnter : undefined}
@@ -198,11 +196,87 @@ const DatacenterGallery = () => {
                     lineHeight: '1.6',
                     color: '#666',
                     margin: 0,
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    maxWidth: '800px'
                 }}>
                     Respecting the confidentiality of clients and tenants within the Data Center sector makes it difficult to share work and visualizations. For the JHET Architects internship, I created quick nondescript sketches and collages to fill that gap with a goal of bringing warmth and familiarity to buildings traditionally viewed as intimidating.
                 </p>
             </div>
+        </div>
+    );
+};
+
+const MuseumExperience = () => {
+    return (
+        <div className="museum-container" style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            padding: '60px 20px 60px 20px',
+            maxWidth: '900px',
+            margin: '0 auto',
+            borderBottom: '1px solid #e0e0e0',
+            marginBottom: '40px'
+        }}>
+            <div style={{
+                marginBottom: '30px',
+                width: '100%'
+            }}>
+                <h1 style={{
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontSize: 'clamp(2.5em, 5vw, 4em)',
+                    fontWeight: 'bold',
+                    color: '#333',
+                    letterSpacing: '-0.05em',
+                    margin: 0,
+                    marginBottom: '15px',
+                    textAlign: 'left'
+                }}>
+                    Spencer Museum of Art Student Ambassador/Educator
+                </h1>
+                <p style={{
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontSize: '1.2em',
+                    color: '#666',
+                    margin: 0,
+                    marginBottom: '8px',
+                    textAlign: 'left'
+                }}>
+                    2025 - Present
+                </p>
+            </div>
+            
+            <div style={{
+                width: '100%'
+            }}>
+                <p style={{
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontSize: '1em',
+                    fontWeight: 'normal',
+                    lineHeight: '1.6',
+                    color: '#666',
+                    margin: 0,
+                    textAlign: 'left',
+                    maxWidth: '800px'
+                }}>
+                    I lead tours for elementary aged students through dedicated curriculum, encouraging engagement and critical thinking between the relationships between culture, history and art. It's a lot of fun :)
+                </p>
+            </div>
+        </div>
+    );
+};
+
+const ProfessionalSection = () => {
+    return (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            paddingTop: '40px',
+            paddingBottom: '40px'
+        }}>
+            <MuseumExperience />
+            <DatacenterGallery />
         </div>
     );
 };
@@ -215,6 +289,7 @@ function Portfolio() {
     const [visitedImages, setVisitedImages] = useState(new Set(["Paper Module"]));
     const [showDescription, setShowDescription] = useState(false);
     const [showMotionDescription, setShowMotionDescription] = useState(false);
+    const [showHealingDescription, setShowHealingDescription] = useState(false);
     const [showEnclosureDescription, setShowEnclosureDescription] = useState(false);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const galleryRef = useRef();
@@ -224,23 +299,23 @@ function Portfolio() {
         { 
             id: 'structural-narrative', 
             title: 'Structural Narrative',
-            images: ['Paper Module', 'Core', 'Above, Subtracted', 'Corner', 'Shoulder', 'Above', 'Inside']
+            images: ['Paper Module', 'Core', 'Above, Subtracted', 'Corner', 'Inside']
         },
         { 
             id: 'motion-capture', 
             title: 'Motion Capture',
-            images: ['Motion Diagram', 'Iteration', 'Final Diagram', 'The Bootcut', 'The Bootcut, Continued']
+            images: ['Motion Diagram', 'Iteration', 'Final Diagram', 'The Bootcut']
+        },
+        { 
+            id: 'healing-space', 
+            title: 'A Space for Healing',
+            images: ['Preview Images', 'Floor Plans', 'Section Cuts', 'Therapeutic Design']
         },
         { 
             id: 'enclosure', 
             title: 'Enclosure',
             images: ['For Roger', 'Ideation', 'The Bowtie', 'Up Close', 'Aerial', 'Walking Down']
         },
-        { 
-            id: 'tiny-home', 
-            title: 'Tiny Home',
-            images: ['Tiny Render']
-        }
     ];
 
     const categories = {
@@ -435,7 +510,7 @@ function Portfolio() {
                             />
                         </div>
                     ) : selectedCategory === 'professional' ? (
-                        <DatacenterGallery />
+                        <ProfessionalSection />
                     ) : (
                         <>
 
@@ -668,69 +743,6 @@ function Portfolio() {
                                                     </div>
                                                 </div>
 
-                                                {/* The Bootcut, Continued */}
-                                                <div 
-                                                    data-image="The Bootcut, Continued"
-                                                    style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        maxWidth: '900px',
-                                                        width: '100%',
-                                                        gap: '10px'
-                                                    }}
-                                                >
-                                                    <h3 className="mobile-only-heading" style={{
-                                                        fontFamily: 'Cormorant Garamond, serif',
-                                                        fontSize: '1.5em',
-                                                        color: '#333',
-                                                        marginBottom: '20px',
-                                                        fontStyle: 'italic',
-                                                        display: 'none'
-                                                    }}>The Bootcut, Continued</h3>
-                                                    <div style={{
-                                                        width: '100%',
-                                                        height: '800px',
-                                                        overflow: 'hidden',
-                                                        position: 'relative'
-                                                    }}>
-                                                        <img
-                                                            src="/motioncapture/fifth.JPEG"
-                                                            alt="The Bootcut, Continued"
-                                                            style={{
-                                                                width: '100%',
-                                                                height: '800px',
-                                                                objectFit: 'cover',
-                                                                objectPosition: 'center bottom',
-                                                                display: 'block'
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div style={{ width: '100%' }}>
-                                                        <img
-                                                            src="/motioncapture/sixth.JPEG"
-                                                            alt="Sixth Image"
-                                                            style={{
-                                                                width: '100%',
-                                                                height: 'auto',
-                                                                objectFit: 'contain',
-                                                                display: 'block'
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div style={{ width: '100%' }}>
-                                                        <img
-                                                            src="/motioncapture/seventh.JPEG"
-                                                            alt="Seventh Image"
-                                                            style={{
-                                                                width: '100%',
-                                                                height: 'auto',
-                                                                objectFit: 'contain',
-                                                                display: 'block'
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -749,6 +761,289 @@ function Portfolio() {
                                                 }}
                                             >
                                                 {showMotionDescription ? "Hide Description" : "Description"}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* A Space for Healing Project */}
+                                    <div className="project-section" data-project="healing-space">
+                                        <div style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            width: '100%',
+                                            padding: '40px 20px'
+                                        }}>
+                                            {/* Healing Space Header */}
+                                            <div 
+                                                data-image="Preview Images"
+                                                className="figure-study-header"
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    gap: '40px',
+                                                    width: '100%',
+                                                    marginBottom: '60px',
+                                                    paddingBottom: '60px'
+                                                }}
+                                            >
+                                                <div style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    alignItems: 'flex-start'
+                                                }}>
+                                                    <h1 style={{
+                                                        fontFamily: 'Helvetica, Arial, sans-serif',
+                                                        fontSize: 'clamp(2.5em, 5vw, 4.5em)',
+                                                        fontWeight: 'bold',
+                                                        color: '#333',
+                                                        letterSpacing: '-0.08em',
+                                                        margin: 0,
+                                                        textAlign: 'left',
+                                                        whiteSpace: 'nowrap'
+                                                    }}>
+                                                        A Space for Healing
+                                                    </h1>
+                                                    <div style={{
+                                                        marginTop: '20px',
+                                                        maxWidth: '600px'
+                                                    }}>
+                                                        <p style={{
+                                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                                            fontSize: '0.8em',
+                                                            fontWeight: 300,
+                                                            color: '#666',
+                                                            lineHeight: '1.4',
+                                                            margin: 0,
+                                                            textAlign: 'left'
+                                                        }}>
+                                                            Tasked with creating a therapy retreat space that embraces the calming properties of the natural landscape of Clinton Lake. Utilizing mass timber construction as well as limestone, natural materials that make up the structure of the building also help to ground patients in the simple beauty.
+                                                            <br/><br/>
+                                                            In programming, it was clear that having two distinct spaces offers significant benefits. This provides the visitor and therapist an opportunity to enter a new space and begin again, especially if a patient is experiencing immense stress. Understanding this need for two spaces, I used two guiding principles in shaping their form.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                gap: '60px',
+                                                alignItems: 'center',
+                                                width: '100%'
+                                            }}>
+                                                {/* Preview Images */}
+                                                <div 
+                                                    data-image="Preview Images"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 className="mobile-only-heading" style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic',
+                                                        display: 'none'
+                                                    }}>Preview Images</h3>
+                                                    <div style={{
+                                                        display: 'grid',
+                                                        gridTemplateColumns: '1fr 1fr',
+                                                        gap: '20px',
+                                                        width: '100%',
+                                                        marginBottom: '30px'
+                                                    }}>
+                                                        <img
+                                                            src="/healing/preview_image.png"
+                                                            alt="Preview 1"
+                                                            style={{
+                                                                width: '100%',
+                                                                height: '300px',
+                                                                objectFit: 'cover'
+                                                            }}
+                                                        />
+                                                        <img
+                                                            src="/healing/preview_image_2.png"
+                                                            alt="Preview 2"
+                                                            style={{
+                                                                width: '100%',
+                                                                height: '300px',
+                                                                objectFit: 'cover'
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* Floor Plans */}
+                                                <div 
+                                                    data-image="Floor Plans"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic'
+                                                    }}>Floor Plans</h3>
+                                                    <img
+                                                        src="/healing/floorplan_1.png"
+                                                        alt="Floor Plans"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            objectFit: 'contain',
+                                                            marginBottom: '20px'
+                                                        }}
+                                                    />
+                                                    <div style={{
+                                                        width: '100%',
+                                                        textAlign: 'left'
+                                                    }}>
+                                                        <p style={{
+                                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                                            fontSize: '0.85em',
+                                                            fontWeight: 300,
+                                                            color: '#666',
+                                                            lineHeight: '1.5',
+                                                            margin: 0,
+                                                            textAlign: 'left'
+                                                        }}>
+                                                            <strong>1. Limestone walls would ground, hide, and support the served, private spaces.</strong> The bathroom, HVAC/Utilities, office, and kitchen would be stabilized by strong limestone walls, while the open shared spaces feature expansive glass views of the lake. The buildings reflect each other's limestone location, creating a sort of "S" shape that brings connection back to the two spaces.
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Section Cuts */}
+                                                <div 
+                                                    data-image="Section Cuts"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic'
+                                                    }}>Section Cuts</h3>
+                                                    <div style={{
+                                                        display: 'grid',
+                                                        gridTemplateColumns: '1fr',
+                                                        gap: '20px',
+                                                        width: '100%',
+                                                        marginBottom: '30px'
+                                                    }}>
+                                                        <img
+                                                            src="/healing/sectioncut_1.png"
+                                                            alt="Section Cut 1"
+                                                            style={{
+                                                                width: '100%',
+                                                                height: 'auto',
+                                                                objectFit: 'contain'
+                                                            }}
+                                                        />
+                                                        <img
+                                                            src="/healing/sectioncut_2.png"
+                                                            alt="Section Cut 2"
+                                                            style={{
+                                                                width: '100%',
+                                                                height: 'auto',
+                                                                objectFit: 'contain'
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div style={{
+                                                        width: '100%',
+                                                        textAlign: 'left'
+                                                    }}>
+                                                        <p style={{
+                                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                                            fontSize: '0.85em',
+                                                            fontWeight: 300,
+                                                            color: '#666',
+                                                            lineHeight: '1.5',
+                                                            margin: 0,
+                                                            textAlign: 'left'
+                                                        }}>
+                                                            <strong>2. The roof hierarchy also brings a stronger sense of certainty to the spaces.</strong> The tallest spaces are the public spaces, where many should gather, while the shortest spaces are the most intimate served spaces.
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Therapeutic Design */}
+                                                <div 
+                                                    data-image="Therapeutic Design"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 className="mobile-only-heading" style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic',
+                                                        display: 'none'
+                                                    }}>Therapeutic Design</h3>
+                                                    <div style={{
+                                                        width: '100%',
+                                                        textAlign: 'left'
+                                                    }}>
+                                                        <p style={{
+                                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                                            fontSize: '0.85em',
+                                                            fontWeight: 300,
+                                                            color: '#666',
+                                                            lineHeight: '1.5',
+                                                            margin: 0,
+                                                            textAlign: 'left'
+                                                        }}>
+                                                            In conjoining the two spaces, the entry vestibule gives the therapist a chance to introduce visitors to the space. By providing a dedicated entry that transparently offers visual opportunities to understand what lies on either side of the building, visitors can acclimate, especially if they are unsure or weary of approaching therapy.
+                                                            <br/><br/>
+                                                            The angle of the two buildings is designed to maximize lakeside views, enhancing the therapeutic experience in the public spaces. Simultaneously, the "V" shape promotes a natural guide to encourage visitors into the building's embrace.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Healing Space Description Button and Divider */}
+                                    <div className="project-divider">
+                                        <div className="project-divider-content">
+                                            <button
+                                                className="divider-toggle-btn"
+                                                onClick={() => setShowHealingDescription(!showHealingDescription)}
+                                                style={{
+                                                    textDecoration: 'none',
+                                                    position: 'absolute',
+                                                    left: '0px',
+                                                    top: '-25px'
+                                                }}
+                                            >
+                                                {showHealingDescription ? "Hide Description" : "Description"}
                                             </button>
                                         </div>
                                     </div>
@@ -1082,96 +1377,6 @@ function Portfolio() {
                                             </button>
                                         </div>
                                     </div>
-                                    
-                                    {/* Tiny Home Project */}
-                                    <div className="project-section" data-project="tiny-home">
-                                        <div style={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                            width: '100%',
-                                            padding: '40px 20px'
-                                        }}>
-                                            {/* Tiny Home Header */}
-                                            <div 
-                                                style={{
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    alignItems: 'center',
-                                                    width: '100%',
-                                                    marginBottom: '60px',
-                                                    paddingBottom: '60px'
-                                                }}
-                                            >
-                                                <h1 style={{
-                                                    fontFamily: 'Helvetica, Arial, sans-serif',
-                                                    fontSize: 'clamp(2em, 4vw, 3.5em)',
-                                                    fontWeight: 'bold',
-                                                    color: '#333',
-                                                    letterSpacing: '-0.08em',
-                                                    margin: 0,
-                                                    textAlign: 'center',
-                                                    marginBottom: '20px'
-                                                }}>
-                                                    Tiny Home Render
-                                                </h1>
-                                                <div style={{
-                                                    maxWidth: '500px',
-                                                    textAlign: 'center'
-                                                }}>
-                                                    <p style={{
-                                                        fontFamily: 'Helvetica, Arial, sans-serif',
-                                                        fontSize: '0.8em',
-                                                        fontWeight: 300,
-                                                        color: '#666',
-                                                        lineHeight: '1.4',
-                                                        margin: 0
-                                                    }}>
-                                                        <em style={{ fontSize: '0.9em', color: '#999' }}>Rhino, Spring 2025</em><br/><br/>
-                                                        Developing and practicing 3-D visualization skills with a Tiny Home accessorized with an elevated front porch and garage.
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div style={{
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                                gap: '60px',
-                                                alignItems: 'center',
-                                                width: '100%'
-                                            }}>
-                                                {/* Tiny Render */}
-                                                <div 
-                                                    data-image="Tiny Render"
-                                                    style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        maxWidth: '900px',
-                                                        width: '100%'
-                                                    }}
-                                                >
-                                                    <h3 className="mobile-only-heading" style={{
-                                                        fontFamily: 'Cormorant Garamond, serif',
-                                                        fontSize: '1.5em',
-                                                        color: '#333',
-                                                        marginBottom: '20px',
-                                                        fontStyle: 'italic',
-                                                        display: 'none'
-                                                    }}>Tiny Render</h3>
-                                                    <img
-                                                        src="/tinyhome/tinyhome.png"
-                                                        alt="Tiny Render"
-                                                        style={{
-                                                            width: '100%',
-                                                            height: 'auto',
-                                                            objectFit: 'contain'
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </>
                             )}
 
@@ -1225,6 +1430,31 @@ function Portfolio() {
                                             </p>
                                             <p>
                                                 Hoping to create a sense of ease, I subtracted unnecessary information to create a space for the bold movement of the ribbon to define the narrative and direction of the viewer.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Healing Space Description Overlay */}
+                            {showHealingDescription && (
+                                <div className="description-overlay">
+                                    <div className="description-content">
+                                        <button 
+                                            className="close-description"
+                                            onClick={() => setShowHealingDescription(false)}
+                                        >
+                                            ×
+                                        </button>
+                                        <div className="description-text">
+                                            <p>
+                                                This therapy retreat demonstrates how thoughtful architectural design can support healing and therapeutic processes. The dual-building approach creates distinct yet connected spaces that allow for therapeutic flexibility and patient comfort.
+                                            </p>
+                                            <p>
+                                                The strategic use of limestone walls provides both structural support and psychological grounding, creating intimate private spaces while maintaining expansive views of the natural landscape through glass walls in public areas.
+                                            </p>
+                                            <p>
+                                                The varying roof heights create a clear hierarchy that guides visitors intuitively through the space, while the V-shaped configuration maximizes therapeutic lakeside views and creates a welcoming embrace for those approaching the facility.
                                             </p>
                                         </div>
                                     </div>
