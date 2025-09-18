@@ -309,7 +309,7 @@ function Portfolio() {
         { 
             id: 'healing-space', 
             title: 'A Space for Healing',
-            images: ['Preview Images', 'Floor Plans', 'Section Cuts', 'Therapeutic Design']
+            images: ['Preview', 'Floor Plans', 'Section Cuts', 'Therapeutic Design']
         },
         { 
             id: 'enclosure', 
@@ -776,7 +776,7 @@ function Portfolio() {
                                         }}>
                                             {/* Healing Space Header */}
                                             <div 
-                                                data-image="Preview Images"
+                                                data-image="Preview"
                                                 className="figure-study-header"
                                                 style={{
                                                     display: 'flex',
@@ -835,7 +835,7 @@ function Portfolio() {
                                             }}>
                                                 {/* Preview Images */}
                                                 <div 
-                                                    data-image="Preview Images"
+                                                    data-image="Preview"
                                                     style={{
                                                         display: 'flex',
                                                         flexDirection: 'column',
@@ -851,7 +851,7 @@ function Portfolio() {
                                                         marginBottom: '20px',
                                                         fontStyle: 'italic',
                                                         display: 'none'
-                                                    }}>Preview Images</h3>
+                                                    }}>Preview</h3>
                                                     <div style={{
                                                         display: 'grid',
                                                         gridTemplateColumns: '1fr 1fr',
