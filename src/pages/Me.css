@@ -144,6 +144,15 @@ body, .me-container {
     transform: scale(1.1);
 }
 
+/* Pinterest SVG icon inherits icon-image styling */
+.pinterest-link svg {
+    color: black;
+}
+
+.pinterest-link:hover svg {
+    color: black;
+}
+
 .social-links {
     display: flex;
     gap: 45px;

@@ -266,6 +266,130 @@ const MuseumExperience = () => {
     );
 };
 
+const UniversityScholar = () => {
+    return (
+        <div className="professional-item-container" style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            padding: '60px 20px 60px 20px',
+            maxWidth: '900px',
+            margin: '0 auto',
+            borderBottom: '1px solid #e0e0e0',
+            marginBottom: '40px'
+        }}>
+            <div style={{
+                marginBottom: '30px',
+                width: '100%'
+            }}>
+                <h1 style={{
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontSize: 'clamp(2em, 4.5vw, 3.5em)',
+                    fontWeight: 'bold',
+                    color: '#333',
+                    letterSpacing: '-0.05em',
+                    margin: 0,
+                    marginBottom: '15px',
+                    textAlign: 'left',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word'
+                }}>
+                    University of Kansas University Scholar
+                </h1>
+                <p style={{
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontSize: '1.2em',
+                    color: '#666',
+                    margin: 0,
+                    marginBottom: '8px',
+                    textAlign: 'left'
+                }}>
+                    Class of 2028 Cohort
+                </p>
+            </div>
+            
+            <div style={{
+                width: '100%'
+            }}>
+                <p style={{
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontSize: '1em',
+                    fontWeight: 'normal',
+                    lineHeight: '1.6',
+                    color: '#666',
+                    margin: 0,
+                    textAlign: 'left',
+                    maxWidth: '800px'
+                }}>
+                    Created to recognize and encourage academically talented and motivated students, the University Scholars program provides scholarship, mentorship and enrollment in an interdisciplinary seminar.
+                </p>
+            </div>
+        </div>
+    );
+};
+
+const ResearchAssistant = () => {
+    return (
+        <div className="professional-item-container" style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            padding: '60px 20px 60px 20px',
+            maxWidth: '900px',
+            margin: '0 auto',
+            borderBottom: '1px solid #e0e0e0',
+            marginBottom: '40px'
+        }}>
+            <div style={{
+                marginBottom: '30px',
+                width: '100%'
+            }}>
+                <h1 style={{
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontSize: 'clamp(2em, 4.5vw, 3.5em)',
+                    fontWeight: 'bold',
+                    color: '#333',
+                    letterSpacing: '-0.05em',
+                    margin: 0,
+                    marginBottom: '15px',
+                    textAlign: 'left',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word'
+                }}>
+                    Department of Architecture and Design Research Assistant
+                </h1>
+                <p style={{
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontSize: '1.2em',
+                    color: '#666',
+                    margin: 0,
+                    marginBottom: '8px',
+                    textAlign: 'left'
+                }}>
+                    Fall 2025 - Ongoing
+                </p>
+            </div>
+            
+            <div style={{
+                width: '100%'
+            }}>
+                <p style={{
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontSize: '1em',
+                    fontWeight: 'normal',
+                    lineHeight: '1.6',
+                    color: '#666',
+                    margin: 0,
+                    textAlign: 'left',
+                    maxWidth: '800px'
+                }}>
+                    Analyzing "Chamber works" by Daniel Libeskind, aiding in the visual and conceptual interpretation of his work through the lens of art, architecture, and music theory. Further supporting efforts to dissect compositional methods and spatial relationships, exploring how rhythm, structure, and abstraction inform the architect's philosophy.
+                </p>
+            </div>
+        </div>
+    );
+};
+
 const ProfessionalSection = () => {
     return (
         <div style={{
@@ -275,18 +399,20 @@ const ProfessionalSection = () => {
             paddingTop: '40px',
             paddingBottom: '40px'
         }}>
-            <MuseumExperience />
             <DatacenterGallery />
+            <ResearchAssistant />
+            <MuseumExperience />
+            <UniversityScholar />
         </div>
     );
 };
 
 function Portfolio() {
     const [selectedCategory, setSelectedCategory] = useState("structures");
-    const [activeProject, setActiveProject] = useState("structural-narrative");
-    const [activeImage, setActiveImage] = useState("Paper Module");
-    const [visitedProjects, setVisitedProjects] = useState(new Set(["structural-narrative"]));
-    const [visitedImages, setVisitedImages] = useState(new Set(["Paper Module"]));
+    const [activeProject, setActiveProject] = useState("healing-space");
+    const [activeImage, setActiveImage] = useState("Preview");
+    const [visitedProjects, setVisitedProjects] = useState(new Set(["healing-space"]));
+    const [visitedImages, setVisitedImages] = useState(new Set(["Preview"]));
     const [showDescription, setShowDescription] = useState(false);
     const [showMotionDescription, setShowMotionDescription] = useState(false);
     const [showHealingDescription, setShowHealingDescription] = useState(false);
@@ -296,6 +422,16 @@ function Portfolio() {
 
     const projects = [
         { 
+            id: 'healing-space', 
+            title: 'A Space for Healing',
+            images: ['Preview', 'Floor Plans', 'Section Cuts', 'Therapeutic Design']
+        },
+        { 
+            id: 'contemplation-space', 
+            title: 'A Space for Contemplation',
+            images: ['Chapel Reveal', 'Site', 'Geometry', 'Sun Path', 'Copper Core']
+        },
+        { 
             id: 'structural-narrative', 
             title: 'Structural Narrative',
             images: ['Paper Module', 'Core', 'Above, Subtracted', 'Corner', 'Inside']
@@ -304,11 +440,6 @@ function Portfolio() {
             id: 'motion-capture', 
             title: 'Motion Capture',
             images: ['Motion Diagram', 'Iteration', 'Final Diagram', 'The Bootcut']
-        },
-        { 
-            id: 'healing-space', 
-            title: 'A Space for Healing',
-            images: ['Preview', 'Floor Plans', 'Section Cuts', 'Therapeutic Design']
         },
     ];
 
@@ -501,6 +632,11 @@ function Portfolio() {
                                 muted
                                 playsInline
                                 className="projection-video"
+                                style={{
+                                    maxWidth: '800px',
+                                    width: '100%',
+                                    height: 'auto'
+                                }}
                             />
                         </div>
                     ) : selectedCategory === 'professional' ? (
@@ -530,236 +666,6 @@ function Portfolio() {
 
                             {selectedCategory === 'structures' && (
                                 <>
-                                    {/* Structural Narrative Project */}
-                                    <div className="project-section" data-project="structural-narrative">
-                                        <ImageGallery />
-                                    </div>
-                                    
-                                    {/* Description Button and Divider */}
-                                    <div className="project-divider">
-                                        <div className="project-divider-content">
-                                            <button
-                                                className="divider-toggle-btn"
-                                                onClick={() => setShowDescription(!showDescription)}
-                                                style={{
-                                                    textDecoration: 'none',
-                                                    position: 'absolute',
-                                                    left: '0px',
-                                                    top: '-25px'
-                                                }}
-                                            >
-                                                {showDescription ? "Hide Description" : "Description"}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Motion Capture Project */}
-                                    <div className="project-section" data-project="motion-capture">
-                                        <div style={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                            width: '100%',
-                                            padding: '40px 20px'
-                                        }}>
-                                            {/* Figure Study Header */}
-                                            <div 
-                                                data-image="Motion Diagram"
-                                                className="figure-study-header"
-                                                style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    gap: '40px',
-                                                    width: '100%',
-                                                    marginBottom: '10px',
-                                                    paddingBottom: '60px'
-                                                }}
-                                            >
-                                                <img
-                                                    src="/motioncapture/start.png"
-                                                    alt="Figure Study"
-                                                    style={{
-                                                        width: '300px',
-                                                        height: 'auto',
-                                                        objectFit: 'contain',
-                                                        flexShrink: 0
-                                                    }}
-                                                />
-                                                <h1 style={{
-                                                    fontFamily: 'Helvetica, Arial, sans-serif',
-                                                    fontSize: 'clamp(3em, 6vw, 5em)',
-                                                    fontWeight: 'bold',
-                                                    color: '#333',
-                                                    letterSpacing: '-0.08em',
-                                                    margin: 0,
-                                                    textAlign: 'left',
-                                                    whiteSpace: 'nowrap'
-                                                }}>
-                                                    Figure Study
-                                                </h1>
-                                            </div>
-
-                                            <div style={{
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                                gap: '10px',
-                                                alignItems: 'center',
-                                                width: '100%'
-                                            }}>
-                                                {/* Motion Diagram */}
-                                                <div 
-                                                    data-image="Motion Diagram"
-                                                    style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        maxWidth: '900px',
-                                                        width: '100%'
-                                                    }}
-                                                >
-                                                    <h3 className="mobile-only-heading" style={{
-                                                        fontFamily: 'Cormorant Garamond, serif',
-                                                        fontSize: '1.5em',
-                                                        color: '#333',
-                                                        marginBottom: '20px',
-                                                        fontStyle: 'italic',
-                                                        display: 'none'
-                                                    }}>Motion Diagram</h3>
-                                                    <img
-                                                        src="/motioncapture/first.png"
-                                                        alt="Motion Diagram"
-                                                        style={{
-                                                            width: '100%',
-                                                            height: 'auto',
-                                                            objectFit: 'contain'
-                                                        }}
-                                                    />
-                                                </div>
-
-                                                {/* Iteration */}
-                                                <div 
-                                                    data-image="Iteration"
-                                                    style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        maxWidth: '900px',
-                                                        width: '100%'
-                                                    }}
-                                                >
-                                                    <h3 className="mobile-only-heading" style={{
-                                                        fontFamily: 'Cormorant Garamond, serif',
-                                                        fontSize: '1.5em',
-                                                        color: '#333',
-                                                        marginBottom: '20px',
-                                                        fontStyle: 'italic',
-                                                        display: 'none'
-                                                    }}>Iteration</h3>
-                                                    <img
-                                                        src="/motioncapture/second.png"
-                                                        alt="Iteration"
-                                                        style={{
-                                                            width: '100%',
-                                                            height: 'auto',
-                                                            objectFit: 'contain'
-                                                        }}
-                                                    />
-                                                </div>
-
-                                                {/* Final Diagram */}
-                                                <div 
-                                                    data-image="Final Diagram"
-                                                    style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        maxWidth: '900px',
-                                                        width: '100%'
-                                                    }}
-                                                >
-                                                    <h3 className="mobile-only-heading" style={{
-                                                        fontFamily: 'Cormorant Garamond, serif',
-                                                        fontSize: '1.5em',
-                                                        color: '#333',
-                                                        marginBottom: '20px',
-                                                        fontStyle: 'italic',
-                                                        display: 'none'
-                                                    }}>Final Diagram</h3>
-                                                    <img
-                                                        src="/motioncapture/third.png"
-                                                        alt="Final Diagram"
-                                                        style={{
-                                                            width: '100%',
-                                                            height: 'auto',
-                                                            objectFit: 'contain'
-                                                        }}
-                                                    />
-                                                </div>
-
-                                                {/* The Bootcut */}
-                                                <div 
-                                                    data-image="The Bootcut"
-                                                    style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        maxWidth: '900px',
-                                                        width: '100%',
-                                                        gap: '10px'
-                                                    }}
-                                                >
-                                                    <h3 className="mobile-only-heading" style={{
-                                                        fontFamily: 'Cormorant Garamond, serif',
-                                                        fontSize: '1.5em',
-                                                        color: '#333',
-                                                        marginBottom: '20px',
-                                                        fontStyle: 'italic',
-                                                        display: 'none'
-                                                    }}>The Bootcut</h3>
-                                                    <div style={{
-                                                        width: '100%',
-                                                        height: '500px',
-                                                        overflow: 'hidden',
-                                                        position: 'relative'
-                                                    }}>
-                                                        <img
-                                                            src="/motioncapture/fourth.JPEG"
-                                                            alt="The Bootcut"
-                                                            style={{
-                                                                width: '100%',
-                                                                height: '500px',
-                                                                objectFit: 'cover',
-                                                                objectPosition: 'center bottom',
-                                                                display: 'block'
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Motion Capture Description Button and Divider */}
-                                    <div className="project-divider">
-                                        <div className="project-divider-content">
-                                            <button
-                                                className="divider-toggle-btn"
-                                                onClick={() => setShowMotionDescription(!showMotionDescription)}
-                                                style={{
-                                                    textDecoration: 'none',
-                                                    position: 'absolute',
-                                                    left: '0px',
-                                                    top: '-25px'
-                                                }}
-                                            >
-                                                {showMotionDescription ? "Hide Description" : "Description"}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* A Space for Healing Project */}
                                     <div className="project-section" data-project="healing-space">
                                         <div style={{
                                             display: 'flex',
@@ -1041,6 +947,565 @@ function Portfolio() {
                                             </button>
                                         </div>
                                     </div>
+                                    {/* A Space for Contemplation Project */}
+                                    <div className="project-section" data-project="contemplation-space">
+                                        <div style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            width: '100%',
+                                            padding: '40px 20px'
+                                        }}>
+                                            {/* Chapel Header */}
+                                            <div 
+                                                data-image="Chapel Reveal"
+                                                className="figure-study-header"
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    flexDirection: 'column',
+                                                    gap: '40px',
+                                                    width: '100%',
+                                                    marginBottom: '40px',
+                                                    paddingBottom: '40px'
+                                                }}
+                                            >
+                                                <h1 style={{
+                                                    fontFamily: 'Helvetica, Arial, sans-serif',
+                                                    fontSize: 'clamp(2.5em, 5vw, 4.5em)',
+                                                    fontWeight: 'bold',
+                                                    color: '#333',
+                                                    letterSpacing: '-0.08em',
+                                                    margin: 0,
+                                                    textAlign: 'center'
+                                                }}>
+                                                    A Space for Contemplation
+                                                </h1>
+                                            </div>
+
+                                            <div style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                gap: '60px',
+                                                alignItems: 'center',
+                                                width: '100%'
+                                            }}>
+                                                {/* Chapel Reveal Image */}
+                                                <div 
+                                                    data-image="Chapel Reveal"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 className="mobile-only-heading" style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic',
+                                                        display: 'none'
+                                                    }}>Chapel Reveal</h3>
+                                                    <img
+                                                        src="/contemplation/contemplation.png"
+                                                        alt="Chapel Reveal"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            objectFit: 'contain',
+                                                            marginBottom: '30px'
+                                                        }}
+                                                    />
+                                                    <div style={{
+                                                        width: '100%',
+                                                        textAlign: 'left'
+                                                    }}>
+                                                        <p style={{
+                                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                                            fontSize: '0.85em',
+                                                            fontWeight: 300,
+                                                            color: '#666',
+                                                            lineHeight: '1.5',
+                                                            margin: 0,
+                                                            textAlign: 'left'
+                                                        }}>
+                                                            In creating an introspective non-denominational chapel space, simple clean forms revealed themselves. Heavy masonry lifts itself from the earth, reaching for the sky. This reveal in the chapel space answers three critical goals for the chapel space. First, the view lets in natural light and enables selective passive heating. Second, the view serves as a reminder that the world is much larger, and much more beautiful than what is just within the bounds of space. To prevent and mitigate unproductive rumination, the view out provides a desirable and encouraging reminder of more. Finally, this lift connects the earth to the sky creating harmony and balance with basic elements we find daily.
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Site Section */}
+                                                <div 
+                                                    data-image="Site"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'row',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%',
+                                                        gap: '30px'
+                                                    }}
+                                                    className="site-section"
+                                                >
+                                                    <div style={{
+                                                        flex: '1',
+                                                        textAlign: 'left'
+                                                    }}>
+                                                        <h3 style={{
+                                                            fontFamily: 'Cormorant Garamond, serif',
+                                                            fontSize: '1.5em',
+                                                            color: '#333',
+                                                            marginBottom: '15px',
+                                                            fontStyle: 'italic'
+                                                        }}>Site</h3>
+                                                        <p style={{
+                                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                                            fontSize: '0.85em',
+                                                            fontWeight: 300,
+                                                            color: '#666',
+                                                            lineHeight: '1.5',
+                                                            margin: 0
+                                                        }}>
+                                                            The project revitalizes a neglected cemetery with centuries of critical state history and legacy. With many abolitionists from the Bleeding Kansas era buried here, the site carries significant knowledge and power. To draw more visitors and to provide new services, the chapel is intended for meditation and small memorials. Just a short walk from many dormitories on the University of Kansas's campus, this space provides a space for breathing and reorientation.
+                                                        </p>
+                                                    </div>
+                                                    <div style={{
+                                                        flex: '0 0 50%',
+                                                        maxWidth: '50%'
+                                                    }}>
+                                                        <img
+                                                            src="/contemplation/comtemplation2.png"
+                                                            alt="Site"
+                                                            style={{
+                                                                width: '100%',
+                                                                height: 'auto',
+                                                                objectFit: 'contain'
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* Geometry Section */}
+                                                <div 
+                                                    data-image="Geometry"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '15px',
+                                                        fontStyle: 'italic',
+                                                        alignSelf: 'flex-start'
+                                                    }}>Geometry</h3>
+                                                    <div style={{
+                                                        width: '100%',
+                                                        textAlign: 'left',
+                                                        marginBottom: '20px'
+                                                    }}>
+                                                        <p style={{
+                                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                                            fontSize: '0.85em',
+                                                            fontWeight: 300,
+                                                            color: '#666',
+                                                            lineHeight: '1.5',
+                                                            margin: 0
+                                                        }}>
+                                                            Elliptical geometries define the programming and layout of the space. The ellipse was derived from the vegetation present on the site. Tall grass bends in perfect curves, reaching for the ground. In between hedges and through the leaves, light filters in through these curvilinear openings. Finding harmony with the site and the natural guidance of elliptical forms, the shape of the building is defined by one simple large movement.
+                                                        </p>
+                                                    </div>
+                                                    <img
+                                                        src="/contemplation/contemplation3.png"
+                                                        alt="Geometry"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            objectFit: 'contain'
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                {/* Sun Path Section */}
+                                                <div 
+                                                    data-image="Sun Path"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '15px',
+                                                        fontStyle: 'italic',
+                                                        alignSelf: 'flex-start'
+                                                    }}>Sun Path</h3>
+                                                    <div style={{
+                                                        width: '100%',
+                                                        textAlign: 'left',
+                                                        marginBottom: '20px'
+                                                    }}>
+                                                        <p style={{
+                                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                                            fontSize: '0.85em',
+                                                            fontWeight: 300,
+                                                            color: '#666',
+                                                            lineHeight: '1.5',
+                                                            margin: 0
+                                                        }}>
+                                                            The sun engages with every tangible form in the space. Notes from sundials are imbued in the daily cycle of light within the space. In the morning, the quality of light is diffused and variable due to the surrounding vegetation. As the morning rises, the light in the space awakens. By noon, light floods from the thin skylight in rectangular frames falling down the wall behind the altar. As the sun sets, light shines diffused by the front doors but reaching down the aisle of the chapel, illuminating the altar.
+                                                        </p>
+                                                    </div>
+                                                    <img
+                                                        src="/contemplation/contemplation4.png"
+                                                        alt="Sun Path"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            objectFit: 'contain'
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                {/* Copper Core Section */}
+                                                <div 
+                                                    data-image="Copper Core"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'row',
+                                                        alignItems: 'flex-start',
+                                                        maxWidth: '900px',
+                                                        width: '100%',
+                                                        gap: '30px'
+                                                    }}
+                                                    className="copper-section"
+                                                >
+                                                    <div style={{
+                                                        flex: '1',
+                                                        textAlign: 'left'
+                                                    }}>
+                                                        <h3 style={{
+                                                            fontFamily: 'Cormorant Garamond, serif',
+                                                            fontSize: '1.5em',
+                                                            color: '#333',
+                                                            marginBottom: '15px',
+                                                            fontStyle: 'italic'
+                                                        }}>Copper Core</h3>
+                                                        <p style={{
+                                                            fontFamily: 'Helvetica, Arial, sans-serif',
+                                                            fontSize: '0.85em',
+                                                            fontWeight: 300,
+                                                            color: '#666',
+                                                            lineHeight: '1.5',
+                                                            margin: 0
+                                                        }}>
+                                                            Copper roofs are intrinsic to our understanding of longevity, used throughout history for its durability. With the intention of creating something that felt monumental and larger than the individual visitor, design conflict arose in trying to avoid feeling like the building was dead or of another time. To carry motifs of change and evolution a copper roof and detailing throughout the building would allow the appearance of the building to change over time, unevenly, reflecting the imperfect timing of internal change within ourselves.
+                                                        </p>
+                                                    </div>
+                                                    <div style={{
+                                                        flex: '0 0 50%',
+                                                        maxWidth: '50%'
+                                                    }}>
+                                                        <img
+                                                            src="/contemplation/contemplation5.png"
+                                                            alt="Copper Core"
+                                                            style={{
+                                                                width: '100%',
+                                                                height: 'auto',
+                                                                objectFit: 'contain'
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Contemplation Space Divider */}
+                                    <div className="project-divider">
+                                        <div className="project-divider-content"></div>
+                                    </div>
+                                    
+                                    {/* Structural Narrative Project */}
+                                    <div className="project-section" data-project="structural-narrative">
+                                        <div style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            width: '100%',
+                                            padding: '40px 20px'
+                                        }}>
+                                            {/* Structural Narrative Header */}
+                                            <div 
+                                                data-image="Paper Module"
+                                                className="figure-study-header"
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    flexDirection: 'column',
+                                                    gap: '40px',
+                                                    width: '100%',
+                                                    marginBottom: '40px',
+                                                    paddingBottom: '40px'
+                                                }}
+                                            >
+                                                <h1 style={{
+                                                    fontFamily: 'Helvetica, Arial, sans-serif',
+                                                    fontSize: 'clamp(2.5em, 5vw, 4.5em)',
+                                                    fontWeight: 'bold',
+                                                    color: '#333',
+                                                    letterSpacing: '-0.08em',
+                                                    margin: 0,
+                                                    textAlign: 'center'
+                                                }}>
+                                                    Structural Narrative
+                                                </h1>
+                                            </div>
+                                            
+                                            <ImageGallery />
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Description Button and Divider */}
+                                    <div className="project-divider">
+                                        <div className="project-divider-content">
+                                            <button
+                                                className="divider-toggle-btn"
+                                                onClick={() => setShowDescription(!showDescription)}
+                                                style={{
+                                                    textDecoration: 'none',
+                                                    position: 'absolute',
+                                                    left: '0px',
+                                                    top: '-25px'
+                                                }}
+                                            >
+                                                {showDescription ? "Hide Description" : "Description"}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Motion Capture Project */}
+                                    <div className="project-section" data-project="motion-capture">
+                                        <div style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            width: '100%',
+                                            padding: '40px 20px'
+                                        }}>
+                                            {/* Figure Study Header */}
+                                            <div 
+                                                data-image="Motion Diagram"
+                                                className="figure-study-header"
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    gap: '40px',
+                                                    width: '100%',
+                                                    marginBottom: '10px',
+                                                    paddingBottom: '60px'
+                                                }}
+                                            >
+                                                <img
+                                                    src="/motioncapture/start.png"
+                                                    alt="Figure Study"
+                                                    style={{
+                                                        width: '300px',
+                                                        height: 'auto',
+                                                        objectFit: 'contain',
+                                                        flexShrink: 0
+                                                    }}
+                                                />
+                                                <h1 style={{
+                                                    fontFamily: 'Helvetica, Arial, sans-serif',
+                                                    fontSize: 'clamp(3em, 6vw, 5em)',
+                                                    fontWeight: 'bold',
+                                                    color: '#333',
+                                                    letterSpacing: '-0.08em',
+                                                    margin: 0,
+                                                    textAlign: 'left',
+                                                    whiteSpace: 'nowrap'
+                                                }}>
+                                                    Figure Study
+                                                </h1>
+                                            </div>
+
+                                            <div style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                gap: '10px',
+                                                alignItems: 'center',
+                                                width: '100%'
+                                            }}>
+                                                {/* Motion Diagram */}
+                                                <div 
+                                                    data-image="Motion Diagram"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 className="mobile-only-heading" style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic',
+                                                        display: 'none'
+                                                    }}>Motion Diagram</h3>
+                                                    <img
+                                                        src="/motioncapture/first.png"
+                                                        alt="Motion Diagram"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            objectFit: 'contain'
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                {/* Iteration */}
+                                                <div 
+                                                    data-image="Iteration"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 className="mobile-only-heading" style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic',
+                                                        display: 'none'
+                                                    }}>Iteration</h3>
+                                                    <img
+                                                        src="/motioncapture/second.png"
+                                                        alt="Iteration"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            objectFit: 'contain'
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                {/* Final Diagram */}
+                                                <div 
+                                                    data-image="Final Diagram"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <h3 className="mobile-only-heading" style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic',
+                                                        display: 'none'
+                                                    }}>Final Diagram</h3>
+                                                    <img
+                                                        src="/motioncapture/third.png"
+                                                        alt="Final Diagram"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            objectFit: 'contain'
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                {/* The Bootcut */}
+                                                <div 
+                                                    data-image="The Bootcut"
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        maxWidth: '900px',
+                                                        width: '100%',
+                                                        gap: '10px'
+                                                    }}
+                                                >
+                                                    <h3 className="mobile-only-heading" style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
+                                                        marginBottom: '20px',
+                                                        fontStyle: 'italic',
+                                                        display: 'none'
+                                                    }}>The Bootcut</h3>
+                                                    <div style={{
+                                                        width: '100%',
+                                                        height: '500px',
+                                                        overflow: 'hidden',
+                                                        position: 'relative'
+                                                    }}>
+                                                        <img
+                                                            src="/motioncapture/fourth.JPEG"
+                                                            alt="The Bootcut"
+                                                            style={{
+                                                                width: '100%',
+                                                                height: '500px',
+                                                                objectFit: 'cover',
+                                                                objectPosition: 'center bottom',
+                                                                display: 'block'
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Motion Capture Description Button and Divider */}
+                                    <div className="project-divider">
+                                        <div className="project-divider-content">
+                                            <button
+                                                className="divider-toggle-btn"
+                                                onClick={() => setShowMotionDescription(!showMotionDescription)}
+                                                style={{
+                                                    textDecoration: 'none',
+                                                    position: 'absolute',
+                                                    left: '0px',
+                                                    top: '-25px'
+                                                }}
+                                            >
+                                                {showMotionDescription ? "Hide Description" : "Description"}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* A Space for Healing Project */}
                                     
                                 </>
                             )}
