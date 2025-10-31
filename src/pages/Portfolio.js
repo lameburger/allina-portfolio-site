@@ -242,7 +242,7 @@ const MuseumExperience = () => {
                     marginBottom: '8px',
                     textAlign: 'left'
                 }}>
-                    2025 - Present
+                    2025 - Ongoing
                 </p>
             </div>
             
