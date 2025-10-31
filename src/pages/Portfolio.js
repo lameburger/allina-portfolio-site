@@ -423,7 +423,7 @@ function Portfolio() {
     const projects = [
         { 
             id: 'healing-space', 
-            title: 'Healing',
+            title: 'A Space for Healing',
             images: ['Preview', 'Floor Plans', 'Section Cuts', 'Therapeutic Design']
         },
         { 
