@@ -379,7 +379,7 @@ const ResearchAssistant = () => {
                     textAlign: 'left',
                     maxWidth: '800px'
                 }}>
-                    Analyzing "Chamber works" by Daniel Libeskind, aiding in the visual and conceptual interpretation of his work through the lens of art, architecture, and music theory. Further supporting efforts to dissect compositional methods and spatial relationships, exploring how rhythm, structure, and abstraction inform the architect's philosophy.
+                    Analyzing "Chamber works" by Daniel Libeskind, studying the visual and conceptual interpretation of his work through the lens of art, architecture, and music theory. Further supporting efforts to dissect compositional methods and spatial relationships, exploring how rhythm, structure, and abstraction inform the architect's philosophy.
                 </p>
             </div>
         </div>
@@ -761,7 +761,9 @@ function Portfolio() {
                                                         style={{
                                                             width: '100%',
                                                                 height: '300px',
-                                                                objectFit: 'cover'
+                                                                objectFit: 'cover',
+                                                                maxWidth: '900px',
+                                                                alignItems: 'center'
                                                             }}
                                                         />
                                                         <img
