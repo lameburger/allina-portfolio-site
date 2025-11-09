@@ -699,7 +699,7 @@ function Portfolio() {
                                                     textAlign: 'left',
                                                     whiteSpace: 'nowrap'
                                                 }}>
-                                                        A Space for learning web development
+                                                    A Space for Death
                                                 </h1>
                                                     <div style={{
                                                         marginTop: '20px',
