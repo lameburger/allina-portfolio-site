@@ -26,4 +26,3 @@ unset HOST && yarn start
 ```
 
 The site will open automatically at `http://localhost:3000`
-```
