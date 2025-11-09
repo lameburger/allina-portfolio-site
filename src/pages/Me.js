@@ -49,7 +49,7 @@ function Me() {
                 <p>If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but started my own indie rock band. My favorite movies include <em>Moonrise Kingdom</em>, <em>Minari</em>, and <em>Scott Pilgrim vs. the World</em>. I have too many baby photos.</p>
             </div>
             <div className="mom-image-container">
-                <img src="/images/mom.jpg" alt="Baby photo" className="mom-image" />
+                <img src="/images/mom.jpg" alt="Baby with mom" className="mom-image" />
                 <p className="mom-caption">(i love you mom)</p>
             </div>
             <div className="social-links">

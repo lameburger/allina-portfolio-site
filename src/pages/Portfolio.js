@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './Portfolio.css';
 
 const ImageGallery = () => {
-    const [showDescription, setShowDescription] = useState(false);
     const images = [
         { src: 'works/1.mp4', heading: 'Paper Module' },
         { src: 'works/4.png', heading: 'Core' },
@@ -96,7 +95,6 @@ const ImageGallery = () => {
 // Professional Experience Components
 const DatacenterGallery = () => {
     const [currentImage, setCurrentImage] = useState(1);
-    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -107,12 +105,10 @@ const DatacenterGallery = () => {
     }, []);
 
     const handleMouseEnter = () => {
-        setIsHovered(true);
         setCurrentImage(2);
     };
 
     const handleMouseLeave = () => {
-        setIsHovered(false);
         setCurrentImage(1);
     };
 
@@ -693,18 +689,18 @@ function Portfolio() {
                                                     flexDirection: 'column',
                                                     alignItems: 'flex-start'
                                                 }}>
-                                                    <h1 style={{
-                                                        fontFamily: 'Helvetica, Arial, sans-serif',
+                                                <h1 style={{
+                                                    fontFamily: 'Helvetica, Arial, sans-serif',
                                                         fontSize: 'clamp(2.5em, 5vw, 4.5em)',
-                                                        fontWeight: 'bold',
-                                                        color: '#333',
-                                                        letterSpacing: '-0.08em',
-                                                        margin: 0,
-                                                        textAlign: 'left',
-                                                        whiteSpace: 'nowrap'
-                                                    }}>
+                                                    fontWeight: 'bold',
+                                                    color: '#333',
+                                                    letterSpacing: '-0.08em',
+                                                    margin: 0,
+                                                    textAlign: 'left',
+                                                    whiteSpace: 'nowrap'
+                                                }}>
                                                         A Space for Healing
-                                                    </h1>
+                                                </h1>
                                                     <div style={{
                                                         marginTop: '20px',
                                                         maxWidth: '600px'
@@ -762,8 +758,8 @@ function Portfolio() {
                                                         <img
                                                             src="/healing/preview_image.png"
                                                             alt="Preview 1"
-                                                            style={{
-                                                                width: '100%',
+                                                        style={{
+                                                            width: '100%',
                                                                 height: '300px',
                                                                 objectFit: 'cover'
                                                             }}
@@ -863,12 +859,12 @@ function Portfolio() {
                                                         <img
                                                             src="/healing/sectioncut_2.png"
                                                             alt="Section Cut 2"
-                                                            style={{
-                                                                width: '100%',
-                                                                height: 'auto',
-                                                                objectFit: 'contain'
-                                                            }}
-                                                        />
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            objectFit: 'contain'
+                                                        }}
+                                                    />
                                                     </div>
                                                     <div style={{
                                                         width: '100%',
@@ -971,17 +967,17 @@ function Portfolio() {
                                                     paddingBottom: '40px'
                                                 }}
                                             >
-                                                <h1 style={{
-                                                    fontFamily: 'Helvetica, Arial, sans-serif',
-                                                    fontSize: 'clamp(2.5em, 5vw, 4.5em)',
-                                                    fontWeight: 'bold',
-                                                    color: '#333',
-                                                    letterSpacing: '-0.08em',
-                                                    margin: 0,
+                                                    <h1 style={{
+                                                        fontFamily: 'Helvetica, Arial, sans-serif',
+                                                        fontSize: 'clamp(2.5em, 5vw, 4.5em)',
+                                                        fontWeight: 'bold',
+                                                        color: '#333',
+                                                        letterSpacing: '-0.08em',
+                                                        margin: 0,
                                                     textAlign: 'center'
-                                                }}>
+                                                    }}>
                                                     A Space for Contemplation
-                                                </h1>
+                                                    </h1>
                                             </div>
 
                                             <div style={{
@@ -1013,15 +1009,15 @@ function Portfolio() {
                                                     <img
                                                         src="/contemplation/contemplation.png"
                                                         alt="Chapel Reveal"
-                                                        style={{
-                                                            width: '100%',
+                                                            style={{
+                                                                width: '100%',
                                                             height: 'auto',
                                                             objectFit: 'contain',
                                                             marginBottom: '30px'
-                                                        }}
-                                                    />
+                                                            }}
+                                                        />
                                                     <div style={{
-                                                        width: '100%',
+                                                                width: '100%',
                                                         textAlign: 'left'
                                                     }}>
                                                         <p style={{
@@ -1055,12 +1051,12 @@ function Portfolio() {
                                                         flex: '1',
                                                         textAlign: 'left'
                                                     }}>
-                                                        <h3 style={{
-                                                            fontFamily: 'Cormorant Garamond, serif',
-                                                            fontSize: '1.5em',
-                                                            color: '#333',
+                                                    <h3 style={{
+                                                        fontFamily: 'Cormorant Garamond, serif',
+                                                        fontSize: '1.5em',
+                                                        color: '#333',
                                                             marginBottom: '15px',
-                                                            fontStyle: 'italic'
+                                                        fontStyle: 'italic'
                                                         }}>Site</h3>
                                                         <p style={{
                                                             fontFamily: 'Helvetica, Arial, sans-serif',
@@ -1080,9 +1076,9 @@ function Portfolio() {
                                                         <img
                                                             src="/contemplation/comtemplation2.png"
                                                             alt="Site"
-                                                            style={{
-                                                                width: '100%',
-                                                                height: 'auto',
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
                                                                 objectFit: 'contain'
                                                             }}
                                                         />
@@ -1173,25 +1169,25 @@ function Portfolio() {
                                                     <img
                                                         src="/contemplation/contemplation4.png"
                                                         alt="Sun Path"
-                                                        style={{
-                                                            width: '100%',
-                                                            height: 'auto',
-                                                            objectFit: 'contain'
-                                                        }}
-                                                    />
+                                                            style={{
+                                                                width: '100%',
+                                                                height: 'auto',
+                                                                objectFit: 'contain'
+                                                            }}
+                                                        />
                                                 </div>
 
                                                 {/* Copper Core Section */}
                                                 <div 
                                                     data-image="Copper Core"
-                                                    style={{
+                                                            style={{
                                                         display: 'flex',
                                                         flexDirection: 'row',
                                                         alignItems: 'flex-start',
                                                         maxWidth: '900px',
-                                                        width: '100%',
+                                                                width: '100%',
                                                         gap: '30px'
-                                                    }}
+                                                            }}
                                                     className="copper-section"
                                                 >
                                                     <div style={{
@@ -1232,9 +1228,9 @@ function Portfolio() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    
+                                                    </div>
+                                                </div>
+
                                     {/* Contemplation Space Divider */}
                                     <div className="project-divider">
                                         <div className="project-divider-content"></div>
