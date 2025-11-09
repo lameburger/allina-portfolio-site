@@ -1,4 +1,4 @@
-## how to test it on allina's laptop
+## How to test it on allina's laptop
 
 Install npm (Node.js):
 
