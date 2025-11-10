@@ -699,7 +699,7 @@ function Portfolio() {
                                                     textAlign: 'left',
                                                     whiteSpace: 'nowrap'
                                                 }}>
-                                                    A Space for Death
+                                                    A Space for Healing
                                                 </h1>
                                                     <div style={{
                                                         marginTop: '20px',
