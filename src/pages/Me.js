@@ -46,7 +46,7 @@ function Me() {
             </p>
             <hr className="divider" />
             <div className="description">
-                <p>If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but now play at small venues with own emo grunge band. My favorite movies include <em>The Wind Rises</em>, <em>Minari</em>, and <em>Scott Pilgrim vs. the World</em>. I have too many baby photos.</p>
+                <p>If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but now I play at small venues with my own emo grunge band. My favorite movies include <em>The Wind Rises</em>, <em>Minari</em>, and <em>Scott Pilgrim vs. the World</em>. I have too many baby photos.</p>
             </div>
             <div className="mom-image-container">
                 <img src="/images/mom.jpg" alt="Baby with mom" className="mom-image" />
