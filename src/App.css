@@ -117,8 +117,8 @@ body {
 }
 
 .home-artwork {
-  max-height: 65vh;
-  max-width: 50vw;
+  max-height: 70vh;
+  max-width: 55vw;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -238,7 +238,7 @@ body {
 .spaces-content {
   margin-left: 300px;
   padding: 0 4rem 0 0;
-  max-width: 800px;
+  max-width: 900px;
   width: calc(100% - 340px);
 }
 
@@ -285,7 +285,7 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  max-height: 70vh;
+  max-height: 75vh;
   object-fit: contain;
 }
 
@@ -392,7 +392,7 @@ body {
 .paintings-content {
   margin-left: 280px;
   padding: 0 2rem 0 0;
-  max-width: 1100px;
+  max-width: 1200px;
   width: calc(100% - 300px);
 }
 
@@ -420,8 +420,8 @@ body {
 }
 
 .painting-image {
-  width: 55%;
-  max-height: 75vh;
+  width: 58%;
+  max-height: 78vh;
   object-fit: contain;
 }
 
@@ -561,6 +561,129 @@ body {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.05em;
+}
+
+/* ===== RESPONSIVE - LARGE DESKTOP ===== */
+@media (min-width: 1440px) {
+  .home-artwork {
+    max-height: 75vh;
+    max-width: 60vw;
+  }
+
+  .spaces-content {
+    max-width: 1000px;
+    width: calc(100% - 380px);
+  }
+
+  .project-image {
+    max-height: 80vh;
+  }
+
+  .paintings-content {
+    max-width: 1400px;
+    width: calc(100% - 320px);
+  }
+
+  .painting-image {
+    width: 60%;
+    max-height: 82vh;
+  }
+
+  .painting-overlay-item .painting-image {
+    width: 80%;
+    max-height: 85vh;
+  }
+
+  .painting-info {
+    max-width: 420px;
+  }
+
+  .contact-photo {
+    max-width: 420px;
+    max-height: 540px;
+  }
+
+  .contact-content {
+    max-width: 1200px;
+    gap: 5rem;
+  }
+}
+
+/* ===== RESPONSIVE - EXTRA LARGE DESKTOP ===== */
+@media (min-width: 1920px) {
+  .home-artwork {
+    max-height: 80vh;
+    max-width: 65vw;
+  }
+
+  .spaces-sidebar,
+  .paintings-sidebar {
+    width: 260px !important;
+    left: 3rem !important;
+  }
+
+  .spaces-content {
+    margin-left: 340px;
+    max-width: 1200px;
+    width: calc(100% - 400px);
+    padding: 0 5rem 0 0;
+  }
+
+  .project-image {
+    max-height: 85vh;
+  }
+
+  .image-group.side-by-side .project-image {
+    height: 55vh;
+  }
+
+  .paintings-content {
+    margin-left: 320px;
+    max-width: 1600px;
+    width: calc(100% - 360px);
+  }
+
+  .painting-image {
+    width: 65%;
+    max-height: 85vh;
+  }
+
+  .painting-overlay-item .painting-image {
+    width: 85%;
+    max-height: 88vh;
+  }
+
+  .painting-info {
+    max-width: 500px;
+  }
+
+  .painting-display-title {
+    font-size: 1.3rem;
+  }
+
+  .painting-description {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .project-description {
+    font-size: 0.95rem;
+  }
+
+  .contact-photo {
+    max-width: 480px;
+    max-height: 620px;
+  }
+
+  .contact-content {
+    max-width: 1400px;
+    gap: 6rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
 }
 
 /* ===== RESPONSIVE - TABLET ===== */
