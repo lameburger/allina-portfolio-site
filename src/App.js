@@ -1,10 +1,492 @@
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 
+// Project data structure with descriptions
+const projects = [
+  {
+    id: 1,
+    title: 'MIXED USE',
+    subcategories: [
+      { 
+        id: 'preview', 
+        name: 'Preview', 
+        images: ['/mixeduse/Asset 1.jpg'],
+        description: 'Fine dining connected to a sculpture garden below a contemporary art gallery.',
+        meta: {
+          client: 'Bryan Gross',
+          location: 'Lawrence, Kansas',
+          size: '8,725 sqft'
+        }
+      },
+      { 
+        id: 'floorplans', 
+        name: 'Floor Plans', 
+        images: ['/mixeduse/Asset 2.jpg'],
+        description: 'Throughout the iterative design process, the relationship between the new structure and the preexisting historical context became central. Sat next to the heavy masonry courthouse and Watkins history building demanded a response. The answer was the removal of form, by placing something so transparent and formless next to the stoneworks. This allowed the historical forms to shine while still matching the precedents of storefronts so critical to the vernacular of Mass St.'
+      },
+      { id: 'site', name: 'Site', images: ['/mixeduse/Asset 3.jpg'] },
+      { id: 'sections', name: 'Sections', images: ['/mixeduse/Asset 4.jpg'] },
+      { 
+        id: 'interiors', 
+        name: 'Interiors', 
+        images: ['/mixeduse/Asset 5.jpg', '/mixeduse/Asset 6.jpg'],
+        layout: 'side-by-side',
+        description: 'Understanding the transparent form and of the building as defining logic, the stairs become the central focus visually and structurally. Acting as a shelter for the outdoor dining and becoming the spotlit movement, the stairs act as the only intrusion to the pure rectangular form. As the stairs punch in, the motif of ascension becomes a hopeful guide to encourage visitors of the restaurant to break the boundary and travel up the stairs to the gallery. The open atrium spaces support this encouragement.'
+      },
+      { 
+        id: 'finale', 
+        name: 'Finale', 
+        images: ['/mixeduse/Asset 1.jpg'],
+        isFinale: true
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: 'CHAPEL',
+    subcategories: [
+      { 
+        id: 'reveal', 
+        name: 'Chapel Reveal', 
+        images: ['/contemplation/contemplation.png'],
+        description: 'In creating an introspective non-denominational chapel space, simple clean forms revealed themselves. Heavy masonry lifts itself from the earth, reaching for the sky. This reveal in the chapel space answers three critical goals for the chapel space. First, the view lets in natural light and enables selective passive heating. Second, the view serves as a reminder that the world is much larger, and much more beautiful than what is just within the bounds of space. To prevent and mitigate unproductive rumination, the view out provides a desirable and encouraging reminder of more. Finally, this lift connects the earth to the sky creating harmony and balance with basic elements we find daily.'
+      },
+      { id: 'site', name: 'Site', images: ['/contemplation/comtemplation2.png'] },
+      { 
+        id: 'geometry', 
+        name: 'Geometry', 
+        images: ['/contemplation/contemplation3.png'], 
+        description: 'Elliptical geometries define the programming and layout of the space. The ellipse was derived from the vegetation present on the site. Tall grass bends in perfect curves, reaching for the ground. In between hedges and through the leaves, light filters in through these curvilinear openings. Finding harmony with the site and the natural guidance of elliptical forms, the shape of the building is defined by one simple large movement.' 
+      },
+      { id: 'sunpath', name: 'Sun Path', images: ['/contemplation/contemplation4.png'] },
+      { id: 'copper', name: 'Copper Core', images: ['/contemplation/contemplation5.png'] },
+    ],
+  },
+  {
+    id: 3,
+    title: 'HEALING',
+    subcategories: [
+      { 
+        id: 'preview', 
+        name: 'Preview', 
+        images: ['/healing/preview_image.png'],
+        description: 'A Space for Healing — designed to provide comfort, clarity, and restoration through architecture that responds to both the landscape and the human need for sanctuary.'
+      },
+      { id: 'floorplans', name: 'Floor Plans', images: ['/healing/floorplan_1.png'] },
+      { id: 'sectioncuts', name: 'Section Cuts', images: ['/healing/sectioncut_1.png', '/healing/sectioncut_2.png'] },
+      { 
+        id: 'therapeutic', 
+        name: 'Therapeutic Design', 
+        images: ['/healing/preview_image_2.png'], 
+        description: 'In conjoining the two spaces, the entry vestibule gives the therapist a chance to introduce visitors to the space. By providing a dedicated entry that transparently offers visual opportunities to understand what lies on either side of the building, visitors can acclimate, especially if they are unsure or weary of approaching therapy. The angle of the two buildings is designed to maximize lakeside views, enhancing the therapeutic experience in the public spaces. Simultaneously, the "V" shape promotes a natural guide to encourage visitors into the building\'s embrace.' 
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: 'MOTION',
+    subcategories: [
+      { 
+        id: 'diagram', 
+        name: 'Motion Diagram', 
+        images: ['/motioncapture/first.png'],
+        description: 'Motion Capture — an exploration of human movement translated into architectural form. By analyzing the rhythm and flow of the body, this project captures gesture and transforms it into spatial sequences.'
+      },
+      { id: 'iteration', name: 'Iteration', images: ['/motioncapture/second.png', '/motioncapture/third.png'] },
+      { id: 'final', name: 'Final Diagram', images: ['/motioncapture/start.png'] },
+      { id: 'bootcut', name: 'The Bootcut', images: ['/motioncapture/fourth.JPEG'] },
+    ],
+  },
+];
+
+// Paintings data
+const paintings = [
+  {
+    id: 1,
+    title: 'RADIO TOWERS',
+    displayTitle: 'RADIO TOWERS',
+    images: ['/works/rt/1.JPG', '/works/rt/2.JPG', '/works/rt/3.JPG', '/works/rt/4.JPG', '/works/rt/5.JPG'],
+    isMultiImage: true,
+    description: "",
+    size: '',
+    materials: 'Acrylic on Drop Cloth'
+  },
+  {
+    id: 2,
+    title: 'STUDY',
+    displayTitle: 'POJAGI',
+    image: '/works/grids.png',
+    description: "Inspired by Korean Pojagi, quiltwork that utilizes the discarded, I explored where we find new and reconnection in what is abandoned. Finding beauty and new mutations in joining of fabrics cut from different cloths, the pojagi become obscured by new forms meshing into new shapes. This quick exploration is just a small study in a greater series.",
+    size: '5 x 7 inches',
+    materials: 'Acrylic on canvas'
+  },
+  {
+    id: 3,
+    title: 'CYCLE',
+    displayTitle: 'CYCLE',
+    image: '/works/fly.JPG',
+    description: "Faced with imposing limits, the fly is an uncomfortable confrontation. With short life spans the life cycle of a fly inspired this hostile and uncomfortable presentation of a fly.",
+    size: '29.5 x 40 inches',
+    materials: 'Acrylic on canvas'
+  },
+  {
+    id: 4,
+    title: 'COWBOY',
+    displayTitle: 'COWBOY',
+    image: '/works/painting4.jpg',
+    description: "Although cowboys may have found themselves obsolete with the invention of barbed wire, they live on the American zeitgeist. Existing beyond the bounds of their historical input, Cowboys and their culture have achieved a mythical status within pop culture. Capturing that energy required a exaggerated canvas spanning 48 inches by 36 inches.",
+    size: '48 x 36 inches',
+    materials: 'Acrylic on canvas'
+  },
+  {
+    id: 5,
+    title: 'RETURN',
+    displayTitle: 'RETURN',
+    image: '/works/pencil.png',
+    description: "A collage of sensations exaggerated by time. When memories return more vivid and vibrant upon recollection, Return calls a bright and wonderous sense.",
+    size: '11.5 x 8 inches',
+    materials: 'Colored Pencil on Illustration Board'
+  },
+  {
+    id: 6,
+    title: 'SPILL',
+    displayTitle: 'SPILL',
+    image: '/works/work2.png',
+    description: "In environments that seem to be changing rapidly before our eyes, there is an unbound and reckless freedom. The force nature possesses is one that cannot be controlled nor contained. Utilizing wax to contain cold water fabric dyes to select sections of cloth, the dye continues to seep through.",
+    size: '32 x 24 inches',
+    materials: 'Wax, cold water dye, muslin cloth'
+  },
+  {
+    id: 7,
+    title: 'PRAIRIE DREAMS',
+    displayTitle: 'PRAIRIE DREAMS',
+    image: '/works/work3.png',
+    description: "Inspired by the living and almost breathing aspects of a prairie, 'Prairie Dreams' mimics the movement of the Flint Hills. The unique and beautiful landscape holds a significant presence in the community of Manhattan, Kansas. Combining the movement of post-impressionist painters and the drama of stark contrasting colors, the vibrant image is an homage to a bright and enduring landscape. 'Prairie Dreams' is now a temporary installation for the Anderson Knight Architecture Firm. After being selected from their 2023 art competition, this piece now lives in front of a trash enclosure, beautifying a previously looked over part of an office complex.",
+    size: '12 x 24 inches',
+    materials: 'Acrylic on canvas'
+  },
+  {
+    id: 8,
+    title: 'RINGS',
+    displayTitle: 'RINGS',
+    image: '/works/work5.png',
+    description: "While seasons change, trees hold fast firmly watching everything around them change. Unmoving themselves, this removed experience of time and change inspired a hand carved linoleum print.",
+    size: '18 x 12 inches',
+    materials: 'Linoleum Print, Speedball ink, Illustration Board'
+  },
+];
+
 function App() {
+  const [activeSection, setActiveSection] = useState('home');
+  const [activeProject, setActiveProject] = useState(null);
+  const [activeSubcategory, setActiveSubcategory] = useState(null);
+  const [activePainting, setActivePainting] = useState(null);
+  const sectionRefs = useRef({});
+  const subcategoryRefs = useRef({});
+  const paintingRefs = useRef({});
+
+  // Handle scroll to update active states
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+      // Check which section is active
+      ['home', 'spaces', 'paintings', 'contact'].forEach((section) => {
+        const element = sectionRefs.current[section];
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+          }
+        }
+      });
+
+      // Check which subcategory is active within spaces
+      if (activeSection === 'spaces') {
+        Object.keys(subcategoryRefs.current).forEach((key) => {
+          const element = subcategoryRefs.current[key];
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 3) {
+              const [projectId, subId] = key.split('-');
+              setActiveProject(parseInt(projectId));
+              setActiveSubcategory(subId);
+            }
+          }
+        });
+      }
+
+      // Check which painting is active
+      if (activeSection === 'paintings') {
+        Object.keys(paintingRefs.current).forEach((key) => {
+          const element = paintingRefs.current[key];
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 3) {
+              setActivePainting(parseInt(key));
+            }
+          }
+        });
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeSection]);
+
+  const scrollToSection = (sectionId) => {
+    const element = sectionRefs.current[sectionId];
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToSubcategory = (projectId, subId) => {
+    const key = `${projectId}-${subId}`;
+    const element = subcategoryRefs.current[key];
+    if (element) {
+      const rect = element.getBoundingClientRect();
+      const scrollTop = window.pageYOffset + rect.top;
+      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+    }
+  };
+
+  const scrollToPainting = (paintingId) => {
+    const element = paintingRefs.current[paintingId];
+    if (element) {
+      const rect = element.getBoundingClientRect();
+      const scrollTop = window.pageYOffset + rect.top;
+      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="App">
-      <h1>Hello World</h1>
-      <p>Your fresh portfolio site starts here.</p>
+      {/* Fixed Header */}
+      <header className="fixed-header">
+        <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>
+          <img src="/images/eden.png" alt="Eden" className="logo" />
+        </a>
+        <nav className={`main-nav ${activeSection === 'home' ? 'hidden' : ''}`}>
+          <a 
+            href="#spaces" 
+            onClick={(e) => { e.preventDefault(); scrollToSection('spaces'); }}
+            className={activeSection === 'spaces' ? 'active' : ''}
+          >
+            SPACES
+          </a>
+          <a 
+            href="#paintings" 
+            onClick={(e) => { e.preventDefault(); scrollToSection('paintings'); }}
+            className={activeSection === 'paintings' ? 'active' : ''}
+          >
+            PAINTINGS
+          </a>
+          <a 
+            href="#contact" 
+            onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
+            className={activeSection === 'contact' ? 'active' : ''}
+          >
+            CONTACT
+          </a>
+        </nav>
+      </header>
+
+      {/* Fixed Footer */}
+      <footer className="fixed-footer">
+        <span className="email">ALLINADOUGHERTY[AT]KU[DOT]EDU</span>
+      </footer>
+
+      {/* Home Section */}
+      <section 
+        id="home" 
+        className="section home-section"
+        ref={(el) => (sectionRefs.current['home'] = el)}
+      >
+        <div className="home-content">
+          <img src="/images/background.png" alt="Artwork" className="home-artwork" />
+          <nav className="home-nav">
+            <a href="#spaces" onClick={(e) => { e.preventDefault(); scrollToSection('spaces'); }}>SPACES</a>
+            <a href="#paintings" onClick={(e) => { e.preventDefault(); scrollToSection('paintings'); }}>PAINTINGS</a>
+            <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>CONTACT</a>
+          </nav>
+        </div>
+      </section>
+
+      {/* Spaces Section */}
+      <section 
+        id="spaces" 
+        className="section spaces-section"
+        ref={(el) => (sectionRefs.current['spaces'] = el)}
+      >
+        {/* Fixed Sidebar Index */}
+        <aside className={`spaces-sidebar ${activeSection !== 'spaces' ? 'hidden' : ''}`}>
+          {projects.map((project) => (
+            <div key={project.id} className="project-index">
+              <div className="project-header">
+                <span className="project-number">{project.id}</span>
+                <span className="project-title">{project.title}</span>
+              </div>
+              <ul className="subcategory-list">
+                {project.subcategories.filter(sub => !sub.isFinale).map((sub) => (
+                  <li 
+                    key={sub.id}
+                    className={activeProject === project.id && activeSubcategory === sub.id ? 'active' : ''}
+                    onClick={() => scrollToSubcategory(project.id, sub.id)}
+                  >
+                    <span className="indicator">•</span>
+                    {sub.name.toUpperCase()}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </aside>
+
+        {/* Main Content */}
+        <div className="spaces-content">
+          {projects.map((project) => (
+            <div key={project.id} className="project-section">
+              {project.subcategories.map((sub, subIndex) => (
+                <div 
+                  key={sub.id}
+                  className={`subcategory-section ${subIndex === 0 ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''}`}
+                  ref={(el) => (subcategoryRefs.current[`${project.id}-${sub.id}`] = el)}
+                >
+                  <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
+                    {sub.images.map((img, idx) => (
+                      <img 
+                        key={idx}
+                        src={img} 
+                        alt={`${project.title} - ${sub.name}`}
+                        className="project-image"
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* Show description if exists */}
+                  {sub.description && (
+                    <div className="description-block">
+                      <p className="project-description">{sub.description}</p>
+                    </div>
+                  )}
+                  
+                  {/* Show meta info if exists (for preview sections) */}
+                  {sub.meta && (
+                    <div className="meta-block">
+                      <p className="meta-item">{sub.meta.client}</p>
+                      <p className="meta-item">{sub.meta.location}</p>
+                      <p className="meta-item">{sub.meta.size}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Paintings Section */}
+      <section 
+        id="paintings" 
+        className="section paintings-section"
+        ref={(el) => (sectionRefs.current['paintings'] = el)}
+      >
+        {/* Fixed Sidebar Index for Paintings */}
+        <aside className={`paintings-sidebar ${activeSection !== 'paintings' ? 'hidden' : ''}`}>
+          {paintings.map((painting) => (
+            <div 
+              key={painting.id} 
+              className={`painting-index ${activePainting === painting.id ? 'active' : ''}`}
+              onClick={() => scrollToPainting(painting.id)}
+            >
+              <div className="painting-header">
+                <span className="painting-number">{painting.id}</span>
+                <span className="painting-title">{painting.title}</span>
+              </div>
+              <div className="painting-meta">
+                <span className="painting-size">{painting.size}</span>
+                <span className="painting-materials">{painting.materials}</span>
+              </div>
+            </div>
+          ))}
+        </aside>
+
+        {/* Paintings Content */}
+        <div className="paintings-content">
+          {paintings.map((painting) => (
+            <div 
+              key={painting.id}
+              className={`painting-section ${painting.isMultiImage ? 'has-multi-image' : ''}`}
+              ref={(el) => (paintingRefs.current[painting.id] = el)}
+            >
+              {painting.isMultiImage ? (
+                <div className="multi-image-stack">
+                  {painting.images.map((img, idx) => (
+                    <div key={idx} className="painting-overlay-item">
+                      <div className="painting-layout">
+                        <img src={img} alt={`${painting.title} ${idx + 1}`} className="painting-image" />
+                        {idx === 0 && (
+                          <div className="painting-info">
+                            <h3 className="painting-display-title">{painting.displayTitle}</h3>
+                            {painting.description && <p className="painting-description">{painting.description}</p>}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="painting-layout">
+                  <img 
+                    src={painting.image} 
+                    alt={painting.title}
+                    className="painting-image"
+                  />
+                  <div className="painting-info">
+                    <h3 className="painting-display-title">{painting.displayTitle}</h3>
+                    {painting.description && <p className="painting-description">{painting.description}</p>}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section 
+        id="contact" 
+        className="section contact-section"
+        ref={(el) => (sectionRefs.current['contact'] = el)}
+      >
+        <div className="contact-content">
+          <img src="/images/yellowshirt.jpeg" alt="Allina" className="contact-photo" />
+          <div className="contact-info">
+            <p className="about-text">
+              My name is Allina and I am currently an Honors student at the University of Kansas studying architecture. My motivation and energy to create is fueled by a desire to share.
+            </p>
+            <p className="about-text">
+              I believe architecture, ideally, is an act of service. Creating living solutions for every possible user, architecture is a practice that flourishes in its application of interdisciplinary work. In the same vein, art and performance, first and foremost, is a shared experience that I believe is at its best in its intersections.
+            </p>
+            <p className="about-text personal">
+              If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but now I play at small venues with my own emo grunge band. My favorite movies include <em>The Wind Rises</em>, <em>Minari</em>, and <em>Scott Pilgrim vs. the World</em>.
+            </p>
+            <div className="social-links">
+              <a href="https://www.instagram.com/allina.dough/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <img src="/icons/spot.png" alt="Instagram" className="social-icon" />
+              </a>
+              <a href="https://www.linkedin.com/in/allina-dougherty-090398326/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <img src="/icons/linkedin.png" alt="LinkedIn" className="social-icon" />
+              </a>
+              <a href="https://open.spotify.com/user/shubs232?si=e45887de603a4ce7" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+                <img src="/icons/spotify.png" alt="Spotify" className="social-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

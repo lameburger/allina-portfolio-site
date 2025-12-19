@@ -1,7 +1,788 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #ffffff;
+  color: #000000;
+}
+
 .App {
   min-height: 100vh;
+}
+
+/* ===== FIXED HEADER ===== */
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem 2.5rem;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.fixed-header > * {
+  pointer-events: auto;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+}
+
+.main-nav {
+  display: flex;
+  gap: 1rem;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.main-nav.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.main-nav a {
+  color: #000000;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.main-nav a:hover {
+  opacity: 0.7;
+}
+
+.main-nav a.active {
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* ===== FIXED FOOTER ===== */
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem 1rem;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.fixed-footer.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.email {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: #000000;
+  font-weight: 400;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  min-height: 100vh;
+}
+
+/* ===== HOME SECTION ===== */
+.home-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.home-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.home-artwork {
+  max-height: 65vh;
+  max-width: 50vw;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.home-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.home-nav a {
+  color: #000000;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s ease;
+}
+
+.home-nav a:hover {
+  opacity: 0.6;
+}
+
+/* ===== SPACES SECTION ===== */
+.spaces-section {
+  display: flex;
+  min-height: auto;
+  padding-top: 0;
+}
+
+/* Shared Sidebar Base */
+.spaces-sidebar,
+.paintings-sidebar {
+  position: fixed !important;
+  left: 2rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 220px !important;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  max-height: 80vh;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+
+.spaces-sidebar.hidden,
+.paintings-sidebar.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.project-index {
+  margin-bottom: 1.5rem;
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.project-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  line-height: 1;
+}
+
+.project-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.subcategory-list {
+  list-style: none;
+  padding-left: 2rem;
+}
+
+.subcategory-list li {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subcategory-list li:hover {
+  opacity: 0.8;
+}
+
+.subcategory-list li.active {
+  opacity: 1;
+  font-weight: 500;
+}
+
+.subcategory-list .indicator {
+  opacity: 0;
+  font-size: 0.5rem;
+  transition: opacity 0.2s ease;
+}
+
+.subcategory-list li.active .indicator {
+  opacity: 1;
+}
+
+/* Main Content */
+.spaces-content {
+  margin-left: 300px;
+  padding: 0 4rem 0 0;
+  max-width: 800px;
+  width: calc(100% - 340px);
+}
+
+.project-section {
+  margin-bottom: 0;
+}
+
+.subcategory-section {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  padding: 4rem 0;
+}
+
+.subcategory-section.first-subcategory {
+  /* Same as others */
+}
+
+.image-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Side by side layout for interiors */
+.image-group.side-by-side {
+  flex-direction: row;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.image-group.side-by-side .project-image {
+  width: 48%;
+  height: 45vh;
+  object-fit: cover;
+}
+
+/* Consistent image sizing */
+.project-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+/* Description styling */
+.description-block {
+  margin-top: 0.75rem;
+  max-width: 100%;
+}
+
+.project-description {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: #666;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.subcategory-description {
+  font-size: 0.8rem;
+  line-height: 1.75;
+  color: #888;
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Meta info block (client, location, size) */
+.meta-block {
+  margin-top: 1.5rem;
+}
+
+.meta-item {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #999;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Finale section - recap image */
+.finale-section .project-image {
+  opacity: 1;
+}
+
+/* ===== PAINTINGS SECTION ===== */
+.paintings-section {
+  display: flex;
+  min-height: auto;
+  padding-top: 0;
+}
+
+/* Paintings Sidebar - inherits from shared base above */
+
+.painting-index {
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  opacity: 0.5;
+  pointer-events: auto;
+}
+
+.painting-index:hover {
+  opacity: 0.8;
+}
+
+.painting-index.active {
+  opacity: 1;
+}
+
+.painting-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.painting-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  line-height: 1;
+}
+
+.painting-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.painting-meta {
+  padding-left: 2rem;
+  margin-top: 0;
+}
+
+.painting-size,
+.painting-materials {
+  display: block;
+  font-size: 0.75rem;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* Paintings Content */
+.paintings-content {
+  margin-left: 280px;
+  padding: 0 2rem 0 0;
+  max-width: 1100px;
+  width: calc(100% - 300px);
+}
+
+.painting-section {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+.painting-section.has-multi-image {
+  position: relative;
+  min-height: auto;
+  padding: 0;
+}
+
+.painting-layout {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.painting-image {
+  width: 55%;
+  max-height: 75vh;
+  object-fit: contain;
+}
+
+.painting-info {
+  flex: 1;
+  padding-top: 0;
+  max-width: 350px;
+}
+
+.painting-display-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.painting-description {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #666;
+  font-weight: 400;
+}
+
+/* Multi-image stack for Radio Towers - each image overlays */
+.multi-image-stack {
+  width: 100%;
+}
+
+.painting-overlay-item {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+.painting-overlay-item .painting-layout {
+  width: 100%;
+}
+
+.painting-overlay-item .painting-image {
+  width: 75%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 4rem;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.contact-content {
+  display: flex;
+  gap: 4rem;
+  align-items: flex-start;
+  max-width: 1000px;
+}
+
+.contact-photo {
+  width: auto;
+  max-width: 350px;
+  height: auto;
+  max-height: 450px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.contact-info {
+  flex: 1;
+  max-width: 500px;
+}
+
+.about-text {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 1.25rem;
+}
+
+.about-text.personal {
+  color: #666;
+  font-style: italic;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.about-text em {
+  font-style: italic;
+}
+
+.social-links {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.social-icon {
+  width: 28px;
+  height: 28px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.social-icon:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Contact Sidebar */
+.contact-index {
+  margin-bottom: 1.5rem;
+}
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contact-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  line-height: 1;
+}
+
+.contact-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* ===== RESPONSIVE - TABLET ===== */
+@media (max-width: 1024px) {
+  .spaces-sidebar,
+  .paintings-sidebar {
+    position: fixed !important;
+    left: 1.5rem !important;
+    width: 180px !important;
+  }
+
+  .spaces-content,
+  .paintings-content {
+    margin-left: 220px;
+    width: calc(100% - 240px);
+    padding: 0 2rem 0 0;
+  }
+
+  .painting-layout {
+    gap: 1.5rem;
+  }
+
+  .painting-image {
+    width: 60%;
+  }
+
+  .painting-info {
+    max-width: 280px;
+  }
+}
+
+/* ===== RESPONSIVE - MOBILE ===== */
+@media (max-width: 768px) {
+  /* Header */
+  .fixed-header {
+    padding: 1rem 1.25rem;
+  }
+
+  .logo {
+    height: 35px;
+  }
+
+  .main-nav {
+    gap: 0.75rem;
+  }
+
+  .main-nav a {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Footer */
+  .fixed-footer {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .email {
+    font-size: 0.6rem;
+  }
+
+  /* Home */
+  .home-artwork {
+    max-height: 45vh;
+    max-width: 90vw;
+  }
+
+  .home-nav {
+    gap: 1rem;
+  }
+
+  .home-nav a {
+    font-size: 0.85rem;
+  }
+
+  /* Hide sidebars on mobile */
+  .spaces-sidebar,
+  .paintings-sidebar,
+  .contact-sidebar {
+    display: none !important;
+  }
+
+  /* Full width content on mobile */
+  .spaces-content,
+  .paintings-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  .spaces-section,
+  .paintings-section {
+    flex-direction: column;
+  }
+
+  /* Images */
+  .project-image {
+    max-height: 60vh;
+  }
+
+  .image-group.side-by-side {
+    flex-direction: column;
+  }
+
+  .image-group.side-by-side .project-image {
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+  }
+
+  /* Descriptions */
+  .description-block {
+    margin-top: 0.5rem;
+  }
+
+  .project-description {
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .meta-block {
+    margin-top: 1rem;
+  }
+
+  .meta-item {
+    font-size: 0.75rem;
+  }
+
+  /* Sticky sections */
+  .subcategory-section,
+  .painting-section,
+  .painting-overlay-item {
+    padding: 2rem 0;
+    min-height: 80vh;
+  }
+
+  /* Paintings */
+  .painting-layout {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .painting-image,
+  .painting-overlay-item .painting-image {
+    width: 100%;
+    max-width: 100%;
+    max-height: 55vh;
+  }
+
+  .painting-info {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .painting-display-title {
+    font-size: 1rem;
+  }
+
+  .painting-description {
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  /* Contact */
+  .contact-section {
+    padding: 4rem 1.5rem;
+  }
+
+  .contact-content {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .contact-photo {
+    width: 200px;
+    height: 260px;
+  }
+
+  .contact-info {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .about-text {
+    font-size: 0.8rem;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
+/* ===== RESPONSIVE - SMALL MOBILE ===== */
+@media (max-width: 480px) {
+  .fixed-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .logo {
+    height: 30px;
+  }
+
+  .main-nav a {
+    font-size: 0.6rem;
+  }
+
+  .home-artwork {
+    max-height: 40vh;
+  }
+
+  .home-nav a {
+    font-size: 0.75rem;
+  }
+
+  .spaces-content,
+  .paintings-content {
+    padding: 0.75rem;
+  }
+
+  .project-description,
+  .painting-description {
+    font-size: 0.7rem;
+  }
 }
