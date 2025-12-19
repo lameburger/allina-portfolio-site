@@ -607,6 +607,12 @@ body {
     gap: 0.75rem;
   }
 
+  .main-nav.hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    display: none;
+  }
+
   .main-nav a {
     font-size: 0.7rem;
     letter-spacing: 0.05em;
