@@ -165,6 +165,15 @@ body {
   max-height: 80vh;
   overflow-y: auto;
   pointer-events: auto;
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.spaces-sidebar::-webkit-scrollbar,
+.paintings-sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .spaces-sidebar.hidden,
