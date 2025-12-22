@@ -108,7 +108,7 @@ const paintings = [
     images: ['/works/rt/1.JPG', '/works/rt/2.JPG', '/works/rt/3.JPG', '/works/rt/4.JPG', '/works/rt/5.JPG'],
     isMultiImage: true,
     description: "",
-    size: '',
+    size: '29 x 48 inches',
     materials: 'Acrylic on Drop Cloth'
   },
   {
