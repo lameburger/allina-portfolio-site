@@ -99,8 +99,8 @@ const projects = [
       { 
         id: 'ideation', 
         name: 'Iteration', 
-        images: ['/contemplation/ideacontemp.JPEG']
-        description: ['First, the view lets in natural light, enabling passive heating. Second, the view serves to mitigate unproductive rumination, the view out provides an encouraging reminder of more. Finally, this lift connects the earth to the sky balancing basic elements we find daily.']
+        images: ['/contemplation/ideacontemp.JPEG'],
+        description: 'First, the view lets in natural light, enabling passive heating. Second, the view serves to mitigate unproductive rumination, the view out provides an encouraging reminder of more. Finally, this lift connects the earth to the sky balancing basic elements we find daily.'
       },
       { 
         id: 'geometry', 
