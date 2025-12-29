@@ -41,6 +41,7 @@ body {
 .logo {
   height: 50px;
   width: auto;
+  margin-top: -0.6rem;
 }
 
 .main-nav {
@@ -155,16 +156,18 @@ body {
 .spaces-sidebar,
 .paintings-sidebar {
   position: fixed !important;
-  left: 2rem !important;
+  left: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 220px !important;
+  width: 200px !important;
   z-index: 100;
   opacity: 1;
   transition: opacity 0.3s ease;
   max-height: 80vh;
   overflow-y: auto;
   pointer-events: auto;
+  padding-left: 2rem;
+  border-left: 1px solid #000000;
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -183,18 +186,18 @@ body {
 }
 
 .project-index {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .project-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.25rem;
+  gap: 0.6rem;
+  margin-bottom: 0.2rem;
 }
 
 .project-number {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -202,26 +205,36 @@ body {
 }
 
 .project-title {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.05em;
+  color: #000000;
+  transition: opacity 0.3s ease;
+}
+
+.project-title.active {
+  opacity: 1;
+}
+
+.project-title.inactive {
+  opacity: 0.5;
 }
 
 .subcategory-list {
   list-style: none;
-  padding-left: 2rem;
+  padding-left: 1.5rem;
 }
 
 .subcategory-list li {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   letter-spacing: 0.05em;
-  padding: 0.2rem 0;
+  padding: 0.15rem 0;
   cursor: pointer;
   opacity: 0.5;
   transition: opacity 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .subcategory-list li:hover {
@@ -255,6 +268,12 @@ body {
   margin-bottom: 0;
 }
 
+/* White space break between projects */
+.project-spacer {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
 .subcategory-section {
   position: sticky;
   top: 0;
@@ -266,14 +285,49 @@ body {
   padding: 4rem 0;
 }
 
-.subcategory-section.first-subcategory {
-  /* Same as others */
-}
 
 .image-group {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  position: relative;
+}
+
+/* Image Title Overlay - Bottom Right (Large - for excluded items) */
+.image-title-overlay {
+  position: absolute;
+  bottom: 2rem;
+  right: 0;
+  font-size: 8rem;
+  font-weight: 100;
+  letter-spacing: -0.05em;
+  color: #000000;
+  opacity: 0.15;
+  text-align: right;
+  line-height: 1;
+  pointer-events: none;
+  width: 100%;
+  z-index: 1;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Image Title Overlay - Small (matches description text) */
+.image-title-overlay-small {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #666;
+  text-align: right;
+  line-height: 1.8;
+  pointer-events: none;
+  width: 100%;
+  z-index: 1;
+  padding-bottom: 0.75rem;
 }
 
 /* Side by side layout for interiors */
@@ -310,6 +364,7 @@ body {
   color: #666;
   font-weight: 400;
   letter-spacing: 0.01em;
+  white-space: pre-line;
 }
 
 .subcategory-description {
@@ -348,7 +403,7 @@ body {
 /* Paintings Sidebar - inherits from shared base above */
 
 .painting-index {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   cursor: pointer;
   transition: opacity 0.2s ease;
   opacity: 0.5;
@@ -366,12 +421,12 @@ body {
 .painting-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.25rem;
+  gap: 0.6rem;
+  margin-bottom: 0.2rem;
 }
 
 .painting-number {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -379,22 +434,32 @@ body {
 }
 
 .painting-title {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.05em;
+  color: #000000;
+  transition: opacity 0.3s ease;
+}
+
+.painting-title.active {
+  opacity: 1;
+}
+
+.painting-title.inactive {
+  opacity: 0.5;
 }
 
 .painting-meta {
-  padding-left: 2rem;
+  padding-left: 1.5rem;
   margin-top: 0;
 }
 
 .painting-size,
 .painting-materials {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: #888;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 /* Paintings Content */
@@ -529,6 +594,16 @@ body {
   font-style: italic;
 }
 
+.contact-info .email {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: #000000;
+  font-weight: 400;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
 .social-links {
   display: flex;
   gap: 1.25rem;
@@ -588,6 +663,10 @@ body {
     max-height: 80vh;
   }
 
+  .image-title-overlay {
+    font-size: 9rem;
+  }
+
   .paintings-content {
     max-width: 1400px;
     width: calc(100% - 320px);
@@ -640,6 +719,10 @@ body {
 
   .project-image {
     max-height: 85vh;
+  }
+
+  .image-title-overlay {
+    font-size: 10rem;
   }
 
   .image-group.side-by-side .project-image {
@@ -722,6 +805,11 @@ body {
   .painting-info {
     max-width: 280px;
   }
+
+  .image-title-overlay {
+    font-size: 5rem;
+    bottom: 1.5rem;
+  }
 }
 
 /* ===== RESPONSIVE - MOBILE ===== */
@@ -797,6 +885,12 @@ body {
   /* Images */
   .project-image {
     max-height: 60vh;
+  }
+
+  .image-title-overlay {
+    font-size: 3rem;
+    bottom: 1rem;
+    opacity: 0.12;
   }
 
   .image-group.side-by-side {

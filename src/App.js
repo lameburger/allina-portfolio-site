@@ -8,8 +8,8 @@ const projects = [
     title: 'MIXED USE',
     subcategories: [
       { 
-        id: 'preview', 
-        name: 'Preview', 
+        id: 'celebration', 
+        name: 'Celebration', 
         images: ['/mixeduse/Asset 1.jpg'],
         description: 'Fine dining connected to a sculpture garden below a contemporary art gallery.',
         meta: {
@@ -19,39 +19,89 @@ const projects = [
         }
       },
       { 
-        id: 'floorplans', 
-        name: 'Floor Plans', 
+        id: 'site', 
+        name: 'Site', 
+        images: ['/mixeduse/Asset 3.jpg'],
+        description: '1 - Site\n2 - Watkins History Museum\n3 - Douglas Courthouse\n4 - Granada Music Venue'
+      },
+      { id: 'context', name: 'Context', images: ['/mixeduse/2.3sitediagrammap.jpg'] },
+      { 
+        id: 'ideation', 
+        name: 'Ideation', 
+        images: ['/mixeduse/ideation.jpg']
+      },
+      { 
+        id: 'floorplan', 
+        name: 'Floor Plan', 
         images: ['/mixeduse/Asset 2.jpg'],
         description: 'Throughout the iterative design process, the relationship between the new structure and the preexisting historical context became central. Sat next to the heavy masonry courthouse and Watkins history building demanded a response. The answer was the removal of form, by placing something so transparent and formless next to the stoneworks. This allowed the historical forms to shine while still matching the precedents of storefronts so critical to the vernacular of Mass St.'
       },
-      { id: 'site', name: 'Site', images: ['/mixeduse/Asset 3.jpg'] },
       { id: 'sections', name: 'Sections', images: ['/mixeduse/Asset 4.jpg'] },
       { 
         id: 'interiors', 
         name: 'Interiors', 
         images: ['/mixeduse/Asset 5.jpg', '/mixeduse/Asset 6.jpg'],
         layout: 'side-by-side',
-        description: 'Understanding the transparent form and of the building as defining logic, the stairs become the central focus visually and structurally. Acting as a shelter for the outdoor dining and becoming the spotlit movement, the stairs act as the only intrusion to the pure rectangular form. As the stairs punch in, the motif of ascension becomes a hopeful guide to encourage visitors of the restaurant to break the boundary and travel up the stairs to the gallery. The open atrium spaces support this encouragement.'
+        description: 'Understanding the transparent form as defining logic, the stairs become the central focus visually and structurally. Acting as a shelter for the outdoor dining and becoming the spotlit movement, the stairs act as the only intrusion to the pure rectangular form. As the stairs punch in, the motif of ascension becomes a hopeful guide to encourage visitors of the restaurant to pierce the boundary and travel up the stairs to the gallery.'
       },
       { 
         id: 'finale', 
         name: 'Finale', 
-        images: ['/mixeduse/Asset 1.jpg'],
+        images: ['/mixeduse/asset8.png'],
         isFinale: true
       },
     ],
   },
   {
     id: 2,
+    title: 'HEALING',
+    subcategories: [
+      { 
+        id: 'healing', 
+        name: 'Healing', 
+        images: ['/healing/preview_image.png'],
+        description: 'Designed to provide comfort, clarity, and restoration through architecture that responds to both the landscape and the human need for sanctuary.',
+        meta: {
+          client: 'Bryan Gross',
+          location: 'Lawrence, Kansas',
+          size: '1,500 sqft',
+          duration: '4 weeks'
+        }
+      },
+      { id: 'site', name: 'Site', images: ['/healing/site.jpg'] },
+      { id: 'floorplans', name: 'Floor Plans', images: ['/healing/floorplan_1.png'] },
+      { id: 'sectioncuts', name: 'Section Cuts', images: ['/healing/sectioncut_1.png'] },
+      { 
+        id: 'therapeutic', 
+        name: 'Therapeutic Design', 
+        images: ['/healing/preview_image_2.png'], 
+        description: 'In conjoining the two spaces, the entry vestibule gives the therapist a chance to introduce visitors to the space. By providing a dedicated entry that transparently offers visual opportunities to understand what lies on either side of the building, visitors can acclimate, especially if they are unsure or weary of approaching therapy. The angle of the two buildings is designed to maximize lakeside views, enhancing the therapeutic experience in the public spaces. Simultaneously, the "V" shape promotes a natural guide to encourage visitors into the building\'s embrace.' 
+      },
+    ],
+  },
+  {
+    id: 3,
     title: 'CHAPEL',
     subcategories: [
       { 
         id: 'reveal', 
         name: 'Chapel Reveal', 
         images: ['/contemplation/contemplation.png'],
-        description: 'In creating an introspective non-denominational chapel space, simple clean forms revealed themselves. Heavy masonry lifts itself from the earth, reaching for the sky. This reveal in the chapel space answers three critical goals for the chapel space. First, the view lets in natural light and enables selective passive heating. Second, the view serves as a reminder that the world is much larger, and much more beautiful than what is just within the bounds of space. To prevent and mitigate unproductive rumination, the view out provides a desirable and encouraging reminder of more. Finally, this lift connects the earth to the sky creating harmony and balance with basic elements we find daily.'
+        description: 'In creating an introspective non-denominational chapel space, heavy masonry lifts itself from the earth, reaching for the sky.',
+        meta: {
+          client: 'Bryan Gross',
+          location: 'Lawrence, Kansas',
+          size: '1,300 sqft',
+          duration: '4 weeks'
+        }
       },
       { id: 'site', name: 'Site', images: ['/contemplation/comtemplation2.png'] },
+      { 
+        id: 'ideation', 
+        name: 'Iteration', 
+        images: ['/contemplation/ideacontemp.JPEG']
+        description: ['First, the view lets in natural light, enabling passive heating. Second, the view serves to mitigate unproductive rumination, the view out provides an encouraging reminder of more. Finally, this lift connects the earth to the sky balancing basic elements we find daily.']
+      },
       { 
         id: 'geometry', 
         name: 'Geometry', 
@@ -60,26 +110,6 @@ const projects = [
       },
       { id: 'sunpath', name: 'Sun Path', images: ['/contemplation/contemplation4.png'] },
       { id: 'copper', name: 'Copper Core', images: ['/contemplation/contemplation5.png'] },
-    ],
-  },
-  {
-    id: 3,
-    title: 'HEALING',
-    subcategories: [
-      { 
-        id: 'preview', 
-        name: 'Preview', 
-        images: ['/healing/preview_image.png'],
-        description: 'A Space for Healing — designed to provide comfort, clarity, and restoration through architecture that responds to both the landscape and the human need for sanctuary.'
-      },
-      { id: 'floorplans', name: 'Floor Plans', images: ['/healing/floorplan_1.png'] },
-      { id: 'sectioncuts', name: 'Section Cuts', images: ['/healing/sectioncut_1.png', '/healing/sectioncut_2.png'] },
-      { 
-        id: 'therapeutic', 
-        name: 'Therapeutic Design', 
-        images: ['/healing/preview_image_2.png'], 
-        description: 'In conjoining the two spaces, the entry vestibule gives the therapist a chance to introduce visitors to the space. By providing a dedicated entry that transparently offers visual opportunities to understand what lies on either side of the building, visitors can acclimate, especially if they are unsure or weary of approaching therapy. The angle of the two buildings is designed to maximize lakeside views, enhancing the therapeutic experience in the public spaces. Simultaneously, the "V" shape promotes a natural guide to encourage visitors into the building\'s embrace.' 
-      },
     ],
   },
   {
@@ -93,7 +123,6 @@ const projects = [
         description: 'Motion Capture — an exploration of human movement translated into architectural form. By analyzing the rhythm and flow of the body, this project captures gesture and transforms it into spatial sequences.'
       },
       { id: 'iteration', name: 'Iteration', images: ['/motioncapture/second.png', '/motioncapture/third.png'] },
-      { id: 'final', name: 'Final Diagram', images: ['/motioncapture/start.png'] },
       { id: 'bootcut', name: 'The Bootcut', images: ['/motioncapture/fourth.JPEG'] },
     ],
   },
@@ -107,7 +136,7 @@ const paintings = [
     displayTitle: 'RADIO TOWERS',
     images: ['/works/rt/1.JPG', '/works/rt/2.JPG', '/works/rt/3.JPG', '/works/rt/4.JPG', '/works/rt/5.JPG'],
     isMultiImage: true,
-    description: "",
+    description: "The red lights that radiate in the empty space of the sky as to shout, in a steady rhythm, as to say I am here. Still and forever. These silent reminders that cover the midwest as the sole being prolating out of the earth and far into the sky.",
     size: '29 x 48 inches',
     materials: 'Acrylic on Drop Cloth'
   },
@@ -261,6 +290,23 @@ function App() {
     }
   };
 
+  // Determine if title should be large (low opacity) or small (matching description)
+  const shouldUseLargeTitle = (projectId, subId) => {
+    // Mixed Use (id: 1): celebration, ideation, site, context, sections, interiors, finale
+    if (projectId === 1 && ['celebration', 'ideation', 'site', 'context', 'sections', 'interiors', 'finale'].includes(subId)) {
+      return true;
+    }
+    // Healing (id: 2): site
+    if (projectId === 2 && ['site'].includes(subId)) {
+      return true;
+    }
+    // Chapel (id: 3): site, ideation, sunpath
+    if (projectId === 3 && ['site', 'ideation', 'sunpath'].includes(subId)) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div className="App">
       {/* Fixed Header */}
@@ -295,7 +341,6 @@ function App() {
 
       {/* Fixed Footer */}
       <footer className="fixed-footer">
-        <span className="email">ALLINADOUGHERTY[AT]KU[DOT]EDU</span>
       </footer>
 
       {/* Home Section */}
@@ -326,7 +371,7 @@ function App() {
             <div key={project.id} className="project-index">
               <div className="project-header">
                 <span className="project-number">{project.id}</span>
-                <span className="project-title">{project.title}</span>
+                <span className={`project-title ${activeProject === project.id ? 'active' : 'inactive'}`}>{project.title}</span>
               </div>
               <ul className="subcategory-list">
                 {project.subcategories.filter(sub => !sub.isFinale).map((sub) => (
@@ -346,42 +391,53 @@ function App() {
 
         {/* Main Content */}
         <div className="spaces-content">
-          {projects.map((project) => (
-            <div key={project.id} className="project-section">
-              {project.subcategories.map((sub, subIndex) => (
-                <div 
-                  key={sub.id}
-                  className={`subcategory-section ${subIndex === 0 ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''}`}
-                  ref={(el) => (subcategoryRefs.current[`${project.id}-${sub.id}`] = el)}
-                >
-                  <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
-                    {sub.images.map((img, idx) => (
-                      <img 
-                        key={idx}
-                        src={img} 
-                        alt={`${project.title} - ${sub.name}`}
-                        className="project-image"
-                      />
-                    ))}
+          {projects.map((project, projectIndex) => (
+            <div key={project.id}>
+              <div className="project-section">
+                {project.subcategories.map((sub, subIndex) => (
+                  <div 
+                    key={sub.id}
+                    className={`subcategory-section ${subIndex === 0 ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''}`}
+                    ref={(el) => (subcategoryRefs.current[`${project.id}-${sub.id}`] = el)}
+                  >
+                    <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
+                      {sub.images.map((img, idx) => (
+                        <img 
+                          key={idx}
+                          src={img} 
+                          alt={`${project.title} - ${sub.name}`}
+                          className="project-image"
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Image Title Overlay */}
+                    <div className={shouldUseLargeTitle(project.id, sub.id) ? "image-title-overlay" : "image-title-overlay-small"}>
+                      {sub.name.toUpperCase()}
+                    </div>
+                    
+                    {/* Show description if exists */}
+                    {sub.description && (
+                      <div className="description-block">
+                        <p className="project-description">{sub.description}</p>
+                      </div>
+                    )}
+                    
+                    {/* Show meta info if exists (for preview sections) */}
+                    {sub.meta && (
+                      <div className="meta-block">
+                        <p className="meta-item">{sub.meta.client}</p>
+                        <p className="meta-item">{sub.meta.location}</p>
+                        <p className="meta-item">{sub.meta.size}</p>
+                      </div>
+                    )}
                   </div>
-                  
-                  {/* Show description if exists */}
-                  {sub.description && (
-                    <div className="description-block">
-                      <p className="project-description">{sub.description}</p>
-                    </div>
-                  )}
-                  
-                  {/* Show meta info if exists (for preview sections) */}
-                  {sub.meta && (
-                    <div className="meta-block">
-                      <p className="meta-item">{sub.meta.client}</p>
-                      <p className="meta-item">{sub.meta.location}</p>
-                      <p className="meta-item">{sub.meta.size}</p>
-                    </div>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
+              {/* White space break between projects */}
+              {projectIndex < projects.length - 1 && (
+                <div className="project-spacer"></div>
+              )}
             </div>
           ))}
         </div>
@@ -403,7 +459,7 @@ function App() {
             >
               <div className="painting-header">
                 <span className="painting-number">{painting.id}</span>
-                <span className="painting-title">{painting.title}</span>
+                <span className={`painting-title ${activePainting === painting.id ? 'active' : 'inactive'}`}>{painting.title}</span>
               </div>
               <div className="painting-meta">
                 <span className="painting-size">{painting.size}</span>
@@ -473,6 +529,7 @@ function App() {
             <p className="about-text personal">
               If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but now I play at small venues with my own emo grunge band. My favorite movies include <em>The Wind Rises</em>, <em>Minari</em>, and <em>Scott Pilgrim vs. the World</em>.
             </p>
+            <span className="email">ALLINADOUGHERTY[AT]KU[DOT]EDU</span>
             <div className="social-links">
               <a href="https://www.instagram.com/allina.dough/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <img src="/icons/spot.png" alt="Instagram" className="social-icon" />
