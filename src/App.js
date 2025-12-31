@@ -36,7 +36,7 @@ const projects = [
         images: ['/mixeduse/Asset 2.jpg'],
         description: 'Throughout the iterative design process, the relationship between the new structure and the preexisting historical context became central. Sat next to the heavy masonry courthouse and Watkins history building demanded a response. The answer was the removal of form, by placing something so transparent and formless next to the stoneworks. This allowed the historical forms to shine while still matching the precedents of storefronts so critical to the vernacular of Mass St.'
       },
-      { id: 'sections', name: 'Sections', images: ['/mixeduse/Asset 4.jpg'] },
+      { id: 'sections', name: 'Sections', images: ['/mixeduse/asset 4.jpg'] },
       { 
         id: 'interiors', 
         name: 'Interiors', 
@@ -70,6 +70,12 @@ const projects = [
       },
       { id: 'site', name: 'Site', images: ['/healing/site.jpg'] },
       { id: 'floorplans', name: 'Floor Plans', images: ['/healing/floorplan_1.png'] },
+      { 
+        id: 'process', 
+        name: 'Process', 
+        images: ['/healing/process_1.JPEG', '/healing/process_2.JPEG'],
+        layout: 'side-by-side'
+      },
       { id: 'sectioncuts', name: 'Section Cuts', images: ['/healing/sectioncut_1.png'] },
       { 
         id: 'therapeutic', 
@@ -109,7 +115,6 @@ const projects = [
         description: 'Elliptical geometries define the programming and layout of the space. The ellipse was derived from the vegetation present on the site. Tall grass bends in perfect curves, reaching for the ground. In between hedges and through the leaves, light filters in through these curvilinear openings. Finding harmony with the site and the natural guidance of elliptical forms, the shape of the building is defined by one simple large movement.' 
       },
       { id: 'sunpath', name: 'Sun Path', images: ['/contemplation/contemplation4.png'] },
-      { id: 'copper', name: 'Copper Core', images: ['/contemplation/contemplation5.png'] },
     ],
   },
   {
@@ -272,12 +277,23 @@ function App() {
   };
 
   const scrollToSubcategory = (projectId, subId) => {
+    // Ensure we're working with spaces projects only
+    const project = projects.find(p => p.id === projectId);
+    if (!project) return;
+    
     const key = `${projectId}-${subId}`;
     const element = subcategoryRefs.current[key];
     if (element) {
-      const rect = element.getBoundingClientRect();
-      const scrollTop = window.pageYOffset + rect.top;
-      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+      // Verify the element is actually in the spaces section
+      const spacesSection = sectionRefs.current['spaces'];
+      if (spacesSection && spacesSection.contains(element)) {
+        // Use scrollIntoView for reliable scrolling
+        element.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest'
+        });
+      }
     }
   };
 
@@ -290,14 +306,25 @@ function App() {
     }
   };
 
+  const scrollToProject = (projectId) => {
+    // Find the first subcategory of the project (excluding finale)
+    const project = projects.find(p => p.id === projectId);
+    if (project) {
+      const firstSub = project.subcategories.find(sub => !sub.isFinale);
+      if (firstSub) {
+        scrollToSubcategory(projectId, firstSub.id);
+      }
+    }
+  };
+
   // Determine if title should be large (low opacity) or small (matching description)
   const shouldUseLargeTitle = (projectId, subId) => {
     // Mixed Use (id: 1): celebration, ideation, site, context, sections, interiors, finale
     if (projectId === 1 && ['celebration', 'ideation', 'site', 'context', 'sections', 'interiors', 'finale'].includes(subId)) {
       return true;
     }
-    // Healing (id: 2): site
-    if (projectId === 2 && ['site'].includes(subId)) {
+    // Healing (id: 2): site, floorplans, process, sectioncuts
+    if (projectId === 2 && ['site', 'floorplans', 'process', 'sectioncuts'].includes(subId)) {
       return true;
     }
     // Chapel (id: 3): site, ideation, sunpath
@@ -341,6 +368,7 @@ function App() {
 
       {/* Fixed Footer */}
       <footer className="fixed-footer">
+        <span className="email">ALLINADOUGHERTY[AT]KU[DOT]EDU</span>
       </footer>
 
       {/* Home Section */}
@@ -371,7 +399,13 @@ function App() {
             <div key={project.id} className="project-index">
               <div className="project-header">
                 <span className="project-number">{project.id}</span>
-                <span className={`project-title ${activeProject === project.id ? 'active' : 'inactive'}`}>{project.title}</span>
+                <span 
+                  className={`project-title ${activeProject === project.id ? 'active' : 'inactive'}`}
+                  onClick={() => scrollToProject(project.id)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {project.title}
+                </span>
               </div>
               <ul className="subcategory-list">
                 {project.subcategories.filter(sub => !sub.isFinale).map((sub) => (
