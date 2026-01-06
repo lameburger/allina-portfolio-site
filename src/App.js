@@ -36,7 +36,7 @@ const projects = [
         images: ['/mixeduse/Asset 2.jpg'],
         description: 'Throughout the iterative design process, the relationship between the new structure and the preexisting historical context became central. Sat next to the heavy masonry courthouse and Watkins history building demanded a response. The answer was the removal of form, by placing something so transparent and formless next to the stoneworks. This allowed the historical forms to shine while still matching the precedents of storefronts so critical to the vernacular of Mass St.'
       },
-      { id: 'sections', name: 'Sections', images: ['/mixeduse/asset 4.jpg'] },
+      { id: 'sections', name: 'Sections', images: ['/mixeduse/sections.png'] },
       { 
         id: 'interiors', 
         name: 'Interiors', 
@@ -119,6 +119,26 @@ const projects = [
   },
   {
     id: 4,
+    title: 'ENCLOSURE',
+    subcategories: [
+      { 
+        id: 'ideation', 
+        name: 'Ideation', 
+        images: ['/enclosure/1.JPEG'],
+        description: ''
+      },
+      { id: 'formexploration', name: 'Form Exploration', images: ['/enclosure/2.JPEG'] },
+      { id: 'section', name: 'Section', images: ['/enclosure/section_1.png'] },
+      { 
+        id: 'model', 
+        name: 'Model', 
+        images: ['/enclosure/5.JPEG', '/enclosure/6.JPEG'],
+        layout: 'side-by-side'
+      },
+    ],
+  },
+  {
+    id: 5,
     title: 'MOTION',
     subcategories: [
       { 
@@ -329,6 +349,10 @@ function App() {
     }
     // Chapel (id: 3): site, ideation, sunpath
     if (projectId === 3 && ['site', 'ideation', 'sunpath'].includes(subId)) {
+      return true;
+    }
+    // Enclosure (id: 4): ideation, formexploration, section, model
+    if (projectId === 4 && ['ideation', 'formexploration', 'section', 'model'].includes(subId)) {
       return true;
     }
     return false;
