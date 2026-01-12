@@ -24,7 +24,6 @@ const projects = [
         images: ['/mixeduse/Asset 3.jpg'],
         description: '1 - Site\n2 - Watkins History Museum\n3 - Douglas Courthouse\n4 - Granada Music Venue'
       },
-      { id: 'context', name: 'Context', images: ['/mixeduse/2.3sitediagrammap.jpg'] },
       { 
         id: 'ideation', 
         name: 'Ideation', 
@@ -60,7 +59,7 @@ const projects = [
         id: 'healing', 
         name: 'Healing', 
         images: ['/healing/preview_image.png'],
-        description: 'Designed to provide comfort, clarity, and restoration through architecture that responds to both the landscape and the human need for sanctuary.',
+        description: 'A therapy space designed to provide comfort, clarity, and restoration through architecture that responds to both the landscape and the human need for sanctuary.',
         meta: {
           client: 'Bryan Gross',
           location: 'Lawrence, Kansas',
@@ -125,7 +124,12 @@ const projects = [
         id: 'ideation', 
         name: 'Ideation', 
         images: ['/enclosure/1.JPEG'],
-        description: ''
+        description: 'A gallery and small living studio for Roger Shimomura, a celebrated Japanese American artist.',
+        meta: {
+          client: 'Anne Patterson',
+          location: 'Lawrence, Kansas',
+          size: '1,150 sqft'
+        }
       },
       { id: 'formexploration', name: 'Form Exploration', images: ['/enclosure/2.JPEG'] },
       { id: 'section', name: 'Section', images: ['/enclosure/section_1.png'] },
@@ -145,7 +149,10 @@ const projects = [
         id: 'diagram', 
         name: 'Motion Diagram', 
         images: ['/motioncapture/first.png'],
-        description: 'Motion Capture — an exploration of human movement translated into architectural form. By analyzing the rhythm and flow of the body, this project captures gesture and transforms it into spatial sequences.'
+        description: 'Motion Capture — an exploration of human movement translated into architectural form. By analyzing the rhythm and flow of the body, this project captures gesture and transforms it into spatial sequences.',
+        meta: {
+          client: 'Anne Patterson',
+        }
       },
       { id: 'iteration', name: 'Iteration', images: ['/motioncapture/second.png', '/motioncapture/third.png'] },
       { id: 'bootcut', name: 'The Bootcut', images: ['/motioncapture/fourth.JPEG'] },
@@ -161,21 +168,12 @@ const paintings = [
     displayTitle: 'RADIO TOWERS',
     images: ['/works/rt/1.JPG', '/works/rt/2.JPG', '/works/rt/3.JPG', '/works/rt/4.JPG', '/works/rt/5.JPG'],
     isMultiImage: true,
-    description: "The red lights that radiate in the empty space of the sky as to shout, in a steady rhythm, as to say I am here. Still and forever. These silent reminders that cover the midwest as the sole being prolating out of the earth and far into the sky.",
+    description: "The red lights that radiate in the empty space of the sky as to shout, in a steady rhythm, as to say I am here. Still and forever. These silent reminders in a flattened midwest stand as the sole figure prolating out of the earth and far into the sky.",
     size: '29 x 48 inches',
     materials: 'Acrylic on Drop Cloth'
   },
   {
     id: 2,
-    title: 'STUDY',
-    displayTitle: 'POJAGI',
-    image: '/works/grids.png',
-    description: "Inspired by Korean Pojagi, quiltwork that utilizes the discarded, I explored where we find new and reconnection in what is abandoned. Finding beauty and new mutations in joining of fabrics cut from different cloths, the pojagi become obscured by new forms meshing into new shapes. This quick exploration is just a small study in a greater series.",
-    size: '5 x 7 inches',
-    materials: 'Acrylic on canvas'
-  },
-  {
-    id: 3,
     title: 'CYCLE',
     displayTitle: 'CYCLE',
     image: '/works/fly.JPG',
@@ -184,7 +182,7 @@ const paintings = [
     materials: 'Acrylic on canvas'
   },
   {
-    id: 4,
+    id: 3,
     title: 'COWBOY',
     displayTitle: 'COWBOY',
     image: '/works/painting4.jpg',
@@ -193,7 +191,7 @@ const paintings = [
     materials: 'Acrylic on canvas'
   },
   {
-    id: 5,
+    id: 4,
     title: 'RETURN',
     displayTitle: 'RETURN',
     image: '/works/pencil.png',
@@ -202,7 +200,7 @@ const paintings = [
     materials: 'Colored Pencil on Illustration Board'
   },
   {
-    id: 6,
+    id: 5,
     title: 'SPILL',
     displayTitle: 'SPILL',
     image: '/works/work2.png',
@@ -211,7 +209,7 @@ const paintings = [
     materials: 'Wax, cold water dye, muslin cloth'
   },
   {
-    id: 7,
+    id: 6,
     title: 'PRAIRIE DREAMS',
     displayTitle: 'PRAIRIE DREAMS',
     image: '/works/work3.png',
@@ -220,7 +218,7 @@ const paintings = [
     materials: 'Acrylic on canvas'
   },
   {
-    id: 8,
+    id: 7,
     title: 'RINGS',
     displayTitle: 'RINGS',
     image: '/works/work5.png',
@@ -303,18 +301,25 @@ function App() {
     
     const key = `${projectId}-${subId}`;
     const element = subcategoryRefs.current[key];
-    if (element) {
-      // Verify the element is actually in the spaces section
-      const spacesSection = sectionRefs.current['spaces'];
-      if (spacesSection && spacesSection.contains(element)) {
-        // Use scrollIntoView for reliable scrolling
-        element.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start',
-          inline: 'nearest'
-        });
-      }
+    
+    if (!element) return;
+    
+    // Verify the element is actually in the spaces section
+    const spacesSection = sectionRefs.current['spaces'];
+    if (!spacesSection || !spacesSection.contains(element)) {
+      return;
     }
+    
+    // Calculate scroll position relative to document
+    const rect = element.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const elementTop = rect.top + scrollTop;
+    
+    // Scroll to the element position with offset for header
+    window.scrollTo({ 
+      top: elementTop - 100, 
+      behavior: 'smooth' 
+    });
   };
 
   const scrollToPainting = (paintingId) => {
@@ -339,8 +344,8 @@ function App() {
 
   // Determine if title should be large (low opacity) or small (matching description)
   const shouldUseLargeTitle = (projectId, subId) => {
-    // Mixed Use (id: 1): celebration, ideation, site, context, sections, interiors, finale
-    if (projectId === 1 && ['celebration', 'ideation', 'site', 'context', 'sections', 'interiors', 'finale'].includes(subId)) {
+    // Mixed Use (id: 1): celebration, ideation, site, sections, interiors, finale
+    if (projectId === 1 && ['celebration', 'ideation', 'site', 'sections', 'interiors', 'finale'].includes(subId)) {
       return true;
     }
     // Healing (id: 2): site, floorplans, process, sectioncuts
