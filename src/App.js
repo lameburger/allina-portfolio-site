@@ -133,6 +133,7 @@ const projects = [
       },
       { id: 'formexploration', name: 'Form Exploration', images: ['/enclosure/2.JPEG'] },
       { id: 'section', name: 'Section', images: ['/enclosure/section_1.png'] },
+      { id: 'floorplan', name: 'Floor Plan', images: ['/enclosure/floorplan.png'] },
       { 
         id: 'model', 
         name: 'Model', 
@@ -356,8 +357,8 @@ function App() {
     if (projectId === 3 && ['site', 'ideation', 'sunpath'].includes(subId)) {
       return true;
     }
-    // Enclosure (id: 4): ideation, formexploration, section, model
-    if (projectId === 4 && ['ideation', 'formexploration', 'section', 'model'].includes(subId)) {
+    // Enclosure (id: 4): ideation, formexploration, section, floorplan, model
+    if (projectId === 4 && ['ideation', 'formexploration', 'section', 'floorplan', 'model'].includes(subId)) {
       return true;
     }
     return false;
