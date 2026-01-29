@@ -229,14 +229,34 @@ const paintings = [
   },
 ];
 
+// Writings data
+const writings = [
+  {
+    id: 1,
+    title: 'WEIGHT',
+    subtitle: 'lessons from my second year of architecture',
+    content: `Attachment is heavier than ambition.
+
+It's one thing to remove your ego from the comments and critiques. That's important, necessary even. But the far more difficult task (arguably the quieter, lonelier one) is learning not to hold your work so preciously, not to confuse what you've made with who you are.
+
+Over the past week, I've become increasingly comfortable throwing my own work away. Not because it's bad, and not because I've grown cynical, but because I'm trying to practice extracting only what matters and leave the rest behind. I'm beginning to understand that progress doesn't come from protecting every line I have drawn, but from trusting that I can make something better next.
+
+It feels like running your hands through hair you've just cut for the first time in months. There's a brief, unsettling moment where something feels wrong—you expect more to be there. There was more there. But almost without noticing, what replaces the loss is a strange, unexpected weightless freedom.
+
+I'm not writing to argue that work should be thrown away more often, only that it should be allowed to change. Iteration should never be erasure, rather just attention. Build on what you have, refine what serves you, and let go of what doesn't. In doing so, you make room for better work and stronger process.`
+  },
+];
+
 function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [activeProject, setActiveProject] = useState(null);
   const [activeSubcategory, setActiveSubcategory] = useState(null);
   const [activePainting, setActivePainting] = useState(null);
+  const [activeWriting, setActiveWriting] = useState(null);
   const sectionRefs = useRef({});
   const subcategoryRefs = useRef({});
   const paintingRefs = useRef({});
+  const writingRefs = useRef({});
 
   // Handle scroll to update active states
   useEffect(() => {
@@ -244,7 +264,7 @@ function App() {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
       // Check which section is active
-      ['home', 'spaces', 'paintings', 'contact'].forEach((section) => {
+      ['home', 'spaces', 'words', 'paintings', 'contact'].forEach((section) => {
         const element = sectionRefs.current[section];
         if (element) {
           const { offsetTop, offsetHeight } = element;
@@ -277,6 +297,19 @@ function App() {
             const rect = element.getBoundingClientRect();
             if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 3) {
               setActivePainting(parseInt(key));
+            }
+          }
+        });
+      }
+
+      // Check which writing is active
+      if (activeSection === 'words') {
+        Object.keys(writingRefs.current).forEach((key) => {
+          const element = writingRefs.current[key];
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 3) {
+              setActiveWriting(parseInt(key));
             }
           }
         });
@@ -332,6 +365,15 @@ function App() {
     }
   };
 
+  const scrollToWriting = (writingId) => {
+    const element = writingRefs.current[writingId];
+    if (element) {
+      const rect = element.getBoundingClientRect();
+      const scrollTop = window.pageYOffset + rect.top;
+      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+    }
+  };
+
   const scrollToProject = (projectId) => {
     // Find the first subcategory of the project (excluding finale)
     const project = projects.find(p => p.id === projectId);
@@ -380,6 +422,13 @@ function App() {
             SPACES
           </a>
           <a 
+            href="#words" 
+            onClick={(e) => { e.preventDefault(); scrollToSection('words'); }}
+            className={activeSection === 'words' ? 'active' : ''}
+          >
+            WORDS
+          </a>
+          <a 
             href="#paintings" 
             onClick={(e) => { e.preventDefault(); scrollToSection('paintings'); }}
             className={activeSection === 'paintings' ? 'active' : ''}
@@ -411,6 +460,7 @@ function App() {
           <img src="/images/background.png" alt="Artwork" className="home-artwork" />
           <nav className="home-nav">
             <a href="#spaces" onClick={(e) => { e.preventDefault(); scrollToSection('spaces'); }}>SPACES</a>
+            <a href="#words" onClick={(e) => { e.preventDefault(); scrollToSection('words'); }}>WORDS</a>
             <a href="#paintings" onClick={(e) => { e.preventDefault(); scrollToSection('paintings'); }}>PAINTINGS</a>
             <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>CONTACT</a>
           </nav>
@@ -502,6 +552,52 @@ function App() {
               {projectIndex < projects.length - 1 && (
                 <div className="project-spacer"></div>
               )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Words Section */}
+      <section 
+        id="words" 
+        className="section words-section"
+        ref={(el) => (sectionRefs.current['words'] = el)}
+      >
+        {/* Fixed Sidebar Index for Words */}
+        <aside className={`words-sidebar ${activeSection !== 'words' ? 'hidden' : ''}`}>
+          {writings.map((writing) => (
+            <div 
+              key={writing.id} 
+              className={`writing-index ${activeWriting === writing.id ? 'active' : ''}`}
+              onClick={() => scrollToWriting(writing.id)}
+            >
+              <div className="writing-header">
+                <span className="writing-number">{writing.id}</span>
+                <span className={`writing-title ${activeWriting === writing.id ? 'active' : 'inactive'}`}>{writing.title}</span>
+              </div>
+            </div>
+          ))}
+        </aside>
+
+        {/* Words Content */}
+        <div className="words-content">
+          {writings.map((writing) => (
+            <div 
+              key={writing.id}
+              className="writing-section"
+              ref={(el) => (writingRefs.current[writing.id] = el)}
+            >
+              <div className="writing-layout">
+                <div className="writing-info">
+                  <h3 className="writing-display-title">{writing.title}</h3>
+                  <p className="writing-subtitle">{writing.subtitle}</p>
+                  <div className="writing-text">
+                    {writing.content.split('\n\n').map((paragraph, idx) => (
+                      <p key={idx} className="writing-paragraph">{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
