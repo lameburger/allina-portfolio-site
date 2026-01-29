@@ -142,23 +142,6 @@ const projects = [
       },
     ],
   },
-  {
-    id: 5,
-    title: 'MOTION',
-    subcategories: [
-      { 
-        id: 'diagram', 
-        name: 'Motion Diagram', 
-        images: ['/motioncapture/first.png'],
-        description: 'Motion Capture — an exploration of human movement translated into architectural form. By analyzing the rhythm and flow of the body, this project captures gesture and transforms it into spatial sequences.',
-        meta: {
-          client: 'Anne Patterson',
-        }
-      },
-      { id: 'iteration', name: 'Iteration', images: ['/motioncapture/second.png', '/motioncapture/third.png'] },
-      { id: 'bootcut', name: 'The Bootcut', images: ['/motioncapture/fourth.JPEG'] },
-    ],
-  },
 ];
 
 // Paintings data
