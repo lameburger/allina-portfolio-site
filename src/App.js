@@ -320,22 +320,35 @@ function App() {
     const key = `${projectId}-${subId}`;
     const element = subcategoryRefs.current[key];
     
-    if (!element) return;
+    if (!element) {
+      console.warn(`Subcategory element not found: ${key}`);
+      return;
+    }
     
     // Verify the element is actually in the spaces section
     const spacesSection = sectionRefs.current['spaces'];
     if (!spacesSection || !spacesSection.contains(element)) {
+      console.warn(`Element ${key} is not in spaces section`);
       return;
     }
     
-    // Calculate scroll position relative to document
+    // Get the element's position relative to the document
     const rect = element.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const elementTop = rect.top + scrollTop;
     
-    // Scroll to the element position with offset for header
+    // Verify the target position is within the spaces section bounds
+    const spacesTop = spacesSection.offsetTop;
+    const spacesBottom = spacesTop + spacesSection.offsetHeight;
+    const targetTop = elementTop - 100;
+    
+    if (targetTop < spacesTop || targetTop > spacesBottom) {
+      console.warn(`Calculated scroll position ${targetTop} is outside spaces section (${spacesTop}-${spacesBottom})`);
+    }
+    
+    // Scroll to element position with offset for header
     window.scrollTo({ 
-      top: elementTop - 100, 
+      top: targetTop, 
       behavior: 'smooth' 
     });
   };
