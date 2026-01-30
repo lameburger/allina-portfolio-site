@@ -148,8 +148,8 @@ const projects = [
 const paintings = [
   {
     id: 1,
-    title: 'RADIO TOWERS',
-    displayTitle: 'RADIO TOWERS',
+    title: 'RADIO FLOWERS',
+    displayTitle: 'RADIO FLOWERS',
     images: ['/works/rt/1.JPG', '/works/rt/2.JPG', '/works/rt/3.JPG', '/works/rt/4.JPG', '/works/rt/5.JPG'],
     isMultiImage: true,
     description: "The red lights that radiate in the empty space of the sky as to shout, in a steady rhythm, as to say I am here. Still and forever. These silent reminders in a flattened midwest stand as the sole figure prolating out of the earth and far into the sky.",
