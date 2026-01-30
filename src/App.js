@@ -218,15 +218,16 @@ const writings = [
     id: 1,
     title: 'WEIGHT',
     subtitle: 'lessons from my second year of architecture',
-    content: `Attachment is heavier than ambition.
+    content: `
+Attachment is heavier than ambition.
 
-It's one thing to remove your ego from the comments and critiques. That's important, necessary even. But the far more difficult task (arguably the quieter, lonelier one) is learning not to hold your work so preciously, not to confuse what you've made with who you are.
+The removal of ego must be supplemented by a removal of reverence in order to create. Holding work preciously removes the agency necessary for creativity.
 
-Over the past week, I've become increasingly comfortable throwing my own work away. Not because it's bad, and not because I've grown cynical, but because I'm trying to practice extracting only what matters and leave the rest behind. I'm beginning to understand that progress doesn't come from protecting every line I have drawn, but from trusting that I can make something better next.
+Over the past week, I’ve become increasingly comfortable throwing my own work away. Not because I believe it to be subpar, and not because I’ve grown cynical, but because I'm learning how to extract what matters and leave the rest behind. Protecting your work is a waste of energy, defending things that fail to constitute your work.
 
-It feels like running your hands through hair you've just cut for the first time in months. There's a brief, unsettling moment where something feels wrong—you expect more to be there. There was more there. But almost without noticing, what replaces the loss is a strange, unexpected weightless freedom.
+Running your hands through your hair you’ve just cut for the first time, there’s a brief, unsettling moment where something feels wrong. When you expect more to be there as there was more there. But almost without noticing, what replaces the loss is a strange, unexpected freedom.
 
-I'm not writing to argue that work should be thrown away more often, only that it should be allowed to change. Iteration should never be erasure, rather just attention. Build on what you have, refine what serves you, and let go of what doesn't. In doing so, you make room for better work and stronger process.`
+I’m not writing to argue that work should be thrown away more often, only that it should be allowed to change. Iteration should never be erasure, rather just attention. Build on what you have, refine what serves you, and let go of what doesn’t. In doing so, you make room for better work and stronger process.
   },
 ];
 
