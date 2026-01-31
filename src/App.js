@@ -228,6 +228,7 @@ Over the past week, I’ve become increasingly comfortable throwing my own work 
 Running your hands through your hair you’ve just cut for the first time, there’s a brief, unsettling moment where something feels wrong. When you expect more to be there as there was more there. But almost without noticing, what replaces the loss is a strange, unexpected freedom.
 
 I’m not writing to argue that work should be thrown away more often, only that it should be allowed to change. Iteration should never be erasure, rather just attention. Build on what you have, refine what serves you, and let go of what doesn’t. In doing so, you make room for better work and stronger process.
+    `
   },
 ];
 
