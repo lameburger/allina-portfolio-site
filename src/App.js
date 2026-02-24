@@ -281,7 +281,6 @@ const handleScroll = () => {
 
       // Check which subcategory is active within spaces
       if (activeSection === 'spaces') {
-        console.log('in spaces');
         Object.keys(subcategoryRefs.current).forEach((key) => {
           const element = subcategoryRefs.current[key];
           if (element) {
@@ -297,7 +296,6 @@ const handleScroll = () => {
 
       // Check which painting is active
       if (activeSection === 'paintings') {
-        console.log('in paintings');
         Object.keys(paintingRefs.current).forEach((key) => {
           const element = paintingRefs.current[key];
           if (element) {
@@ -341,9 +339,6 @@ const scrollToSubcategory = (projectId, subId) => {
   if (!anchor) return;
 
   const paintingsSection = sectionRefs.current['paintings'];
-  console.log('anchor offsetTop:', anchor.offsetTop);
-  console.log('anchor getBoundingClientRect top:', anchor.getBoundingClientRect().top + window.scrollY);
-  console.log('paintings starts at:', paintingsSection?.offsetTop);
   
   anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
@@ -352,7 +347,6 @@ const scrollToSubcategory = (projectId, subId) => {
     if (element) {
       const rect = element.getBoundingClientRect();
       const scrollTop = window.pageYOffset + rect.top;
-      console.log('scroll to painting');
       window.scrollTo({ top: scrollTop, behavior: 'smooth' });
     }
   };
@@ -362,7 +356,6 @@ const scrollToSubcategory = (projectId, subId) => {
     if (element) {
       const rect = element.getBoundingClientRect();
       const scrollTop = window.pageYOffset + rect.top;
-      console.log('scroll to writing');
       window.scrollTo({ top: scrollTop, behavior: 'smooth' });
     }
   };
