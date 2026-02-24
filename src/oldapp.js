@@ -257,31 +257,22 @@ function App() {
 
   // Handle scroll to update active states
   useEffect(() => {
-const handleScroll = () => {
-  const scrollPosition = window.scrollY + window.innerHeight / 3;
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
 
-  // Use paintings start as the boundary for spaces end
-  const spacesEl = sectionRefs.current['spaces'];
-  const paintingsEl = sectionRefs.current['paintings'];
-  const wordsEl = sectionRefs.current['words'];
-  const homeEl = sectionRefs.current['home'];
-  const contactEl = sectionRefs.current['contact'];
-
-  if (homeEl && scrollPosition < homeEl.offsetTop + homeEl.offsetHeight) {
-    setActiveSection('home');
-  } else if (spacesEl && wordsEl && scrollPosition >= spacesEl.offsetTop && scrollPosition < wordsEl.offsetTop) {
-    setActiveSection('spaces');
-  } else if (wordsEl && paintingsEl && scrollPosition >= wordsEl.offsetTop && scrollPosition < paintingsEl.offsetTop) {
-    setActiveSection('words');
-  } else if (paintingsEl && contactEl && scrollPosition >= paintingsEl.offsetTop && scrollPosition < contactEl.offsetTop) {
-    setActiveSection('paintings');
-  } else if (contactEl && scrollPosition >= contactEl.offsetTop) {
-    setActiveSection('contact');
-  }
+      // Check which section is active
+      ['home', 'spaces', 'words', 'paintings', 'contact'].forEach((section) => {
+        const element = sectionRefs.current[section];
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+          }
+        }
+      });
 
       // Check which subcategory is active within spaces
       if (activeSection === 'spaces') {
-        console.log('in spaces');
         Object.keys(subcategoryRefs.current).forEach((key) => {
           const element = subcategoryRefs.current[key];
           if (element) {
@@ -297,7 +288,6 @@ const handleScroll = () => {
 
       // Check which painting is active
       if (activeSection === 'paintings') {
-        console.log('in paintings');
         Object.keys(paintingRefs.current).forEach((key) => {
           const element = paintingRefs.current[key];
           if (element) {
@@ -336,23 +326,24 @@ const handleScroll = () => {
   };
 
 const scrollToSubcategory = (projectId, subId) => {
+  const project = projects.find(p => p.id === projectId);
+  if (!project) return;
+
   const key = `${projectId}-${subId}`;
   const anchor = anchorRefs.current[key];
   if (!anchor) return;
 
-  const paintingsSection = sectionRefs.current['paintings'];
-  console.log('anchor offsetTop:', anchor.offsetTop);
-  console.log('anchor getBoundingClientRect top:', anchor.getBoundingClientRect().top + window.scrollY);
-  console.log('paintings starts at:', paintingsSection?.offsetTop);
-  
-  anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const rect = anchor.getBoundingClientRect();
+  window.scrollTo({
+    top: window.scrollY + rect.top - 100,
+    behavior: 'smooth'
+  });
 };
   const scrollToPainting = (paintingId) => {
     const element = paintingRefs.current[paintingId];
     if (element) {
       const rect = element.getBoundingClientRect();
       const scrollTop = window.pageYOffset + rect.top;
-      console.log('scroll to painting');
       window.scrollTo({ top: scrollTop, behavior: 'smooth' });
     }
   };
@@ -362,7 +353,6 @@ const scrollToSubcategory = (projectId, subId) => {
     if (element) {
       const rect = element.getBoundingClientRect();
       const scrollTop = window.pageYOffset + rect.top;
-      console.log('scroll to writing');
       window.scrollTo({ top: scrollTop, behavior: 'smooth' });
     }
   };
@@ -503,7 +493,7 @@ const scrollToSubcategory = (projectId, subId) => {
               <div className="project-section">
                 {project.subcategories.map((sub, subIndex) => (
                   <Fragment key={sub.id}>
-                    <div ref={(el) => (anchorRefs.current[`${project.id}-${sub.id}`] = el)} style={{ height: '1px', marginBottom: '-1px' }} />
+                    <div ref={(el) => (anchorRefs.current[`${project.id}-${sub.id}`] = el)} />
                     <div 
                       className={`subcategory-section ${subIndex === 0 ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''}`}
                       ref={(el) => (subcategoryRefs.current[`${project.id}-${sub.id}`] = el)}
