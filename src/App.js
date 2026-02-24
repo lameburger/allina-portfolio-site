@@ -5,6 +5,49 @@ import './App.css';
 const projects = [
   {
     id: 1,
+    title: 'ARTS PORCH',
+    subcategories: [
+      {
+        id: 'axon',
+        name: 'Axonometric',
+        images: ['/artsporch/AXON.png'],
+        description: "A cafe and pavillion presents itself as a place of rest on KC's Arterie Artswalk that connects KCAI and the Nelson Museum of Art to the streetcars.",
+        meta: {
+          client: 'Peter Olshavsky',
+          location: 'Kansas City, MO',
+          size: '1800 sqft'
+        }
+      },
+      {
+        id: 'floorplan',
+        name: 'Floor Plan',
+        images: ['/artsporch/floorplan.png'],
+        description: 'Informed by a grid that acts as a form of logic and measurement, the building form is locked by formalization'
+      },
+      {
+        id: 'sec',
+        name: 'Section',
+        images: ['/artsporch/sec.png']
+      },
+      {
+        id: 'int',
+        name: 'CAFE INTERIOR',
+        images: ['/artsporch/int.png']
+      },
+      {
+        id: 'elev',
+        name: 'North Entry Elevation',
+        images: ['/artsporch/elev.png']
+      },
+      {
+        id: 'side',
+        name: 'Terrace',
+        images: ['/artsporch/side.png']
+      },
+    ],
+  },
+  {
+    id: 2,
     title: 'MIXED USE',
     subcategories: [
       { 
@@ -52,7 +95,7 @@ const projects = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: 'HEALING',
     subcategories: [
       { 
@@ -82,38 +125,6 @@ const projects = [
         images: ['/healing/preview_image_2.png'], 
         description: 'In conjoining the two spaces, the entry vestibule gives the therapist a chance to introduce visitors to the space. By providing a dedicated entry that transparently offers visual opportunities to understand what lies on either side of the building, visitors can acclimate, especially if they are unsure or weary of approaching therapy. The angle of the two buildings is designed to maximize lakeside views, enhancing the therapeutic experience in the public spaces. Simultaneously, the "V" shape promotes a natural guide to encourage visitors into the building\'s embrace.' 
       },
-    ],
-  },
-  {
-    id: 3,
-    title: 'CHAPEL',
-    subcategories: [
-      { 
-        id: 'reveal', 
-        name: 'Chapel Reveal', 
-        images: ['/contemplation/contemplation.png'],
-        description: 'In creating an introspective non-denominational chapel space, heavy masonry lifts itself from the earth, reaching for the sky.',
-        meta: {
-          client: 'Bryan Gross',
-          location: 'Lawrence, Kansas',
-          size: '1,300 sqft',
-          duration: '4 weeks'
-        }
-      },
-      { id: 'site', name: 'Site', images: ['/contemplation/comtemplation2.png'] },
-      { 
-        id: 'ideation', 
-        name: 'Iteration', 
-        images: ['/contemplation/ideacontemp.JPEG'],
-        description: 'First, the view lets in natural light, enabling passive heating. Second, the view serves to mitigate unproductive rumination, the view out provides an encouraging reminder of more. Finally, this lift connects the earth to the sky balancing basic elements we find daily.'
-      },
-      { 
-        id: 'geometry', 
-        name: 'Geometry', 
-        images: ['/contemplation/contemplation3.png'], 
-        description: 'Elliptical geometries define the programming and layout of the space. The ellipse was derived from the vegetation present on the site. Tall grass bends in perfect curves, reaching for the ground. In between hedges and through the leaves, light filters in through these curvilinear openings. Finding harmony with the site and the natural guidance of elliptical forms, the shape of the building is defined by one simple large movement.' 
-      },
-      { id: 'sunpath', name: 'Sun Path', images: ['/contemplation/contemplation4.png'] },
     ],
   },
   {
@@ -148,8 +159,8 @@ const projects = [
 const paintings = [
   {
     id: 1,
-    title: 'RADIO FLOWERS',
-    displayTitle: 'RADIO FLOWERS',
+    title: 'RADIO TOWERS',
+    displayTitle: 'RADIO TOWERS',
     images: ['/works/rt/1.JPG', '/works/rt/2.JPG', '/works/rt/3.JPG', '/works/rt/4.JPG', '/works/rt/5.JPG'],
     isMultiImage: true,
     description: "The red lights that radiate in the empty space of the sky as to shout, in a steady rhythm, as to say I am here. Still and forever. These silent reminders in a flattened midwest stand as the sole figure prolating out of the earth and far into the sky.",
@@ -384,16 +395,16 @@ function App() {
 
   // Determine if title should be large (low opacity) or small (matching description)
   const shouldUseLargeTitle = (projectId, subId) => {
-    // Mixed Use (id: 1): celebration, ideation, site, sections, interiors, finale
-    if (projectId === 1 && ['celebration', 'ideation', 'site', 'sections', 'interiors', 'finale'].includes(subId)) {
+    // ARTS PORCH (id: 1)
+    if (projectId === 1 && ['axon', 'floorplan', 'sec', 'int', 'elev', 'side'].includes(subId)) {
       return true;
     }
-    // Healing (id: 2): site, floorplans, process, sectioncuts
-    if (projectId === 2 && ['site', 'floorplans', 'process', 'sectioncuts'].includes(subId)) {
+    // Mixed Use (id: 2): celebration, ideation, site, sections, interiors, finale
+    if (projectId === 2 && ['celebration', 'ideation', 'site', 'sections', 'interiors', 'finale'].includes(subId)) {
       return true;
     }
-    // Chapel (id: 3): site, ideation, sunpath
-    if (projectId === 3 && ['site', 'ideation', 'sunpath'].includes(subId)) {
+    // Healing (id: 3): site, floorplans, process, sectioncuts
+    if (projectId === 3 && ['site', 'floorplans', 'process', 'sectioncuts'].includes(subId)) {
       return true;
     }
     // Enclosure (id: 4): ideation, formexploration, section, floorplan, model
