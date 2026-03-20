@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 import './App.css';
 
 // Project data structure with descriptions
@@ -255,25 +255,37 @@ function App() {
   const subcategoryRefs = useRef({});
   const paintingRefs = useRef({});
   const writingRefs = useRef({});
+  const anchorRefs = useRef({});
 
   // Handle scroll to update active states
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
-      // Check which section is active
-      ['home', 'spaces', 'words', 'paintings', 'contact'].forEach((section) => {
-        const element = sectionRefs.current[section];
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-          }
-        }
-      });
+      const spacesEl = sectionRefs.current['spaces'];
+      const paintingsEl = sectionRefs.current['paintings'];
+      const wordsEl = sectionRefs.current['words'];
+      const homeEl = sectionRefs.current['home'];
+      const contactEl = sectionRefs.current['contact'];
+
+      let currentSection;
+      if (homeEl && scrollPosition < homeEl.offsetTop + homeEl.offsetHeight) {
+        currentSection = 'home';
+      } else if (spacesEl && wordsEl && scrollPosition >= spacesEl.offsetTop && scrollPosition < wordsEl.offsetTop) {
+        currentSection = 'spaces';
+      } else if (wordsEl && paintingsEl && scrollPosition >= wordsEl.offsetTop && scrollPosition < paintingsEl.offsetTop) {
+        currentSection = 'words';
+      } else if (paintingsEl && contactEl && scrollPosition >= paintingsEl.offsetTop && scrollPosition < contactEl.offsetTop) {
+        currentSection = 'paintings';
+      } else if (contactEl && scrollPosition >= contactEl.offsetTop) {
+        currentSection = 'contact';
+      }
+      if (currentSection !== undefined) {
+        setActiveSection(currentSection);
+      }
 
       // Check which subcategory is active within spaces
-      if (activeSection === 'spaces') {
+      if (currentSection === 'spaces') {
         Object.keys(subcategoryRefs.current).forEach((key) => {
           const element = subcategoryRefs.current[key];
           if (element) {
@@ -288,7 +300,7 @@ function App() {
       }
 
       // Check which painting is active
-      if (activeSection === 'paintings') {
+      if (currentSection === 'paintings') {
         Object.keys(paintingRefs.current).forEach((key) => {
           const element = paintingRefs.current[key];
           if (element) {
@@ -301,7 +313,7 @@ function App() {
       }
 
       // Check which writing is active
-      if (activeSection === 'words') {
+      if (currentSection === 'words') {
         Object.keys(writingRefs.current).forEach((key) => {
           const element = writingRefs.current[key];
           if (element) {
@@ -317,7 +329,7 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSection]);
+  }, []);
 
   const scrollToSection = (sectionId) => {
     const element = sectionRefs.current[sectionId];
@@ -327,44 +339,10 @@ function App() {
   };
 
   const scrollToSubcategory = (projectId, subId) => {
-    // Ensure we're working with spaces projects only
-    const project = projects.find(p => p.id === projectId);
-    if (!project) return;
-    
     const key = `${projectId}-${subId}`;
-    const element = subcategoryRefs.current[key];
-    
-    if (!element) {
-      console.warn(`Subcategory element not found: ${key}`);
-      return;
-    }
-    
-    // Verify the element is actually in the spaces section
-    const spacesSection = sectionRefs.current['spaces'];
-    if (!spacesSection || !spacesSection.contains(element)) {
-      console.warn(`Element ${key} is not in spaces section`);
-      return;
-    }
-    
-    // Get the element's position relative to the document
-    const rect = element.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const elementTop = rect.top + scrollTop;
-    
-    // Verify the target position is within the spaces section bounds
-    const spacesTop = spacesSection.offsetTop;
-    const spacesBottom = spacesTop + spacesSection.offsetHeight;
-    const targetTop = elementTop - 100;
-    
-    if (targetTop < spacesTop || targetTop > spacesBottom) {
-      console.warn(`Calculated scroll position ${targetTop} is outside spaces section (${spacesTop}-${spacesBottom})`);
-    }
-    
-    // Scroll to element position with offset for header
-    window.scrollTo({ 
-      top: targetTop, 
-      behavior: 'smooth' 
-    });
+    const anchor = anchorRefs.current[key];
+    if (!anchor) return;
+    anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const scrollToPainting = (paintingId) => {
@@ -534,43 +512,48 @@ function App() {
                   </div>
                 )}
                 {project.subcategories.map((sub, subIndex) => (
-                  <div 
-                    key={sub.id}
-                    className={`subcategory-section ${subIndex === 0 && !project.introductionImages?.length ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''}`}
-                    ref={(el) => (subcategoryRefs.current[`${project.id}-${sub.id}`] = el)}
-                  >
-                    <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
-                      {sub.images.map((img, idx) => (
-                        <img 
-                          key={idx}
-                          src={img} 
-                          alt={`${project.title} - ${sub.name}`}
-                          className="project-image"
-                        />
-                      ))}
-                    </div>
-                    
-                    {/* Image Title Overlay */}
-                    <div className={shouldUseLargeTitle(project.id, sub.id) ? "image-title-overlay" : "image-title-overlay-small"}>
-                      {sub.name.toUpperCase()}
-                    </div>
-                    
-                    {/* Show description if exists */}
-                    {sub.description && (
-                      <div className="description-block">
-                        <p className="project-description">{sub.description}</p>
+                  <Fragment key={sub.id}>
+                    <div
+                      ref={(el) => (anchorRefs.current[`${project.id}-${sub.id}`] = el)}
+                      style={{ height: '1px', marginBottom: '-1px' }}
+                    />
+                    <div
+                      className={`subcategory-section ${subIndex === 0 && !project.introductionImages?.length ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''}`}
+                      ref={(el) => (subcategoryRefs.current[`${project.id}-${sub.id}`] = el)}
+                    >
+                      <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
+                        {sub.images.map((img, idx) => (
+                          <img
+                            key={idx}
+                            src={img}
+                            alt={`${project.title} - ${sub.name}`}
+                            className="project-image"
+                          />
+                        ))}
                       </div>
-                    )}
-                    
-                    {/* Show meta info if exists (for preview sections) */}
-                    {sub.meta && (
-                      <div className="meta-block">
-                        <p className="meta-item">{sub.meta.client}</p>
-                        <p className="meta-item">{sub.meta.location}</p>
-                        <p className="meta-item">{sub.meta.size}</p>
+
+                      {/* Image Title Overlay */}
+                      <div className={shouldUseLargeTitle(project.id, sub.id) ? "image-title-overlay" : "image-title-overlay-small"}>
+                        {sub.name.toUpperCase()}
                       </div>
-                    )}
-                  </div>
+
+                      {/* Show description if exists */}
+                      {sub.description && (
+                        <div className="description-block">
+                          <p className="project-description">{sub.description}</p>
+                        </div>
+                      )}
+
+                      {/* Show meta info if exists (for preview sections) */}
+                      {sub.meta && (
+                        <div className="meta-block">
+                          <p className="meta-item">{sub.meta.client}</p>
+                          <p className="meta-item">{sub.meta.location}</p>
+                          <p className="meta-item">{sub.meta.size}</p>
+                        </div>
+                      )}
+                    </div>
+                  </Fragment>
                 ))}
               </div>
               {/* White space break between projects */}
