@@ -6,6 +6,7 @@ const projects = [
   {
     id: 1,
     title: 'ARTS PORCH',
+    introductionImages: ['/introduction/artsporch.jpg'],
     subcategories: [
       {
         id: 'axon',
@@ -49,6 +50,7 @@ const projects = [
   {
     id: 2,
     title: 'MIXED USE',
+    introductionImages: ['/introduction/mixeduse.jpg'],
     subcategories: [
       { 
         id: 'celebration', 
@@ -517,10 +519,24 @@ function App() {
           {projects.map((project, projectIndex) => (
             <div key={project.id}>
               <div className="project-section">
+                {project.introductionImages?.length > 0 && (
+                  <div className="subcategory-section introduction-visual first-subcategory">
+                    <div className="image-group">
+                      {project.introductionImages.map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={img}
+                          alt=""
+                          className="project-image"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {project.subcategories.map((sub, subIndex) => (
                   <div 
                     key={sub.id}
-                    className={`subcategory-section ${subIndex === 0 ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''}`}
+                    className={`subcategory-section ${subIndex === 0 && !project.introductionImages?.length ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''}`}
                     ref={(el) => (subcategoryRefs.current[`${project.id}-${sub.id}`] = el)}
                   >
                     <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
@@ -706,8 +722,8 @@ function App() {
               <a href="https://www.linkedin.com/in/allina-dougherty-090398326/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <img src="/icons/linkedin.png" alt="LinkedIn" className="social-icon" />
               </a>
-              <a href="https://open.spotify.com/user/shubs232?si=e45887de603a4ce7" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
-                <img src="/icons/spotify.png" alt="Spotify" className="social-icon" />
+              <a href="https://www.pinterest.com/allinaeden/_created" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
+                <img src="/icons/pinterest.svg" alt="Pinterest" className="social-icon" />
               </a>
             </div>
           </div>
