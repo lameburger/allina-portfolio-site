@@ -286,6 +286,22 @@ body {
   padding: 4rem 0;
 }
 
+.project-introduction {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.project-introduction-copy {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: #444;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
 
 .image-group {
   display: flex;
