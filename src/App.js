@@ -5,8 +5,56 @@ import './App.css';
 const projects = [
   {
     id: 1,
+    title: 'ANN CARSON DESIGN',
+    introductionText:
+      'Informed by a MOS precedent, a center for architecture emerges with a thesis of desire. Ann Carson posits that movement is fueled by desire. Necessary for architectural education is a centering of how the bittersweet informs our space.',
+    subcategories: [
+      {
+        id: 'site-axon',
+        name: 'Site Axon',
+        images: ['/archcenter/ac1.png'],
+        meta: {
+          client: 'Peter Olshavsky',
+          location: 'Kansas City, MO',
+          size: '27,000 sqft',
+        },
+      },
+      {
+        id: 'artswalk-map',
+        name: 'Artswalk Map',
+        images: ['/archcenter/arteriemap.png'],
+      },
+      {
+        id: 'reading-room',
+        name: 'Reading Room',
+        images: ['/archcenter/ac2.5.jpg'],
+      },
+      {
+        id: 'floorplans',
+        name: 'Floor Plans',
+        images: [
+          '/archcenter/Screenshot 2026-07-03 191730.png',
+          '/archcenter/Screenshot 2026-07-03 191751.png',
+        ],
+        layout: 'side-by-side',
+      },
+      {
+        id: 'gallery',
+        name: 'Gallery',
+        images: ['/archcenter/ac3.jpg'],
+      },
+      {
+        id: 'auditorium',
+        name: 'Auditorium',
+        images: ['/archcenter/ac5.png'],
+      },
+    ],
+  },
+  {
+    id: 2,
     title: 'ARTS PORCH',
-    introductionImages: ['/introduction/artsporch.jpg'],
+    introductionText:
+      "Arts porch and Cafe placed along Kansas City's Art Walk initiative. Boasting a terrace with installation capablilites, it's point grid runs the course of the building growing and mapping an ever-changing art's landscape.",
     subcategories: [
       {
         id: 'axon',
@@ -31,11 +79,6 @@ const projects = [
         images: ['/artsporch/sec.png']
       },
       {
-        id: 'int',
-        name: 'CAFE INTERIOR',
-        images: ['/artsporch/int.png']
-      },
-      {
         id: 'elev',
         name: 'North Entry Elevation',
         images: ['/artsporch/elev.png']
@@ -48,9 +91,59 @@ const projects = [
     ],
   },
   {
-    id: 2,
+    id: 3,
+    title: 'REVISITING BAD PRESS',
+    introductionText:
+      'When the shirt is worn, the residue of the orthogonal logic of efficiency registers on the surface of the body. The parallel creases and crisp, square corners of a clean, pressed shirt have become sought-after emblems of refinement. The byproduct of efficiency has become a new object of desire. But what if the practice of ironing could be freed from the aesthetics of efficiency altogether? Perhaps ironing could more aptly represent the postindustrial body by trading the image of the functional for that of the dysfunctional.',
+    introductionCredits:
+      'Diller Scofidio + Renfro\nElizabeth Diller, Ricardo Scofidio, John Bachus, Brendan Cotter, Heather Champ, and David Lindberg',
+    subcategories: [
+      {
+        id: 't01',
+        name: '01',
+        images: ['/exhibtion/t01.JPEG'],
+        meta: {
+          client: 'Peter Olshavsky',
+          location: 'University of Kansas',
+        },
+      },
+      {
+        id: 't02',
+        name: '02',
+        images: ['/exhibtion/t02.JPEG'],
+      },
+      {
+        id: 'studio-reflection',
+        name: 'Studio Reflection',
+        isTextBlock: true,
+        content: `As architectural education has become bureaucratic, hyper-professionalized, and increasingly corporatist in the last three decades, schooling's worth only seems to matter when pressed into service of these agendas. In this context, social critic Ivan Illich argues in Deschooling Society (1971), education becomes "the advertising agency which makes you believe that you need the society as it is." Yet this situation is not a closed issue. The nature of education, its roles, and one's place in it can be renegotiated ... whole educational domains are often left aside because they do not easily surrender to the instrumental accounting that underpins them. This motivates our studio's search for other historical possibilities ... It needs to be acknowledged that the promises of the "knowledge economy," which acted as the cultural context for the original work, have unsurprisingly come with intractable problems particularly for education. What arose was not by accident. The current culture of divided attention, distrustful surveillance, gradual de-skilling, and corporate subservience to mention only a few issues was designed. This creates a situation where there was a greater need to think about what Illich called "tools for conviviality" and their possibilities in education ... convivial tools run counter to the set of artifacts and relationships that demand escalation, create dependency, promote deskilling, and support "radical monopolies." Instead, they prioritize social needs in ways that are accessible and encourage individuals to exercise their own skills and creativity. While promoting this form of agency, they retain the ability to deflect power through the performance of a non-performance (e.g., opting out). As they accept limits, they aim to enrich social bonds through lively even joyful means ... For our studio, DS+R's dissident ironing pointed towards these kinds of convivial artifacts and relationships ... While the display may be of little use to someone untroubled by architectural speculation, the hope is that it conscripts an audience into a playful performance of ideas, feelings, and puzzlements. In fact, as Marie Kondo's opening quote wisely suggests, it was developed as an "act of caring," "an expression of love," and a giving thanks for modes of thinking and making out of sync with the supposedly "real world," wherever that begins and ends. Thus, even in our noisy times, perhaps an educational space that creates a genuinely humane and communicative setting might be glimpsed.
+
+Faculty Advisor Peter Olshavsky, Ph.D, Associate Professor of Architecture
+
+As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggemann, Roman Cusumano, Karlos Escutia-Ruiz, Abigail Esparza, Maggie Foresman, Jackson Hoepner, Aubrey Jarecke, Andre Neal, Cristhian Reyes Molina, Amanda Ropers, Hope Schmelzle, Ethan Short, Abi Smith and myself) we found that the creation of a temporary exhibition enabled our own examine of the influences in our educations. In the measured practice of ironing our own shirts, we folded ourselves into the logic of what is predetermined for us. Resisting and aiming to create the most contorted, unrecognizable versions of what was handed to us, we found joy in iteration.`,
+      },
+      {
+        id: 't03',
+        name: '03',
+        images: ['/exhibtion/t03.jpeg'],
+      },
+      {
+        id: 't04',
+        name: '04',
+        images: ['/exhibtion/t04.jpeg'],
+      },
+      {
+        id: 't05',
+        name: '05',
+        images: ['/exhibtion/t05.JPEG'],
+      },
+    ],
+  },
+  {
+    id: 4,
     title: 'MIXED USE',
-    introductionImages: ['/introduction/mixeduse.jpg'],
+    introductionText:
+      'Mixed use space with fine dining on the first floor with views out to a large sculpture garden and a second floor that hosts a contemporary art gallery. Surrounded by historic masonry of the downtown, the delicate void aims to complete rather than compete.',
     subcategories: [
       { 
         id: 'celebration', 
@@ -68,11 +161,6 @@ const projects = [
         name: 'Site', 
         images: ['/mixeduse/Asset 3.jpg'],
         description: '1 - Site\n2 - Watkins History Museum\n3 - Douglas Courthouse\n4 - Granada Music Venue'
-      },
-      { 
-        id: 'ideation', 
-        name: 'Ideation', 
-        images: ['/mixeduse/ideation.jpg']
       },
       { 
         id: 'floorplan', 
@@ -97,7 +185,7 @@ const projects = [
     ],
   },
   {
-    id: 3,
+    id: 5,
     title: 'HEALING',
     subcategories: [
       { 
@@ -130,7 +218,7 @@ const projects = [
     ],
   },
   {
-    id: 4,
+    id: 6,
     title: 'ENCLOSURE',
     subcategories: [
       { 
@@ -147,12 +235,6 @@ const projects = [
       { id: 'formexploration', name: 'Form Exploration', images: ['/enclosure/2.JPEG'] },
       { id: 'section', name: 'Section', images: ['/enclosure/section_1.png'] },
       { id: 'floorplan', name: 'Floor Plan', images: ['/enclosure/floorplan.png'] },
-      { 
-        id: 'model', 
-        name: 'Model', 
-        images: ['/enclosure/5.JPEG', '/enclosure/6.JPEG'],
-        layout: 'side-by-side'
-      },
     ],
   },
 ];
@@ -163,7 +245,7 @@ const paintings = [
     id: 1,
     title: 'RADIO TOWERS',
     displayTitle: 'RADIO TOWERS',
-    images: ['/works/rt/1.JPG', '/works/rt/2.JPG', '/works/rt/3.JPG', '/works/rt/4.JPG', '/works/rt/5.JPG'],
+    images: ['/works/rt/1.JPG', '/works/rt/3.JPG', '/works/rt/5.JPG'],
     isMultiImage: true,
     description: "The red lights that radiate in the empty space of the sky as to shout, in a steady rhythm, as to say I am here. Still and forever. These silent reminders in a flattened midwest stand as the sole figure prolating out of the earth and far into the sky.",
     size: '29 x 48 inches',
@@ -376,20 +458,28 @@ function App() {
 
   // Determine if title should be large (low opacity) or small (matching description)
   const shouldUseLargeTitle = (projectId, subId) => {
-    // ARTS PORCH (id: 1)
-    if (projectId === 1 && ['axon', 'floorplan', 'sec', 'int', 'elev', 'side'].includes(subId)) {
+    // Ann Carson Design (id: 1)
+    if (projectId === 1 && ['site-axon', 'artswalk-map', 'reading-room', 'floorplans', 'gallery', 'auditorium'].includes(subId)) {
       return true;
     }
-    // Mixed Use (id: 2): celebration, ideation, site, sections, interiors, finale
-    if (projectId === 2 && ['celebration', 'ideation', 'site', 'sections', 'interiors', 'finale'].includes(subId)) {
+    // ARTS PORCH (id: 2)
+    if (projectId === 2 && ['axon', 'floorplan', 'sec', 'elev', 'side'].includes(subId)) {
       return true;
     }
-    // Healing (id: 3): site, floorplans, process, sectioncuts
-    if (projectId === 3 && ['site', 'floorplans', 'process', 'sectioncuts'].includes(subId)) {
+    // Revisiting Bad Press (id: 3): exhibition images
+    if (projectId === 3 && ['t01', 't02', 't03', 't04', 't05'].includes(subId)) {
       return true;
     }
-    // Enclosure (id: 4): ideation, formexploration, section, floorplan, model
-    if (projectId === 4 && ['ideation', 'formexploration', 'section', 'floorplan', 'model'].includes(subId)) {
+    // Mixed Use (id: 4): celebration, site, sections, interiors, finale
+    if (projectId === 4 && ['celebration', 'site', 'sections', 'interiors', 'finale'].includes(subId)) {
+      return true;
+    }
+    // Healing (id: 5): site, floorplans, process, sectioncuts
+    if (projectId === 5 && ['site', 'floorplans', 'process', 'sectioncuts'].includes(subId)) {
+      return true;
+    }
+    // Enclosure (id: 6): ideation, formexploration, section, floorplan
+    if (projectId === 6 && ['ideation', 'formexploration', 'section', 'floorplan'].includes(subId)) {
       return true;
     }
     return false;
@@ -497,18 +587,12 @@ function App() {
           {projects.map((project, projectIndex) => (
             <div key={project.id}>
               <div className="project-section">
-                {project.introductionImages?.length > 0 && (
-                  <div className="subcategory-section introduction-visual first-subcategory">
-                    <div className="image-group">
-                      {project.introductionImages.map((img, idx) => (
-                        <img
-                          key={idx}
-                          src={img}
-                          alt=""
-                          className="project-image"
-                        />
-                      ))}
-                    </div>
+                {project.introductionText && (
+                  <div className="subcategory-section project-introduction first-subcategory">
+                    <p className="project-introduction-copy">{project.introductionText}</p>
+                    {project.introductionCredits && (
+                      <p className="project-introduction-credits">{project.introductionCredits}</p>
+                    )}
                   </div>
                 )}
                 {project.subcategories.map((sub, subIndex) => (
@@ -518,39 +602,53 @@ function App() {
                       style={{ height: '1px', marginBottom: '-1px' }}
                     />
                     <div
-                      className={`subcategory-section ${subIndex === 0 && !project.introductionImages?.length ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''}`}
+                      className={`subcategory-section ${subIndex === 0 && !project.introductionText ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''} ${sub.isTextBlock ? 'text-block-section' : ''}`}
                       ref={(el) => (subcategoryRefs.current[`${project.id}-${sub.id}`] = el)}
                     >
-                      <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
-                        {sub.images.map((img, idx) => (
-                          <img
-                            key={idx}
-                            src={img}
-                            alt={`${project.title} - ${sub.name}`}
-                            className="project-image"
-                          />
-                        ))}
-                      </div>
-
-                      {/* Image Title Overlay */}
-                      <div className={shouldUseLargeTitle(project.id, sub.id) ? "image-title-overlay" : "image-title-overlay-small"}>
-                        {sub.name.toUpperCase()}
-                      </div>
-
-                      {/* Show description if exists */}
-                      {sub.description && (
-                        <div className="description-block">
-                          <p className="project-description">{sub.description}</p>
+                      {sub.isTextBlock ? (
+                        <div className="spaces-text-block">
+                          <h3 className="spaces-text-block-title">{sub.name.toUpperCase()}</h3>
+                          <div className="spaces-text-block-body">
+                            {sub.content.split('\n\n').map((paragraph, idx) => (
+                              <p key={idx} className="spaces-text-block-paragraph">{paragraph}</p>
+                            ))}
+                          </div>
                         </div>
-                      )}
+                      ) : (
+                        <>
+                          <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
+                            {sub.images.map((img, idx) => (
+                              <img
+                                key={idx}
+                                src={img}
+                                alt={`${project.title} - ${sub.name}`}
+                                className="project-image"
+                              />
+                            ))}
+                          </div>
 
-                      {/* Show meta info if exists (for preview sections) */}
-                      {sub.meta && (
-                        <div className="meta-block">
-                          <p className="meta-item">{sub.meta.client}</p>
-                          <p className="meta-item">{sub.meta.location}</p>
-                          <p className="meta-item">{sub.meta.size}</p>
-                        </div>
+                          {/* Image Title Overlay */}
+                          <div className={shouldUseLargeTitle(project.id, sub.id) ? "image-title-overlay" : "image-title-overlay-small"}>
+                            {sub.name.toUpperCase()}
+                          </div>
+
+                          {/* Show description if exists */}
+                          {sub.description && (
+                            <div className="description-block">
+                              <p className="project-description">{sub.description}</p>
+                            </div>
+                          )}
+
+                          {/* Show meta info if exists (for preview sections) */}
+                          {sub.meta && (
+                            <div className="meta-block">
+                              <p className="meta-item">{sub.meta.client}</p>
+                              <p className="meta-item">{sub.meta.location}</p>
+                              {sub.meta.size && <p className="meta-item">{sub.meta.size}</p>}
+                              {sub.meta.duration && <p className="meta-item">{sub.meta.duration}</p>}
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
                   </Fragment>
