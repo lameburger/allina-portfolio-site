@@ -5,29 +5,25 @@ import './App.css';
 const projects = [
   {
     id: 1,
-    title: 'ANN CARSON DESIGN',
+    title: 'ARCH CENTER',
     introductionText:
-      'Informed by a MOS precedent, a center for architecture emerges with a thesis of desire. Ann Carson posits that movement is fueled by desire. Necessary for architectural education is a centering of how the bittersweet informs our space.',
+      'Ann Carson posits that movement is fueled by desire. Centering the bittersweet informs this Center For Architecture as a space to develop a more responsible and self-reflexive attitude.',
     subcategories: [
-      {
-        id: 'site-axon',
-        name: 'Site Axon',
-        images: ['/archcenter/ac1.png'],
-        meta: {
-          client: 'Peter Olshavsky',
-          location: 'Kansas City, MO',
-          size: '27,000 sqft',
-        },
-      },
-      {
-        id: 'artswalk-map',
-        name: 'Artswalk Map',
-        images: ['/archcenter/arteriemap.png'],
-      },
       {
         id: 'reading-room',
         name: 'Reading Room',
         images: ['/archcenter/ac2.5.jpg'],
+      },
+      {
+        id: 'site-axon-map',
+        name: 'Site Axon',
+        images: ['/archcenter/arteriemap.png', '/archcenter/ac1.png'],
+        layout: 'side-by-side',
+        meta: {
+          client: 'Peter Olshavsky',
+          location: 'Museum District - Kansas City, MO',
+          size: '27,000 sqft',
+        },
       },
       {
         id: 'floorplans',
@@ -42,6 +38,11 @@ const projects = [
         id: 'gallery',
         name: 'Gallery',
         images: ['/archcenter/ac3.jpg'],
+      },
+      {
+        id: 'center',
+        name: 'Center',
+        images: ['/archcenter/center.png'],
       },
       {
         id: 'auditorium',
@@ -59,7 +60,7 @@ const projects = [
       {
         id: 'axon',
         name: 'Axonometric',
-        images: ['/artsporch/AXON.png'],
+        images: ['/artsporch/AXON.jpg'],
         description: "A cafe and pavillion presents itself as a place of rest on KC's Arterie Artswalk that connects KCAI and the Nelson Museum of Art to the streetcars.",
         meta: {
           client: 'Peter Olshavsky',
@@ -327,6 +328,65 @@ I’m not writing to argue that work should be thrown away more often, only that
   },
 ];
 
+function getScrollAnchor() {
+  return window.scrollY + window.innerHeight / 3;
+}
+
+function getScrollLinkedState(items, sectionRefs, getId) {
+  if (!items.length) return { activeId: null, progress: 0 };
+
+  const anchor = getScrollAnchor();
+  let activeId = getId(items[0]);
+  let progress = 0;
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const el = sectionRefs.current[getId(item)];
+    if (!el) continue;
+
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const bottom = top + el.offsetHeight;
+
+    if (anchor < top) {
+      activeId = i > 0 ? getId(items[i - 1]) : getId(item);
+      progress = i > 0 ? 1 : 0;
+      return { activeId, progress };
+    }
+
+    if (anchor >= top && anchor <= bottom) {
+      activeId = getId(item);
+      const range = bottom - top;
+      progress = range > 0 ? Math.min(1, Math.max(0, (anchor - top) / range)) : 0;
+      return { activeId, progress };
+    }
+
+    if (i === items.length - 1 && anchor > bottom) {
+      activeId = getId(item);
+      progress = 1;
+      return { activeId, progress };
+    }
+  }
+
+  return { activeId, progress };
+}
+
+function ScrollLinkedSidebar({ className, hidden, activeId, items, getId, renderItem }) {
+  const resolvedActiveId = activeId ?? (items.length ? getId(items[0]) : null);
+
+  return (
+    <aside className={`${className} scroll-linked-sidebar ${hidden ? 'hidden' : ''}`}>
+      <div className="sidebar-reel">
+        {items.map((item) => {
+          const id = getId(item);
+          const variant =
+            id === resolvedActiveId ? 'current' : id < resolvedActiveId ? 'passed' : 'upcoming';
+          return <Fragment key={id}>{renderItem(item, { variant })}</Fragment>;
+        })}
+      </div>
+    </aside>
+  );
+}
+
 function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [activeProject, setActiveProject] = useState(null);
@@ -334,9 +394,13 @@ function App() {
   const [activePainting, setActivePainting] = useState(null);
   const [activeWriting, setActiveWriting] = useState(null);
   const sectionRefs = useRef({});
+  const projectSectionRefs = useRef({});
+  const projectAnchorRefs = useRef({});
   const subcategoryRefs = useRef({});
   const paintingRefs = useRef({});
+  const paintingAnchorRefs = useRef({});
   const writingRefs = useRef({});
+  const writingAnchorRefs = useRef({});
   const anchorRefs = useRef({});
 
   // Handle scroll to update active states
@@ -366,45 +430,49 @@ function App() {
         setActiveSection(currentSection);
       }
 
-      // Check which subcategory is active within spaces
+      // Spaces scroll-linked nav
       if (currentSection === 'spaces') {
-        Object.keys(subcategoryRefs.current).forEach((key) => {
-          const element = subcategoryRefs.current[key];
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 3) {
-              const [projectId, subId] = key.split('-');
-              setActiveProject(parseInt(projectId));
-              setActiveSubcategory(subId);
+        const { activeId } = getScrollLinkedState(
+          projects,
+          projectSectionRefs,
+          (project) => project.id
+        );
+        setActiveProject(activeId);
+
+        const project = projects.find((p) => p.id === activeId);
+        if (project) {
+          let matchedSub = null;
+          for (const sub of project.subcategories.filter((s) => !s.isFinale)) {
+            const element = subcategoryRefs.current[`${project.id}-${sub.id}`];
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 3) {
+                matchedSub = sub.id;
+              }
             }
           }
-        });
+          setActiveSubcategory(matchedSub);
+        }
       }
 
-      // Check which painting is active
+      // Paintings scroll-linked nav
       if (currentSection === 'paintings') {
-        Object.keys(paintingRefs.current).forEach((key) => {
-          const element = paintingRefs.current[key];
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 3) {
-              setActivePainting(parseInt(key));
-            }
-          }
-        });
+        const { activeId } = getScrollLinkedState(
+          paintings,
+          paintingRefs,
+          (painting) => painting.id
+        );
+        setActivePainting(activeId);
       }
 
-      // Check which writing is active
+      // Words scroll-linked nav
       if (currentSection === 'words') {
-        Object.keys(writingRefs.current).forEach((key) => {
-          const element = writingRefs.current[key];
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 3) {
-              setActiveWriting(parseInt(key));
-            }
-          }
-        });
+        const { activeId } = getScrollLinkedState(
+          writings,
+          writingRefs,
+          (writing) => writing.id
+        );
+        setActiveWriting(activeId);
       }
     };
 
@@ -420,46 +488,37 @@ function App() {
     }
   };
 
+  // Scroll a plain (non-sticky) anchor element to the top of the viewport.
+  // We deliberately target the interleaved 1px anchor divs rather than the
+  // .subcategory-section elements: those are position:sticky, and calling
+  // scrollIntoView/getBoundingClientRect on a stuck sticky element uses its
+  // pinned position, not its real flow position, which lands on the wrong one.
+  const scrollToAnchor = (element) => {
+    if (!element) return;
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const scrollToSubcategory = (projectId, subId) => {
-    const key = `${projectId}-${subId}`;
-    const anchor = anchorRefs.current[key];
-    if (!anchor) return;
-    anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToAnchor(anchorRefs.current[`${projectId}-${subId}`]);
   };
 
   const scrollToPainting = (paintingId) => {
-    const element = paintingRefs.current[paintingId];
-    if (element) {
-      const rect = element.getBoundingClientRect();
-      const scrollTop = window.pageYOffset + rect.top;
-      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
-    }
+    scrollToAnchor(paintingAnchorRefs.current[paintingId]);
   };
 
   const scrollToWriting = (writingId) => {
-    const element = writingRefs.current[writingId];
-    if (element) {
-      const rect = element.getBoundingClientRect();
-      const scrollTop = window.pageYOffset + rect.top;
-      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
-    }
+    scrollToAnchor(writingAnchorRefs.current[writingId]);
   };
 
   const scrollToProject = (projectId) => {
-    // Find the first subcategory of the project (excluding finale)
-    const project = projects.find(p => p.id === projectId);
-    if (project) {
-      const firstSub = project.subcategories.find(sub => !sub.isFinale);
-      if (firstSub) {
-        scrollToSubcategory(projectId, firstSub.id);
-      }
-    }
+    scrollToAnchor(projectAnchorRefs.current[projectId]);
   };
 
   // Determine if title should be large (low opacity) or small (matching description)
   const shouldUseLargeTitle = (projectId, subId) => {
     // Ann Carson Design (id: 1)
-    if (projectId === 1 && ['site-axon', 'artswalk-map', 'reading-room', 'floorplans', 'gallery', 'auditorium'].includes(subId)) {
+    // Arch Center (id: 1)
+    if (projectId === 1 && ['site-axon-map', 'reading-room', 'floorplans', 'gallery', 'center', 'auditorium'].includes(subId)) {
       return true;
     }
     // ARTS PORCH (id: 2)
@@ -553,24 +612,29 @@ function App() {
         ref={(el) => (sectionRefs.current['spaces'] = el)}
       >
         {/* Fixed Sidebar Index */}
-        <aside className={`spaces-sidebar ${activeSection !== 'spaces' ? 'hidden' : ''}`}>
-          {projects.map((project) => (
-            <div key={project.id} className="project-index">
+        <ScrollLinkedSidebar
+          className="spaces-sidebar"
+          hidden={activeSection !== 'spaces'}
+          activeId={activeProject}
+          items={projects}
+          getId={(project) => project.id}
+          renderItem={(project, { variant }) => (
+            <div className={`project-index ${variant === 'current' ? 'active-project' : ''}`}>
               <div className="project-header">
                 <span className="project-number">{project.id}</span>
-                <span 
-                  className={`project-title ${activeProject === project.id ? 'active' : 'inactive'}`}
+                <span
+                  className={`project-title ${variant === 'current' ? 'active' : 'inactive'}`}
                   onClick={() => scrollToProject(project.id)}
                   style={{ cursor: 'pointer' }}
                 >
                   {project.title}
                 </span>
               </div>
-              <ul className="subcategory-list">
-                {project.subcategories.filter(sub => !sub.isFinale).map((sub) => (
-                  <li 
+              <ul className={`subcategory-list ${variant === 'current' ? 'expanded' : 'collapsed'}`}>
+                {project.subcategories.filter((sub) => !sub.isFinale).map((sub) => (
+                  <li
                     key={sub.id}
-                    className={activeProject === project.id && activeSubcategory === sub.id ? 'active' : ''}
+                    className={activeSubcategory === sub.id ? 'active' : ''}
                     onClick={() => scrollToSubcategory(project.id, sub.id)}
                   >
                     <span className="indicator">•</span>
@@ -579,14 +643,21 @@ function App() {
                 ))}
               </ul>
             </div>
-          ))}
-        </aside>
+          )}
+        />
 
         {/* Main Content */}
         <div className="spaces-content">
           {projects.map((project, projectIndex) => (
             <div key={project.id}>
-              <div className="project-section">
+              <div
+                className="scroll-anchor"
+                ref={(el) => (projectAnchorRefs.current[project.id] = el)}
+              />
+              <div
+                className="project-section"
+                ref={(el) => (projectSectionRefs.current[project.id] = el)}
+              >
                 {project.introductionText && (
                   <div className="subcategory-section project-introduction first-subcategory">
                     <p className="project-introduction-copy">{project.introductionText}</p>
@@ -598,8 +669,8 @@ function App() {
                 {project.subcategories.map((sub, subIndex) => (
                   <Fragment key={sub.id}>
                     <div
+                      className="scroll-anchor"
                       ref={(el) => (anchorRefs.current[`${project.id}-${sub.id}`] = el)}
-                      style={{ height: '1px', marginBottom: '-1px' }}
                     />
                     <div
                       className={`subcategory-section ${subIndex === 0 && !project.introductionText ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''} ${sub.isTextBlock ? 'text-block-section' : ''}`}
@@ -670,37 +741,48 @@ function App() {
         ref={(el) => (sectionRefs.current['words'] = el)}
       >
         {/* Fixed Sidebar Index for Words */}
-        <aside className={`words-sidebar ${activeSection !== 'words' ? 'hidden' : ''}`}>
-          {writings.map((writing) => (
-            <div 
-              key={writing.id} 
-              className={`writing-index ${activeWriting === writing.id ? 'active' : ''}`}
+        <ScrollLinkedSidebar
+          className="words-sidebar"
+          hidden={activeSection !== 'words'}
+          activeId={activeWriting}
+          items={writings}
+          getId={(writing) => writing.id}
+          renderItem={(writing, { variant }) => (
+            <div
+              className={`writing-index ${variant === 'current' ? 'active' : ''}`}
               onClick={() => scrollToWriting(writing.id)}
             >
               <div className="writing-header">
                 <span className="writing-number">{writing.id}</span>
-                <span className={`writing-title ${activeWriting === writing.id ? 'active' : 'inactive'}`}>{writing.title}</span>
+                <span className={`writing-title ${variant === 'current' ? 'active' : 'inactive'}`}>
+                  {writing.title}
+                </span>
               </div>
             </div>
-          ))}
-        </aside>
+          )}
+        />
 
         {/* Words Content */}
         <div className="words-content">
           {writings.map((writing) => (
-            <div 
-              key={writing.id}
-              className="writing-section"
-              ref={(el) => (writingRefs.current[writing.id] = el)}
-            >
-              <div className="writing-layout">
-                <div className="writing-info">
-                  <h3 className="writing-display-title">{writing.title}</h3>
-                  <p className="writing-subtitle">{writing.subtitle}</p>
-                  <div className="writing-text">
-                    {writing.content.split('\n\n').map((paragraph, idx) => (
-                      <p key={idx} className="writing-paragraph">{paragraph}</p>
-                    ))}
+            <div key={writing.id}>
+              <div
+                className="scroll-anchor"
+                ref={(el) => (writingAnchorRefs.current[writing.id] = el)}
+              />
+              <div
+                className="writing-section"
+                ref={(el) => (writingRefs.current[writing.id] = el)}
+              >
+                <div className="writing-layout">
+                  <div className="writing-info">
+                    <h3 className="writing-display-title">{writing.title}</h3>
+                    <p className="writing-subtitle">{writing.subtitle}</p>
+                    <div className="writing-text">
+                      {writing.content.split('\n\n').map((paragraph, idx) => (
+                        <p key={idx} className="writing-paragraph">{paragraph}</p>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -716,33 +798,43 @@ function App() {
         ref={(el) => (sectionRefs.current['paintings'] = el)}
       >
         {/* Fixed Sidebar Index for Paintings */}
-        <aside className={`paintings-sidebar ${activeSection !== 'paintings' ? 'hidden' : ''}`}>
-          {paintings.map((painting) => (
-            <div 
-              key={painting.id} 
-              className={`painting-index ${activePainting === painting.id ? 'active' : ''}`}
+        <ScrollLinkedSidebar
+          className="paintings-sidebar"
+          hidden={activeSection !== 'paintings'}
+          activeId={activePainting}
+          items={paintings}
+          getId={(painting) => painting.id}
+          renderItem={(painting, { variant }) => (
+            <div
+              className={`painting-index ${variant === 'current' ? 'active' : ''}`}
               onClick={() => scrollToPainting(painting.id)}
             >
               <div className="painting-header">
                 <span className="painting-number">{painting.id}</span>
-                <span className={`painting-title ${activePainting === painting.id ? 'active' : 'inactive'}`}>{painting.title}</span>
+                <span className={`painting-title ${variant === 'current' ? 'active' : 'inactive'}`}>
+                  {painting.title}
+                </span>
               </div>
               <div className="painting-meta">
                 <span className="painting-size">{painting.size}</span>
                 <span className="painting-materials">{painting.materials}</span>
               </div>
             </div>
-          ))}
-        </aside>
+          )}
+        />
 
         {/* Paintings Content */}
         <div className="paintings-content">
           {paintings.map((painting) => (
-            <div 
-              key={painting.id}
-              className={`painting-section ${painting.isMultiImage ? 'has-multi-image' : ''}`}
-              ref={(el) => (paintingRefs.current[painting.id] = el)}
-            >
+            <div key={painting.id}>
+              <div
+                className="scroll-anchor"
+                ref={(el) => (paintingAnchorRefs.current[painting.id] = el)}
+              />
+              <div
+                className={`painting-section ${painting.isMultiImage ? 'has-multi-image' : ''}`}
+                ref={(el) => (paintingRefs.current[painting.id] = el)}
+              >
               {painting.isMultiImage ? (
                 <div className="multi-image-stack">
                   {painting.images.map((img, idx) => (
@@ -772,6 +864,7 @@ function App() {
                   </div>
                 </div>
               )}
+              </div>
             </div>
           ))}
         </div>
@@ -784,7 +877,7 @@ function App() {
         ref={(el) => (sectionRefs.current['contact'] = el)}
       >
         <div className="contact-content">
-          <img src="/images/yellowshirt.jpeg" alt="Allina" className="contact-photo" />
+          <img src="/images/greenjacket.jpeg" alt="Allina" className="contact-photo" />
           <div className="contact-info">
             <p className="about-text">
               My name is Allina and I am currently an Honors student at the University of Kansas studying architecture. My motivation and energy to create is fueled by a desire to share.
@@ -793,7 +886,7 @@ function App() {
               I believe architecture, ideally, is an act of service. Creating living solutions for every possible user, architecture is a practice that flourishes in its application of interdisciplinary work. In the same vein, art and performance, first and foremost, is a shared experience that I believe is at its best in its intersections.
             </p>
             <p className="about-text personal">
-              If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but now I play at small venues with my own emo grunge band. My favorite movies include <em>The Wind Rises</em>, <em>Minari</em>, and <em>Scott Pilgrim vs. the World</em>.
+              If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but now I play at small venues with my own emo grunge band. My favorite movies include <em>The Wind Rises</em>, <em>Minari</em>, and <em>Ex Machina</em>.
             </p>
             <span className="email">ALLINADOUGHERTY[AT]KU[DOT]EDU</span>
             <div className="social-links">

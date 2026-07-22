@@ -23,9 +23,9 @@ body {
   left: 0;
   right: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
-  padding: 2rem 2.5rem;
+  padding: 2rem 2.5rem 2rem 2rem;
   z-index: 1000;
   pointer-events: none;
 }
@@ -43,6 +43,7 @@ body {
 .main-nav {
   display: flex;
   gap: 1rem;
+  margin-left: auto;
   opacity: 1;
   transition: opacity 0.3s ease;
 }
@@ -151,25 +152,51 @@ body {
 }
 
 /* Shared Sidebar Base */
+/* --menu-anchor: the fixed top offset where the menu begins. It aligns with
+   the top edge of the images/content on the right. Tune this value to match. */
 .spaces-sidebar,
 .paintings-sidebar,
 .words-sidebar {
+  --menu-anchor: 14vh;
   position: fixed !important;
   left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 200px !important;
+  top: var(--menu-anchor) !important;
+  transform: none !important;
+  width: 220px !important;
+  height: calc(100vh - var(--menu-anchor) - 2rem);
+  max-height: none;
   z-index: 100;
   opacity: 1;
   transition: opacity 0.3s ease;
-  max-height: 80vh;
-  overflow-y: auto;
-  pointer-events: auto;
-  padding-left: 2rem;
+  pointer-events: none;
   border-left: 1px solid #000000;
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scroll-linked-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Single top-anchored stack; passed items collapse and stay at the top,
+   the active item expands below them, upcoming items follow. */
+.sidebar-reel {
+  display: flex;
+  flex-direction: column;
+  padding-left: 2rem;
+}
+
+/* Only the visible sidebar may receive clicks. Children with
+   pointer-events:auto would otherwise override a hidden parent's
+   pointer-events:none and steal clicks from the active menu. */
+.spaces-sidebar:not(.hidden) .sidebar-reel,
+.paintings-sidebar:not(.hidden) .sidebar-reel,
+.words-sidebar:not(.hidden) .sidebar-reel {
+  pointer-events: auto;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -183,7 +210,120 @@ body {
 .paintings-sidebar.hidden,
 .words-sidebar.hidden {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+}
+
+/* Spaces sidebar */
+.spaces-sidebar .project-index {
+  margin-bottom: 0.35rem;
+}
+
+.spaces-sidebar .project-header {
+  gap: 0.45rem;
+}
+
+.spaces-sidebar .project-number {
+  font-size: 1rem;
+}
+
+.spaces-sidebar .project-title {
+  font-size: 0.72rem;
+  line-height: 1.3;
+}
+
+.spaces-sidebar .subcategory-list {
+  padding-left: 1.2rem;
+  overflow: hidden;
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    margin-top 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.spaces-sidebar .subcategory-list.expanded {
+  max-height: 220px;
+  margin-top: 0.15rem;
+  opacity: 1;
+}
+
+.spaces-sidebar .subcategory-list li {
+  font-size: 0.58rem;
+  padding: 0.06rem 0;
+  line-height: 1.25;
+}
+
+/* Paintings & Words sidebars — match spaces sizing, keep all sub text */
+.paintings-sidebar:not(.hidden) .painting-index,
+.words-sidebar:not(.hidden) .writing-index {
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.paintings-sidebar.hidden .painting-index,
+.words-sidebar.hidden .writing-index {
+  margin-bottom: 0.5rem;
+}
+
+.paintings-sidebar .painting-header,
+.words-sidebar .writing-header {
+  gap: 0.45rem;
+  margin-bottom: 0.1rem;
+}
+
+.paintings-sidebar .painting-number,
+.words-sidebar .writing-number {
+  font-size: 1rem;
+}
+
+.paintings-sidebar .painting-title,
+.words-sidebar .writing-title {
+  font-size: 0.72rem;
+  line-height: 1.3;
+}
+
+.paintings-sidebar .painting-meta {
+  padding-left: 1.2rem;
+  margin-top: 0.1rem;
+}
+
+.paintings-sidebar .painting-size,
+.paintings-sidebar .painting-materials {
+  font-size: 0.58rem;
+  line-height: 1.25;
+}
+
+@media (max-height: 720px) {
+  .spaces-sidebar,
+  .paintings-sidebar,
+  .words-sidebar {
+    --menu-anchor: 10vh;
+  }
+
+  .sidebar-reel {
+    padding-left: 1.5rem;
+  }
+
+  .spaces-sidebar .project-title,
+  .paintings-sidebar .painting-title,
+  .words-sidebar .writing-title {
+    font-size: 0.65rem;
+  }
+
+  .spaces-sidebar .subcategory-list li,
+  .paintings-sidebar .painting-size,
+  .paintings-sidebar .painting-materials {
+    font-size: 0.52rem;
+  }
+
+  .spaces-sidebar .project-number,
+  .paintings-sidebar .painting-number,
+  .words-sidebar .writing-number {
+    font-size: 0.9rem;
+  }
 }
 
 .project-index {
@@ -267,6 +407,16 @@ body {
 
 .project-section {
   margin-bottom: 0;
+}
+
+/* Non-sticky scroll targets placed before each sticky section.
+   Reading positions from these (instead of the sticky sections) keeps
+   navigation accurate regardless of the sticky pinned state. */
+.scroll-anchor {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
 }
 
 /* White space break between projects */
@@ -483,7 +633,7 @@ body {
   cursor: pointer;
   transition: opacity 0.2s ease;
   opacity: 0.5;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .writing-index:hover {
@@ -997,6 +1147,10 @@ body {
     position: fixed !important;
     left: 1.5rem !important;
     width: 180px !important;
+  }
+
+  .spaces-sidebar {
+    width: 200px !important;
   }
 
   .spaces-content,
