@@ -23,9 +23,9 @@ body {
   left: 0;
   right: 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
-  padding: 2rem 2.5rem 2rem 2rem;
+  padding: 2rem 2.5rem;
   z-index: 1000;
   pointer-events: none;
 }
@@ -43,7 +43,6 @@ body {
 .main-nav {
   display: flex;
   gap: 1rem;
-  margin-left: auto;
   opacity: 1;
   transition: opacity 0.3s ease;
 }
@@ -124,24 +123,71 @@ body {
   object-fit: contain;
 }
 
-.home-nav {
+/* Handwritten identity lockup under the hero animation */
+.home-identity {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  margin-top: 0.35rem;
+  position: relative;
+  z-index: 2; /* sit above the animation where they overlap */
+  /* Negative margin tucks the name up into the animation.
+     The name<->tagline gap and the space below stay intact. */
+  margin-top: clamp(-12.5rem, -17.5vh, -5rem);
+  /* Match the hero animation's opacity fade-in (0.5s ease) for a cohesive entrance. */
+  animation: homeFadeIn 0.6s ease 0.15s both;
 }
 
-.home-nav a {
-  color: #000000;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  transition: opacity 0.2s ease;
+.home-name {
+  width: clamp(220px, 30vw, 420px);
+  height: auto;
+  display: block;
 }
 
-.home-nav a:hover {
-  opacity: 0.6;
+.home-tagline {
+  margin-top: 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #999999;
+  text-align: center;
+}
+
+@keyframes homeFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== ANIMATED SEQUENCE (reusable) ===== */
+.animated-sequence {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  line-height: 0; /* remove inline-canvas descender gap */
+}
+
+.animated-sequence__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Fade the first frame in once decoded so there is never a flash/pop. */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.animated-sequence.is-ready .animated-sequence__canvas {
+  opacity: 1;
+}
+
+.home-animation {
+  aspect-ratio: 7856 / 5908;
+  height: min(70vh, 68vw);
+  max-width: 92vw;
 }
 
 /* ===== SPACES SECTION ===== */
@@ -152,51 +198,25 @@ body {
 }
 
 /* Shared Sidebar Base */
-/* --menu-anchor: the fixed top offset where the menu begins. It aligns with
-   the top edge of the images/content on the right. Tune this value to match. */
 .spaces-sidebar,
 .paintings-sidebar,
 .words-sidebar {
-  --menu-anchor: 14vh;
   position: fixed !important;
   left: 0 !important;
-  top: var(--menu-anchor) !important;
-  transform: none !important;
-  width: 220px !important;
-  height: calc(100vh - var(--menu-anchor) - 2rem);
-  max-height: none;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 200px !important;
   z-index: 100;
   opacity: 1;
   transition: opacity 0.3s ease;
-  pointer-events: none;
+  max-height: 80vh;
+  overflow-y: auto;
+  pointer-events: auto;
+  padding-left: 2rem;
   border-left: 1px solid #000000;
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
-}
-
-.scroll-linked-sidebar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* Single top-anchored stack; passed items collapse and stay at the top,
-   the active item expands below them, upcoming items follow. */
-.sidebar-reel {
-  display: flex;
-  flex-direction: column;
-  padding-left: 2rem;
-}
-
-/* Only the visible sidebar may receive clicks. Children with
-   pointer-events:auto would otherwise override a hidden parent's
-   pointer-events:none and steal clicks from the active menu. */
-.spaces-sidebar:not(.hidden) .sidebar-reel,
-.paintings-sidebar:not(.hidden) .sidebar-reel,
-.words-sidebar:not(.hidden) .sidebar-reel {
-  pointer-events: auto;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -210,120 +230,7 @@ body {
 .paintings-sidebar.hidden,
 .words-sidebar.hidden {
   opacity: 0;
-  visibility: hidden;
   pointer-events: none;
-}
-
-/* Spaces sidebar */
-.spaces-sidebar .project-index {
-  margin-bottom: 0.35rem;
-}
-
-.spaces-sidebar .project-header {
-  gap: 0.45rem;
-}
-
-.spaces-sidebar .project-number {
-  font-size: 1rem;
-}
-
-.spaces-sidebar .project-title {
-  font-size: 0.72rem;
-  line-height: 1.3;
-}
-
-.spaces-sidebar .subcategory-list {
-  padding-left: 1.2rem;
-  overflow: hidden;
-  max-height: 0;
-  margin-top: 0;
-  opacity: 0;
-  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.3s ease,
-    margin-top 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.spaces-sidebar .subcategory-list.expanded {
-  max-height: 220px;
-  margin-top: 0.15rem;
-  opacity: 1;
-}
-
-.spaces-sidebar .subcategory-list li {
-  font-size: 0.58rem;
-  padding: 0.06rem 0;
-  line-height: 1.25;
-}
-
-/* Paintings & Words sidebars — match spaces sizing, keep all sub text */
-.paintings-sidebar:not(.hidden) .painting-index,
-.words-sidebar:not(.hidden) .writing-index {
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  pointer-events: auto;
-}
-
-.paintings-sidebar.hidden .painting-index,
-.words-sidebar.hidden .writing-index {
-  margin-bottom: 0.5rem;
-}
-
-.paintings-sidebar .painting-header,
-.words-sidebar .writing-header {
-  gap: 0.45rem;
-  margin-bottom: 0.1rem;
-}
-
-.paintings-sidebar .painting-number,
-.words-sidebar .writing-number {
-  font-size: 1rem;
-}
-
-.paintings-sidebar .painting-title,
-.words-sidebar .writing-title {
-  font-size: 0.72rem;
-  line-height: 1.3;
-}
-
-.paintings-sidebar .painting-meta {
-  padding-left: 1.2rem;
-  margin-top: 0.1rem;
-}
-
-.paintings-sidebar .painting-size,
-.paintings-sidebar .painting-materials {
-  font-size: 0.58rem;
-  line-height: 1.25;
-}
-
-@media (max-height: 720px) {
-  .spaces-sidebar,
-  .paintings-sidebar,
-  .words-sidebar {
-    --menu-anchor: 10vh;
-  }
-
-  .sidebar-reel {
-    padding-left: 1.5rem;
-  }
-
-  .spaces-sidebar .project-title,
-  .paintings-sidebar .painting-title,
-  .words-sidebar .writing-title {
-    font-size: 0.65rem;
-  }
-
-  .spaces-sidebar .subcategory-list li,
-  .paintings-sidebar .painting-size,
-  .paintings-sidebar .painting-materials {
-    font-size: 0.52rem;
-  }
-
-  .spaces-sidebar .project-number,
-  .paintings-sidebar .painting-number,
-  .words-sidebar .writing-number {
-    font-size: 0.9rem;
-  }
 }
 
 .project-index {
@@ -409,18 +316,9 @@ body {
   margin-bottom: 0;
 }
 
-/* Non-sticky scroll targets placed before each sticky section.
-   Reading positions from these (instead of the sticky sections) keeps
-   navigation accurate regardless of the sticky pinned state. */
-.scroll-anchor {
-  height: 0;
-  margin: 0;
-  padding: 0;
-  pointer-events: none;
-}
-
-/* White space break between projects */
-.project-spacer {
+/* Full-screen white-space break (between projects, and after the hero) */
+.project-spacer,
+.home-spacer {
   min-height: 100vh;
   background: #ffffff;
 }
@@ -451,6 +349,7 @@ body {
   color: #444;
   font-weight: 400;
   letter-spacing: 0.01em;
+  text-align: justify;
 }
 
 .project-introduction-credits {
@@ -633,7 +532,7 @@ body {
   cursor: pointer;
   transition: opacity 0.2s ease;
   opacity: 0.5;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .writing-index:hover {
@@ -889,105 +788,104 @@ body {
 
 /* ===== CONTACT SECTION ===== */
 .contact-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6rem 4rem;
+  display: block;
+  padding: 8rem 2.5rem 6rem;
   min-height: 100vh;
   background: #ffffff;
 }
 
 .contact-content {
-  display: flex;
-  gap: 4rem;
-  align-items: flex-start;
-  max-width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 15rem));
+  column-gap: 3.5rem;
+  align-items: start;
+  max-width: 60rem;
 }
 
-.contact-photo {
-  width: auto;
-  max-width: 350px;
-  height: auto;
-  max-height: 450px;
-  object-fit: contain;
-  flex-shrink: 0;
+.contact-column {
+  min-width: 0;
 }
 
-.contact-info {
-  flex: 1;
-  max-width: 500px;
+/* Shared uppercase typography for the contact grid */
+.contact-name,
+.contact-link,
+.contact-group-heading,
+.contact-group-item,
+.contact-merit,
+.contact-footnote {
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
 }
 
-.about-text {
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: #444;
-  margin-bottom: 1.25rem;
-}
-
-.about-text.personal {
-  color: #666;
-  font-style: italic;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #eee;
-}
-
-.about-text em {
-  font-style: italic;
-}
-
-.contact-info .email {
-  display: block;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
+/* Column 1 — identity + social links */
+.contact-name {
+  font-weight: 700;
   color: #000000;
+  margin-bottom: 0.15rem;
+}
+
+.contact-links {
+  list-style: none;
+}
+
+.contact-link {
+  color: #000000;
+  text-decoration: none;
   font-weight: 400;
-  margin-top: 2rem;
-  margin-bottom: 1.5rem;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
 }
 
-.social-links {
-  display: flex;
-  gap: 1.25rem;
-  margin-top: 2rem;
+.contact-link:hover {
+  opacity: 0.5;
 }
 
-.social-icon {
-  width: 28px;
-  height: 28px;
-  opacity: 0.7;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+/* Column 2 — experience groups */
+.contact-group {
+  margin-bottom: 1.6rem;
 }
 
-.social-icon:hover {
-  opacity: 1;
-  transform: scale(1.1);
+.contact-group:last-child {
+  margin-bottom: 0;
 }
 
-/* Contact Sidebar */
-.contact-index {
-  margin-bottom: 1.5rem;
-}
-
-.contact-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.contact-number {
-  font-size: 1.5rem;
+.contact-group-heading {
   font-weight: 700;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  line-height: 1;
+  color: #000000;
+  margin-bottom: 0;
 }
 
-.contact-title {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+.contact-group-item {
+  font-weight: 400;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.contact-group-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Column 3 — merits & awards */
+.contact-merit-list {
+  list-style: none;
+}
+
+.contact-merit {
+  font-weight: 400;
+  color: #000000;
+  margin-bottom: 0;
+}
+
+.contact-merit-year {
+  color: #999999;
+  font-style: italic;
+}
+
+.contact-footnote {
+  font-weight: 400;
+  color: #000000;
+  margin-top: 1.6rem;
 }
 
 /* ===== RESPONSIVE - LARGE DESKTOP ===== */
@@ -995,6 +893,10 @@ body {
   .home-artwork {
     max-height: 75vh;
     max-width: 60vw;
+  }
+
+  .home-animation {
+    height: min(75vh, 66vw);
   }
 
   .spaces-content {
@@ -1036,14 +938,19 @@ body {
     max-width: 420px;
   }
 
-  .contact-photo {
-    max-width: 420px;
-    max-height: 540px;
+  .contact-content {
+    grid-template-columns: repeat(3, minmax(0, 17rem));
+    column-gap: 4rem;
+    max-width: 68rem;
   }
 
-  .contact-content {
-    max-width: 1200px;
-    gap: 5rem;
+  .contact-name,
+  .contact-link,
+  .contact-group-heading,
+  .contact-group-item,
+  .contact-merit,
+  .contact-footnote {
+    font-size: 0.9rem;
   }
 }
 
@@ -1052,6 +959,10 @@ body {
   .home-artwork {
     max-height: 80vh;
     max-width: 65vw;
+  }
+
+  .home-animation {
+    height: min(80vh, 64vw);
   }
 
   .spaces-sidebar,
@@ -1123,19 +1034,20 @@ body {
     font-size: 0.95rem;
   }
 
-  .contact-photo {
-    max-width: 480px;
-    max-height: 620px;
-  }
-
   .contact-content {
-    max-width: 1400px;
-    gap: 6rem;
+    grid-template-columns: repeat(3, minmax(0, 20rem));
+    column-gap: 5rem;
+    max-width: 80rem;
   }
 
-  .about-text {
+  .contact-name,
+  .contact-link,
+  .contact-group-heading,
+  .contact-group-item,
+  .contact-merit,
+  .contact-footnote {
     font-size: 1rem;
-    line-height: 1.8;
+    line-height: 1.7;
   }
 }
 
@@ -1147,10 +1059,6 @@ body {
     position: fixed !important;
     left: 1.5rem !important;
     width: 180px !important;
-  }
-
-  .spaces-sidebar {
-    width: 200px !important;
   }
 
   .spaces-content,
@@ -1182,6 +1090,26 @@ body {
   .spaces-text-block-body {
     columns: 3;
     font-size: 0.55rem;
+  }
+
+  /* Contact — tighten the 3-column grid for tablet widths */
+  .contact-section {
+    padding: 7rem 1.5rem 5rem;
+  }
+
+  .contact-content {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 2rem;
+    max-width: 100%;
+  }
+
+  .contact-name,
+  .contact-link,
+  .contact-group-heading,
+  .contact-group-item,
+  .contact-merit,
+  .contact-footnote {
+    font-size: 0.78rem;
   }
 }
 
@@ -1226,12 +1154,22 @@ body {
     max-width: 90vw;
   }
 
-  .home-nav {
-    gap: 1rem;
+  .home-animation {
+    height: min(45vh, 82vw);
+    max-width: 90vw;
   }
 
-  .home-nav a {
-    font-size: 0.85rem;
+  .home-identity {
+    margin-top: clamp(-7.5rem, -12.5vh, -2.5rem);
+  }
+
+  .home-name {
+    width: clamp(180px, 60vw, 320px);
+  }
+
+  .home-tagline {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
   }
 
   /* Hide sidebars on mobile */
@@ -1346,33 +1284,25 @@ body {
     line-height: 1.5;
   }
 
-  /* Contact */
+  /* Contact — stack the columns into a single left-aligned flow */
   .contact-section {
-    padding: 4rem 1.5rem;
+    padding: 6rem 1.25rem 5rem;
   }
 
   .contact-content {
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-  }
-
-  .contact-photo {
-    width: 200px;
-    height: 260px;
-  }
-
-  .contact-info {
+    grid-template-columns: 1fr;
+    row-gap: 2.5rem;
+    column-gap: 0;
     max-width: 100%;
-    text-align: center;
   }
 
-  .about-text {
+  .contact-name,
+  .contact-link,
+  .contact-group-heading,
+  .contact-group-item,
+  .contact-merit,
+  .contact-footnote {
     font-size: 0.8rem;
-  }
-
-  .social-links {
-    justify-content: center;
   }
 }
 
@@ -1394,8 +1324,16 @@ body {
     max-height: 40vh;
   }
 
-  .home-nav a {
-    font-size: 0.75rem;
+  .home-animation {
+    height: min(40vh, 82vw);
+  }
+
+  .home-name {
+    width: clamp(170px, 66vw, 300px);
+  }
+
+  .home-tagline {
+    font-size: 0.58rem;
   }
 
   .spaces-content,

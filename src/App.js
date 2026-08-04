@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
 import './App.css';
+import AnimatedSequence from './AnimatedSequence';
 
 // Project data structure with descriptions
 const projects = [
@@ -7,12 +8,12 @@ const projects = [
     id: 1,
     title: 'ARCH CENTER',
     introductionText:
-      'Ann Carson posits that movement is fueled by desire. Centering the bittersweet informs this Center For Architecture as a space to develop a more responsible and self-reflexive attitude.',
+      'Creating a Center for Architecture in Kansas City\'s Arts district demanded an educational space that removes barrier. This project takes an undefined courtyard as its starting condition, a threshold left open between built space and the unbuilt. Its theoretical ground draws on Anne Carson\'s reading of Eros, in which desire is structured around a void that never closes, love and its opposite both drawing force from that same absence. This becomes structural with a single stairwell pierces the courtyard, remains the sole passage between floors. Circulation moves in orbit around this void, pulled outward toward in quiet spaces such as the gallery and reading room. Only to then be drawn back into to carry visitors across the distance. The architecture withholds arrival, asking its occupants to want the space before they are given it.',
     subcategories: [
       {
-        id: 'reading-room',
-        name: 'Reading Room',
-        images: ['/archcenter/ac2.5.jpg'],
+        id: 'program',
+        name: 'Program',
+        images: ['/archcenter/graphic.png'],
       },
       {
         id: 'site-axon-map',
@@ -24,6 +25,11 @@ const projects = [
           location: 'Museum District - Kansas City, MO',
           size: '27,000 sqft',
         },
+      },
+      {
+        id: 'reading-room',
+        name: 'Reading Room',
+        images: ['/archcenter/ac2.5.jpg'],
       },
       {
         id: 'floorplans',
@@ -52,7 +58,7 @@ const projects = [
     ],
   },
   {
-    id: 2,
+    id: 5,
     title: 'ARTS PORCH',
     introductionText:
       "Arts porch and Cafe placed along Kansas City's Art Walk initiative. Boasting a terrace with installation capablilites, it's point grid runs the course of the building growing and mapping an ever-changing art's landscape.",
@@ -73,11 +79,6 @@ const projects = [
         name: 'Floor Plan',
         images: ['/artsporch/floorplan.png'],
         description: 'Informed by a grid that acts as a form of logic and measurement, the building form is locked by formalization'
-      },
-      {
-        id: 'sec',
-        name: 'Section',
-        images: ['/artsporch/sec.png']
       },
       {
         id: 'elev',
@@ -141,10 +142,11 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
     ],
   },
   {
-    id: 4,
+    id: 2,
     title: 'MIXED USE',
     introductionText:
-      'Mixed use space with fine dining on the first floor with views out to a large sculpture garden and a second floor that hosts a contemporary art gallery. Surrounded by historic masonry of the downtown, the delicate void aims to complete rather than compete.',
+      'The project responds to a historic downtown context shaped by a masonry and the measured rhythm of brick storefronts along the street. The project treats movement as its primary subject rather than a byproduct of circulation. The ground floor holds a fine dining space in its most enclosed volume, opening itself under the framework of movement toward a public sculpture park anchored by a Richard Serra piece, collapsing the distance between private and shared ground. A single monumental stair reaches the gallery above, where light is calibrated to the art it falls on. The exterior holds the proportions of its historic neighbors, brick and punched window, even as the section behind the facade proposes something else: a building that returns light and motion to a downtown otherwise held by masonry.',
+ 
     subcategories: [
       { 
         id: 'celebration', 
@@ -169,7 +171,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
         images: ['/mixeduse/Asset 2.jpg'],
         description: 'Throughout the iterative design process, the relationship between the new structure and the preexisting historical context became central. Sat next to the heavy masonry courthouse and Watkins history building demanded a response. The answer was the removal of form, by placing something so transparent and formless next to the stoneworks. This allowed the historical forms to shine while still matching the precedents of storefronts so critical to the vernacular of Mass St.'
       },
-      { id: 'sections', name: 'Sections', images: ['/mixeduse/sections.png'] },
+      { id: 'sections', name: 'Sections', images: ['/mixeduse/New Model.png'] },
       { 
         id: 'interiors', 
         name: 'Interiors', 
@@ -186,8 +188,10 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
     ],
   },
   {
-    id: 5,
+    id: 4,
     title: 'HEALING',
+    introductionText:
+      "Set within Clinton Lake's oak-hickory forest and restored prairie near Lawrence, Kansas, the project is a satellite therapy space built to host workshops, group sessions, and retreats while protecting the privacy that therapeutic practice requires. Its V-shaped massing runs from open to closed, so a visitor descending the nature trail moves through a gradient rather than a single threshold. The roofline carries the argument: low and heavy over limestone-wrapped private rooms, rising into glass where the building opens toward Clinton Lake and a shared dining space. Privacy is built through proportion and material rather than walls alone, leaving the surrounding landscape to do the restorative work the program depends on.",
     subcategories: [
       { 
         id: 'healing', 
@@ -233,12 +237,14 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
           size: '1,150 sqft'
         }
       },
-      { id: 'formexploration', name: 'Form Exploration', images: ['/enclosure/2.JPEG'] },
       { id: 'section', name: 'Section', images: ['/enclosure/section_1.png'] },
       { id: 'floorplan', name: 'Floor Plan', images: ['/enclosure/floorplan.png'] },
     ],
   },
 ];
+
+// Display order for the Spaces section is driven by each project's id.
+projects.sort((a, b) => a.id - b.id);
 
 // Paintings data
 const paintings = [
@@ -259,42 +265,6 @@ const paintings = [
     image: '/works/fly.JPG',
     description: "Faced with imposing limits, the fly is an uncomfortable confrontation. With short life spans the life cycle of a fly inspired this hostile and uncomfortable presentation of a fly.",
     size: '29.5 x 40 inches',
-    materials: 'Acrylic on canvas'
-  },
-  {
-    id: 3,
-    title: 'COWBOY',
-    displayTitle: 'COWBOY',
-    image: '/works/painting4.jpg',
-    description: "Although cowboys may have found themselves obsolete with the invention of barbed wire, they live on the American zeitgeist. Existing beyond the bounds of their historical input, Cowboys and their culture have achieved a mythical status within pop culture. Capturing that energy required a exaggerated canvas spanning 48 inches by 36 inches.",
-    size: '48 x 36 inches',
-    materials: 'Acrylic on canvas'
-  },
-  {
-    id: 4,
-    title: 'RETURN',
-    displayTitle: 'RETURN',
-    image: '/works/pencil.png',
-    description: "A collage of sensations exaggerated by time. When memories return more vivid and vibrant upon recollection, Return calls a bright and wonderous sense.",
-    size: '11.5 x 8 inches',
-    materials: 'Colored Pencil on Illustration Board'
-  },
-  {
-    id: 5,
-    title: 'SPILL',
-    displayTitle: 'SPILL',
-    image: '/works/work2.png',
-    description: "In environments that seem to be changing rapidly before our eyes, there is an unbound and reckless freedom. The force nature possesses is one that cannot be controlled nor contained. Utilizing wax to contain cold water fabric dyes to select sections of cloth, the dye continues to seep through.",
-    size: '32 x 24 inches',
-    materials: 'Wax, cold water dye, muslin cloth'
-  },
-  {
-    id: 6,
-    title: 'PRAIRIE DREAMS',
-    displayTitle: 'PRAIRIE DREAMS',
-    image: '/works/work3.png',
-    description: "Inspired by the living and almost breathing aspects of a prairie, 'Prairie Dreams' mimics the movement of the Flint Hills. The unique and beautiful landscape holds a significant presence in the community of Manhattan, Kansas. Combining the movement of post-impressionist painters and the drama of stark contrasting colors, the vibrant image is an homage to a bright and enduring landscape. 'Prairie Dreams' is now a temporary installation for the Anderson Knight Architecture Firm. After being selected from their 2023 art competition, this piece now lives in front of a trash enclosure, beautifying a previously looked over part of an office complex.",
-    size: '12 x 24 inches',
     materials: 'Acrylic on canvas'
   },
   {
@@ -327,6 +297,56 @@ I’m not writing to argue that work should be thrown away more often, only that
     `
   },
 ];
+
+// Contact data
+const contact = {
+  name: 'ALLINA DOUGHERTY',
+  links: [
+    { label: 'INSTAGRAM', url: 'https://www.instagram.com/allina.dough/' },
+    { label: 'PINTEREST', url: 'https://www.pinterest.com/allinaeden/_created' },
+    { label: 'LINKEDIN', url: 'https://www.linkedin.com/in/allina-dougherty-090398326/' },
+  ],
+  experience: [
+    {
+      heading: 'CURRENTLY,',
+      items: [
+        'M.ARCH, GRADUATE RESEARCH ASSISTANT',
+        {
+          text: 'AMBASSADOR/EDUCATOR AT THE SPENCER MUSEUM OF ART, LAWRENCE, KS',
+          linkText: 'SPENCER MUSEUM OF ART',
+          url: 'https://spencerart.ku.edu/',
+        },
+      ],
+    },
+    {
+      heading: 'PREVIOUSLY,',
+      items: ['ARCHITECTURAL INTERN WITH JHET ARCHITECTS, DALLAS, TX'],
+    },
+  ],
+  merits: {
+    heading: 'MERITS, AWARDS +',
+    items: [
+      {
+        text: 'UNIVERSITY SCHOLAR',
+        year: '2026',
+        url: 'https://news.ku.edu/news/article/2026-cohort-of-university-scholars-announced',
+      },
+      {
+        text: 'UNDERGRADUATE RESEARCH AWARD RECIPIENT',
+        year: '2026',
+        url: 'https://engr.ku.edu/news/article/20-ku-students-receive-undergraduate-research-awards-for-summer-and-fall-2026',
+      },
+      { text: "UNIVERSITY OF KANSAS SCHOOL OF ARCHITECTURE DEAN'S LIST", year: '2024, 2025, 2026' },
+      {
+        text: 'ANDERSON KNIGHT PRAIRIE DREAMS MURAL COMPETITION',
+        year: '2023',
+        url: 'https://www.linkedin.com/posts/akarchitects_work-students-illustration-activity-7080210181816516608-FTgq/',
+      },
+      { text: 'MANHATTAN HIGH SCHOOL COMMENCEMENT SPEAKER', year: '2024' },
+    ],
+    footnote: { text: 'A MEDIOCRE EMO GRUNGE BAND', year: '2025, 2026' },
+  },
+};
 
 function getScrollAnchor() {
   return window.scrollY + window.innerHeight / 3;
@@ -368,6 +388,30 @@ function getScrollLinkedState(items, sectionRefs, getId) {
   }
 
   return { activeId, progress };
+}
+
+function ContactExternalLink({ href, children }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="contact-link">
+      {children}
+    </a>
+  );
+}
+
+// Renders an experience item, wrapping an optional substring in an external link.
+function renderExperienceItem(item) {
+  if (typeof item === 'string') return item;
+  if (item.linkText && item.url) {
+    const [before, after] = item.text.split(item.linkText);
+    return (
+      <>
+        {before}
+        <ContactExternalLink href={item.url}>{item.linkText}</ContactExternalLink>
+        {after}
+      </>
+    );
+  }
+  return item.text;
 }
 
 function ScrollLinkedSidebar({ className, hidden, activeId, items, getId, renderItem }) {
@@ -518,27 +562,27 @@ function App() {
   const shouldUseLargeTitle = (projectId, subId) => {
     // Ann Carson Design (id: 1)
     // Arch Center (id: 1)
-    if (projectId === 1 && ['site-axon-map', 'reading-room', 'floorplans', 'gallery', 'center', 'auditorium'].includes(subId)) {
+    if (projectId === 1 && ['program', 'site-axon-map', 'reading-room', 'floorplans', 'gallery', 'center', 'auditorium'].includes(subId)) {
       return true;
     }
-    // ARTS PORCH (id: 2)
-    if (projectId === 2 && ['axon', 'floorplan', 'sec', 'elev', 'side'].includes(subId)) {
+    // ARTS PORCH (id: 5)
+    if (projectId === 5 && ['axon', 'floorplan', 'elev', 'side'].includes(subId)) {
       return true;
     }
     // Revisiting Bad Press (id: 3): exhibition images
     if (projectId === 3 && ['t01', 't02', 't03', 't04', 't05'].includes(subId)) {
       return true;
     }
-    // Mixed Use (id: 4): celebration, site, sections, interiors, finale
-    if (projectId === 4 && ['celebration', 'site', 'sections', 'interiors', 'finale'].includes(subId)) {
+    // Mixed Use (id: 2): celebration, site, sections, interiors, finale
+    if (projectId === 2 && ['celebration', 'site', 'sections', 'interiors', 'finale'].includes(subId)) {
       return true;
     }
-    // Healing (id: 5): site, floorplans, process, sectioncuts
-    if (projectId === 5 && ['site', 'floorplans', 'process', 'sectioncuts'].includes(subId)) {
+    // Healing (id: 4): site, floorplans, process, sectioncuts
+    if (projectId === 4 && ['site', 'floorplans', 'process', 'sectioncuts'].includes(subId)) {
       return true;
     }
     // Enclosure (id: 6): ideation, formexploration, section, floorplan
-    if (projectId === 6 && ['ideation', 'formexploration', 'section', 'floorplan'].includes(subId)) {
+    if (projectId === 6 && ['ideation', 'section', 'floorplan'].includes(subId)) {
       return true;
     }
     return false;
@@ -595,15 +639,33 @@ function App() {
         ref={(el) => (sectionRefs.current['home'] = el)}
       >
         <div className="home-content">
-          <img src="/images/background.png" alt="Artwork" className="home-artwork" />
-          <nav className="home-nav">
-            <a href="#spaces" onClick={(e) => { e.preventDefault(); scrollToSection('spaces'); }}>SPACES</a>
-            <a href="#words" onClick={(e) => { e.preventDefault(); scrollToSection('words'); }}>WORDS</a>
-            <a href="#paintings" onClick={(e) => { e.preventDefault(); scrollToSection('paintings'); }}>PAINTINGS</a>
-            <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>CONTACT</a>
-          </nav>
+          {/* Frame-sequence hero: autoplay in view, seamless ping-pong loop,
+              preloaded + downscaled for smooth high-DPI playback. */}
+          <AnimatedSequence
+            className="home-animation"
+            frameFolder="/animation"
+            frameCount={5}
+            startIndex={10}
+            prefix="frame-"
+            ext="jpg"
+            fps={3}
+            pingPong
+            loop
+            autoplay
+            objectFit="contain"
+            ariaLabel="Allina Dougherty animated illustration"
+          />
+          {/* Handwritten identity lockup (reuses the existing signed name asset). */}
+          <div className="home-identity">
+            <img src="/images/signed.png" alt="Allina Dougherty" className="home-name" />
+            <p className="home-tagline">A STUDENT ARCHITECTURAL DESIGNER + RESEARCHER</p>
+          </div>
         </div>
       </section>
+
+      {/* Full-screen white space so the hero clears out before any other
+          content or navigation appears while scrolling to Spaces. */}
+      <div className="home-spacer" aria-hidden="true" />
 
       {/* Spaces Section */}
       <section 
@@ -877,29 +939,58 @@ function App() {
         ref={(el) => (sectionRefs.current['contact'] = el)}
       >
         <div className="contact-content">
-          <img src="/images/greenjacket.jpeg" alt="Allina" className="contact-photo" />
-          <div className="contact-info">
-            <p className="about-text">
-              My name is Allina and I am currently an Honors student at the University of Kansas studying architecture. My motivation and energy to create is fueled by a desire to share.
-            </p>
-            <p className="about-text">
-              I believe architecture, ideally, is an act of service. Creating living solutions for every possible user, architecture is a practice that flourishes in its application of interdisciplinary work. In the same vein, art and performance, first and foremost, is a shared experience that I believe is at its best in its intersections.
-            </p>
-            <p className="about-text personal">
-              If you want to know me better I'd tell you I love making music with others, I spent a lot of my life playing with many orchestras, but now I play at small venues with my own emo grunge band. My favorite movies include <em>The Wind Rises</em>, <em>Minari</em>, and <em>Ex Machina</em>.
-            </p>
-            <span className="email">ALLINADOUGHERTY[AT]KU[DOT]EDU</span>
-            <div className="social-links">
-              <a href="https://www.instagram.com/allina.dough/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <img src="/icons/spot.png" alt="Instagram" className="social-icon" />
-              </a>
-              <a href="https://www.linkedin.com/in/allina-dougherty-090398326/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <img src="/icons/linkedin.png" alt="LinkedIn" className="social-icon" />
-              </a>
-              <a href="https://www.pinterest.com/allinaeden/_created" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
-                <img src="/icons/pinterest.svg" alt="Pinterest" className="social-icon" />
-              </a>
-            </div>
+          {/* Identity + social links */}
+          <div className="contact-column contact-column-identity">
+            <h2 className="contact-name">{contact.name}</h2>
+            <ul className="contact-links">
+              {contact.links.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-link"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Experience */}
+          <div className="contact-column contact-column-experience">
+            {contact.experience.map((group) => (
+              <div key={group.heading} className="contact-group">
+                <h3 className="contact-group-heading">{group.heading}</h3>
+                {group.items.map((item, idx) => (
+                  <p key={idx} className="contact-group-item">{renderExperienceItem(item)}</p>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          {/* Merits & awards */}
+          <div className="contact-column contact-column-merits">
+            <h3 className="contact-group-heading">{contact.merits.heading}</h3>
+            <ul className="contact-merit-list">
+              {contact.merits.items.map((merit, idx) => (
+                <li key={idx} className="contact-merit">
+                  {merit.url ? (
+                    <ContactExternalLink href={merit.url}>{merit.text}</ContactExternalLink>
+                  ) : (
+                    merit.text
+                  )}{' '}
+                  <span className="contact-merit-year">{merit.year}</span>
+                </li>
+              ))}
+            </ul>
+            {contact.merits.footnote && (
+              <p className="contact-footnote">
+                {contact.merits.footnote.text}{' '}
+                <span className="contact-merit-year">{contact.merits.footnote.year}</span>
+              </p>
+            )}
           </div>
         </div>
       </section>
