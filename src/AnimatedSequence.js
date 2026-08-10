@@ -35,7 +35,7 @@ export default function AnimatedSequence({
   startIndex = 1,
   pad = 0,
   ext = 'jpg',
-  fps = 3,
+  fps = 5,
   loop = true,
   pingPong = false,
   autoplay = true,
@@ -44,6 +44,13 @@ export default function AnimatedSequence({
   objectFit = 'contain',
   className = '',
   ariaLabel = '',
+  // Fractional crop (0-1) trimmed from each edge of the *source* frame before
+  // decode/resize. Lets a sequence with large baked-in margins (e.g. artwork
+  // centered in a mostly-blank canvas) be tightened up without touching assets.
+  cropTop = 0,
+  cropBottom = 0,
+  cropLeft = 0,
+  cropRight = 0,
 }) {
   const wrapperRef = useRef(null);
   const canvasRef = useRef(null);
@@ -133,10 +140,11 @@ export default function AnimatedSequence({
       ctx.drawImage(src, 0, 0, bw, bh, dx, dy, dw, dh);
     };
 
-    // Fallback decode path: load via <img>, then downscale into a small offscreen
-    // canvas and release the huge source. Used when createImageBitmap(resize) is
-    // unavailable. Keeps memory low even without native resize support.
-    const imageToCanvas = (url, tW, tH) =>
+    // Fallback decode path: load via <img>, then downscale (with crop) into a
+    // small offscreen canvas and release the huge source. Used when
+    // createImageBitmap(resize) is unavailable. Keeps memory low even without
+    // native resize support.
+    const imageToCanvas = (url, sx, sy, sw, sh, tW, tH) =>
       new Promise((resolve, reject) => {
         const img = new Image();
         img.decoding = 'async';
@@ -147,7 +155,7 @@ export default function AnimatedSequence({
           const cx = c.getContext('2d');
           cx.imageSmoothingEnabled = true;
           cx.imageSmoothingQuality = 'high';
-          cx.drawImage(img, 0, 0, tW, tH);
+          cx.drawImage(img, sx, sy, sw, sh, 0, 0, tW, tH);
           img.onload = null;
           img.src = '';
           resolve(c);
@@ -175,8 +183,14 @@ export default function AnimatedSequence({
         if (cancelled || gen !== decodeGen) return;
       }
 
-      const tW = Math.max(1, Math.min(target, natW, MAX_DECODE_WIDTH));
-      const tH = Math.round((tW * natH) / natW);
+      // Crop rect in natural source pixels (defaults to the full frame).
+      const sx = Math.round(natW * cropLeft);
+      const sy = Math.round(natH * cropTop);
+      const sw = Math.max(1, Math.round(natW * (1 - cropLeft - cropRight)));
+      const sh = Math.max(1, Math.round(natH * (1 - cropTop - cropBottom)));
+
+      const tW = Math.max(1, Math.min(target, sw, MAX_DECODE_WIDTH));
+      const tH = Math.round((tW * sh) / sw);
       const canResize = typeof createImageBitmap === 'function';
 
       const next = new Array(urls.length);
@@ -189,20 +203,20 @@ export default function AnimatedSequence({
           if (canResize) {
             const resp = await fetch(urls[i]);
             const blob = await resp.blob();
-            // createImageBitmap can downscale *during* decode -> avoids the giant
-            // full-size intermediate, and resizeQuality:'high' gives clean frames.
-            next[i] = await createImageBitmap(blob, {
+            // createImageBitmap can crop + downscale *during* decode -> avoids the
+            // giant full-size intermediate, and resizeQuality:'high' gives clean frames.
+            next[i] = await createImageBitmap(blob, sx, sy, sw, sh, {
               resizeWidth: tW,
               resizeHeight: tH,
               resizeQuality: 'high',
             });
           } else {
-            next[i] = await imageToCanvas(urls[i], tW, tH);
+            next[i] = await imageToCanvas(urls[i], sx, sy, sw, sh, tW, tH);
           }
         } catch (e) {
           // Any failure (e.g. resize options unsupported) -> robust fallback.
           try {
-            next[i] = await imageToCanvas(urls[i], tW, tH);
+            next[i] = await imageToCanvas(urls[i], sx, sy, sw, sh, tW, tH);
           } catch (e2) {
             // leave slot empty; draw() simply skips missing frames
           }
@@ -331,7 +345,7 @@ export default function AnimatedSequence({
       sources = [];
     };
     // Re-initialize if any structural/config prop changes.
-  }, [urls, order, fps, loop, autoplay, objectFit]);
+  }, [urls, order, fps, loop, autoplay, objectFit, cropTop, cropBottom, cropLeft, cropRight]);
 
   return (
     <div

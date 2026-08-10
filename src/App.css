@@ -1,5 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
+/* ===== LAYOUT MARGINS (desktop) =====
+   Two reserved side "gutters" used across Spaces/Words/Paintings:
+   --menu-margin  (left)  — the project/painting/writing index column.
+   --nav-margin   (right) — where the fixed nav (top) and email (bottom)
+                            live, kept clear of scrolling content.
+   Both scale with viewport width (clamped) instead of per-breakpoint
+   magic numbers, so the header/footer and sidebars stay proportionally
+   sized at any desktop width. Mobile (<=768px) opts out — see that
+   breakpoint, which hides the sidebars and goes full-width. */
+:root {
+  --menu-margin: clamp(210px, 22vw, 340px);
+  --nav-margin: clamp(230px, 21vw, 320px);
+  /* Fixed clearance below the header, and above the viewport bottom, that
+     every single-image Spaces slide's artwork snaps its bottom-left corner
+     to — so every image lands on the same baseline no matter its own
+     height/aspect ratio. */
+  --image-anchor-top: 7rem;
+  --image-anchor-bottom: 16vh;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -42,7 +62,10 @@ body {
 
 .main-nav {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.85rem 1rem;
+  max-width: var(--nav-margin);
   opacity: 1;
   transition: opacity 0.3s ease;
 }
@@ -55,7 +78,7 @@ body {
 .main-nav a {
   color: #000000;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: 0.08em;
   opacity: 0.4;
@@ -76,11 +99,13 @@ body {
   position: fixed;
   bottom: 0;
   right: 0;
+  max-width: var(--nav-margin);
   padding: 0.75rem 2.5rem;
   z-index: 1000;
   opacity: 1;
   transition: opacity 0.3s ease;
   pointer-events: none;
+  text-align: right;
 }
 
 .fixed-footer.hidden {
@@ -130,10 +155,9 @@ body {
   align-items: center;
   width: 100%;
   position: relative;
-  z-index: 2; /* sit above the animation where they overlap */
-  /* Negative margin tucks the name up into the animation.
-     The name<->tagline gap and the space below stay intact. */
-  margin-top: clamp(-12.5rem, -17.5vh, -5rem);
+  z-index: 2;
+  /* Sits fully below the (now smaller) animation, not overlapping it. */
+  margin-top: 1rem;
   /* Match the hero animation's opacity fade-in (0.5s ease) for a cohesive entrance. */
   animation: homeFadeIn 0.6s ease 0.15s both;
 }
@@ -185,9 +209,137 @@ body {
 }
 
 .home-animation {
-  aspect-ratio: 7856 / 5908;
-  height: min(70vh, 68vw);
-  max-width: 92vw;
+  /* Cropped to the artwork's actual ink bounds (source frames have large blank
+     margins above/below); ratio = 7856 / (5908 * 0.38 visible-height fraction). */
+  aspect-ratio: 7856 / 2245;
+  height: min(13.3vh, 12.9vw);
+  max-width: 46vw;
+}
+
+/* ===== SPACES MENU PAGE ===== */
+.spaces-menu-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 8rem 2.5rem 6rem;
+  background: #ffffff;
+}
+
+/* Prompt shown while the page is held on the menu. Taken out of flow so
+   showing/hiding it never nudges the grid. */
+.spaces-menu-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 2.5rem;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #000000;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.spaces-menu-hint.is-visible {
+  opacity: 0.45;
+}
+
+/* Flex (not grid) so that any row left incomplete — e.g. 5 projects filling
+   a 6-up row, or an odd remainder on smaller breakpoints — is centered as a
+   group instead of grid auto-placement hugging the left edge. */
+.spaces-menu-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 1300px;
+}
+
+/* Reset the button so it reads as a plain, clickable tile; sized as a fixed
+   flex-basis (6-up) so wrapped/incomplete rows center via the grid's
+   justify-content instead of stretching or hugging the left edge. */
+.spaces-menu-item {
+  display: block;
+  flex: 0 0 calc((100% - 5 * 2.5rem) / 6);
+  max-width: calc((100% - 5 * 2.5rem) / 6);
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.spaces-menu-thumb {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+}
+
+.spaces-menu-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* Tilt uses the same easing/duration family as the site's other transitions. */
+  transition: transform 0.3s ease;
+}
+
+/* Hovering the image (not the caption) tilts it 5deg; it returns upright on leave. */
+.spaces-menu-thumb:hover .spaces-menu-image {
+  transform: rotate(5deg);
+}
+
+.spaces-menu-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.spaces-menu-title {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  color: #000000;
+  transition: opacity 0.2s ease;
+}
+
+.spaces-menu-item:hover .spaces-menu-title {
+  opacity: 0.6;
+}
+
+.spaces-menu-number {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #000000;
+}
+
+/* Respect reduced-motion: no tilt animation */
+@media (prefers-reduced-motion: reduce) {
+  .spaces-menu-image {
+    transition: none;
+  }
+
+  .spaces-menu-thumb:hover .spaces-menu-image {
+    transform: none;
+  }
+
+  .spaces-menu-hint {
+    transition: none;
+  }
 }
 
 /* ===== SPACES SECTION ===== */
@@ -205,7 +357,7 @@ body {
   left: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 200px !important;
+  width: var(--menu-margin) !important;
   z-index: 100;
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -253,7 +405,7 @@ body {
 }
 
 .project-title {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   color: #000000;
@@ -306,10 +458,10 @@ body {
 
 /* Main Content */
 .spaces-content {
-  margin-left: 300px;
-  padding: 0 4rem 4rem 0;
-  max-width: 900px;
-  width: calc(100% - 340px);
+  margin-left: var(--menu-margin);
+  margin-right: var(--nav-margin);
+  padding: 0 0 4rem;
+  width: auto;
 }
 
 .project-section {
@@ -418,43 +570,6 @@ body {
   position: relative;
 }
 
-/* Image Title Overlay - Bottom Right (Large - for excluded items) */
-.image-title-overlay {
-  position: absolute;
-  bottom: 2rem;
-  right: 0;
-  font-size: 4rem;
-  font-weight: 100;
-  letter-spacing: -0.05em;
-  color: #000000;
-  opacity: 0.15;
-  text-align: right;
-  line-height: 1;
-  pointer-events: none;
-  width: 100%;
-  z-index: 1;
-  white-space: nowrap;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-/* Image Title Overlay - Small (matches description text) */
-.image-title-overlay-small {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  font-size: 0.85rem;
-  font-weight: 150;
-  letter-spacing: 0.01em;
-  color: #666;
-  text-align: right;
-  line-height: 1.8;
-  pointer-events: none;
-  width: 100%;
-  z-index: 1;
-  padding-bottom: 0.75rem;
-}
-
 /* Side by side layout for interiors */
 .image-group.side-by-side {
   flex-direction: row;
@@ -475,6 +590,11 @@ body {
   display: block;
   max-height: 75vh;
   object-fit: contain;
+  /* Default anchor for the per-image `scale` transform (side-by-side pairs
+     and the finale recap keep their existing centered treatment when
+     scaled down; anchor-bottom-left overrides this to the bottom-left
+     corner above). */
+  transform-origin: center;
 }
 
 /* Description styling */
@@ -576,10 +696,10 @@ body {
 
 /* Words Content */
 .words-content {
-  margin-left: 280px;
-  padding: 0 2rem 4rem 0;
-  max-width: 1200px;
-  width: calc(100% - 300px);
+  margin-left: var(--menu-margin);
+  margin-right: var(--nav-margin);
+  padding: 0 0 4rem;
+  width: auto;
 }
 
 .writing-section {
@@ -706,10 +826,10 @@ body {
 
 /* Paintings Content */
 .paintings-content {
-  margin-left: 280px;
-  padding: 0 2rem 4rem 0;
-  max-width: 1200px;
-  width: calc(100% - 300px);
+  margin-left: var(--menu-margin);
+  margin-right: var(--nav-margin);
+  padding: 0 0 4rem;
+  width: auto;
 }
 
 .painting-section {
@@ -896,12 +1016,7 @@ body {
   }
 
   .home-animation {
-    height: min(75vh, 66vw);
-  }
-
-  .spaces-content {
-    max-width: 1000px;
-    width: calc(100% - 380px);
+    height: min(14.25vh, 12.5vw);
   }
 
   .spaces-text-block-body {
@@ -911,16 +1026,6 @@ body {
 
   .project-image {
     max-height: 80vh;
-  }
-
-  .image-title-overlay {
-    font-size: 9rem;
-  }
-
-  .paintings-content,
-  .words-content {
-    max-width: 1400px;
-    width: calc(100% - 320px);
   }
 
   .painting-image {
@@ -962,21 +1067,7 @@ body {
   }
 
   .home-animation {
-    height: min(80vh, 64vw);
-  }
-
-  .spaces-sidebar,
-  .paintings-sidebar,
-  .words-sidebar {
-    width: 260px !important;
-    left: 3rem !important;
-  }
-
-  .spaces-content {
-    margin-left: 340px;
-    max-width: 1200px;
-    width: calc(100% - 400px);
-    padding: 0 5rem 0 0;
+    height: min(15.2vh, 12.2vw);
   }
 
   .spaces-text-block-body {
@@ -989,19 +1080,8 @@ body {
     max-height: 85vh;
   }
 
-  .image-title-overlay {
-    font-size: 10rem;
-  }
-
   .image-group.side-by-side .project-image {
     height: 55vh;
-  }
-
-  .paintings-content,
-  .words-content {
-    margin-left: 320px;
-    max-width: 1600px;
-    width: calc(100% - 360px);
   }
 
   .painting-image {
@@ -1053,20 +1133,15 @@ body {
 
 /* ===== RESPONSIVE - TABLET ===== */
 @media (max-width: 1024px) {
-  .spaces-sidebar,
-  .paintings-sidebar,
-  .words-sidebar {
-    position: fixed !important;
-    left: 1.5rem !important;
-    width: 180px !important;
+  /* Spaces menu: 3 across on tablet */
+  .spaces-menu-grid {
+    gap: 2rem 2.5rem;
+    max-width: 720px;
   }
 
-  .spaces-content,
-  .paintings-content,
-  .words-content {
-    margin-left: 220px;
-    width: calc(100% - 240px);
-    padding: 0 2rem 4rem 0;
+  .spaces-menu-item {
+    flex: 0 0 calc((100% - 2 * 2.5rem) / 3);
+    max-width: calc((100% - 2 * 2.5rem) / 3);
   }
 
   .painting-layout {
@@ -1080,11 +1155,6 @@ body {
   .painting-info,
   .writing-info {
     max-width: 280px;
-  }
-
-  .image-title-overlay {
-    font-size: 5rem;
-    bottom: 1.5rem;
   }
 
   .spaces-text-block-body {
@@ -1115,6 +1185,25 @@ body {
 
 /* ===== RESPONSIVE - MOBILE ===== */
 @media (max-width: 768px) {
+  /* Spaces menu: 2 across on mobile */
+  .spaces-menu-section {
+    padding: 6rem 1.25rem 4rem;
+  }
+
+  .spaces-menu-grid {
+    gap: 1.75rem 1.25rem;
+    max-width: 100%;
+  }
+
+  .spaces-menu-item {
+    flex: 0 0 calc((100% - 1.25rem) / 2);
+    max-width: calc((100% - 1.25rem) / 2);
+  }
+
+  .spaces-menu-title {
+    font-size: 0.62rem;
+  }
+
   /* Header */
   .fixed-header {
     padding: 1rem 1.25rem;
@@ -1125,6 +1214,7 @@ body {
   }
 
   .main-nav {
+    max-width: none;
     gap: 0.75rem;
   }
 
@@ -1141,6 +1231,7 @@ body {
 
   /* Footer */
   .fixed-footer {
+    max-width: none;
     padding: 0.5rem 0.75rem;
   }
 
@@ -1155,12 +1246,12 @@ body {
   }
 
   .home-animation {
-    height: min(45vh, 82vw);
-    max-width: 90vw;
+    height: min(8.55vh, 15.6vw);
+    max-width: 45vw;
   }
 
   .home-identity {
-    margin-top: clamp(-7.5rem, -12.5vh, -2.5rem);
+    margin-top: 0.75rem;
   }
 
   .home-name {
@@ -1185,6 +1276,7 @@ body {
   .paintings-content,
   .words-content {
     margin-left: 0;
+    margin-right: 0;
     width: 100%;
     padding: 1rem 1rem 4rem 1rem;
     max-width: 100%;
@@ -1200,10 +1292,38 @@ body {
     max-height: 60vh;
   }
 
-  .image-title-overlay {
-    font-size: 3rem;
-    bottom: 1rem;
-    opacity: 0.12;
+  /* Bottom-left anchor is a desktop refinement only; mobile keeps the
+     simpler centered/height:auto treatment. */
+  .subcategory-section.anchor-bottom-left {
+    justify-content: center;
+    padding: 4rem 0;
+  }
+
+  /* Same for the project intro copy: desktop left-aligns it to the image
+     column's left edge, mobile keeps the original centered treatment. */
+  .project-introduction {
+    align-items: center;
+    text-align: center;
+  }
+
+  .project-introduction-copy {
+    margin: 0 auto;
+  }
+
+  .project-introduction-credits {
+    margin: 1.5rem auto 0;
+    text-align: center;
+  }
+
+  .subcategory-section.anchor-bottom-left .image-group {
+    height: auto;
+  }
+
+  .subcategory-section.anchor-bottom-left .project-image {
+    height: auto;
+    max-height: 60vh;
+    object-position: center;
+    transform-origin: center;
   }
 
   .image-group.side-by-side {
@@ -1325,7 +1445,7 @@ body {
   }
 
   .home-animation {
-    height: min(40vh, 82vw);
+    height: min(7.6vh, 15.6vw);
   }
 
   .home-name {

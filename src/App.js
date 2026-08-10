@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Fragment } from 'react';
+import { useState, useEffect, useRef, useCallback, Fragment } from 'react';
 import './App.css';
 import AnimatedSequence from './AnimatedSequence';
 
@@ -8,7 +8,7 @@ const projects = [
     id: 1,
     title: 'ARCH CENTER',
     introductionText:
-      'Creating a Center for Architecture in Kansas City\'s Arts district demanded an educational space that removes barrier. This project takes an undefined courtyard as its starting condition, a threshold left open between built space and the unbuilt. Its theoretical ground draws on Anne Carson\'s reading of Eros, in which desire is structured around a void that never closes, love and its opposite both drawing force from that same absence. This becomes structural with a single stairwell pierces the courtyard, remains the sole passage between floors. Circulation moves in orbit around this void, pulled outward toward in quiet spaces such as the gallery and reading room. Only to then be drawn back into to carry visitors across the distance. The architecture withholds arrival, asking its occupants to want the space before they are given it.',
+      'Creating a Center for Architecture in Kansas City\'s Arts district required an educational space that removes barrier. This project takes an undefined courtyard as its starting condition, a built space and the unbuilt. Its theoretical ground draws on Anne Carson\'s reading of Eros, in which desire is structured around a void that never closes, both drawing force from that same absence. This becomes structural with a single stairwell pierces the courtyard, remains the sole passage between floors. Circulation moves in orbit around this void, pulled outward toward in quiet spaces such as the gallery and reading room. Only to then be drawn back into to carry visitors across the distance. The architecture withholds arrival, asking its occupants to want the space before they are given it.',
     subcategories: [
       {
         id: 'program',
@@ -35,8 +35,8 @@ const projects = [
         id: 'floorplans',
         name: 'Floor Plans',
         images: [
-          '/archcenter/Screenshot 2026-07-03 191730.png',
-          '/archcenter/Screenshot 2026-07-03 191751.png',
+          '/archcenter/asset1.png',
+          '/archcenter/asset2.png',
         ],
         layout: 'side-by-side',
       },
@@ -159,10 +159,11 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
           size: '8,725 sqft'
         }
       },
+      { id: 'movement', name: 'Movement', images: ['/mixeduse/collage.jpg'] },
       { 
         id: 'site', 
         name: 'Site', 
-        images: ['/mixeduse/Asset 3.jpg'],
+        images: ['/mixeduse/Asset-8.jpg'],
         description: '1 - Site\n2 - Watkins History Museum\n3 - Douglas Courthouse\n4 - Granada Music Venue'
       },
       { 
@@ -179,10 +180,10 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
         layout: 'side-by-side',
         description: 'Understanding the transparent form as defining logic, the stairs become the central focus visually and structurally. Acting as a shelter for the outdoor dining and becoming the spotlit movement, the stairs act as the only intrusion to the pure rectangular form. As the stairs punch in, the motif of ascension becomes a hopeful guide to encourage visitors of the restaurant to pierce the boundary and travel up the stairs to the gallery.'
       },
-      { 
-        id: 'finale', 
-        name: 'Finale', 
-        images: ['/mixeduse/asset8.png'],
+      {
+        id: 'finale',
+        name: 'Finale',
+        images: ['/mixeduse/asset-9.jpg'],
         isFinale: true
       },
     ],
@@ -225,6 +226,9 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
   {
     id: 6,
     title: 'ENCLOSURE',
+    // Hidden per request: this project (Roger Shimomura residence) is excluded
+    // from the Spaces menu grid and the scrollable Spaces section below.
+    hidden: true,
     subcategories: [
       { 
         id: 'ideation', 
@@ -245,6 +249,34 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
 
 // Display order for the Spaces section is driven by each project's id.
 projects.sort((a, b) => a.id - b.id);
+
+// Projects actually shown in the Spaces menu grid + scrollable Spaces section
+// (excludes anything flagged `hidden`, e.g. the Shimomura residence).
+const visibleProjects = projects.filter((project) => !project.hidden);
+
+// Per-image size control for the Spaces section. Each entry in a
+// subcategory's `images` array can stay a plain path string (renders at its
+// normal 100% size, unchanged), or become `{ src, scale }` where `scale` is
+// 1-100 and shrinks that one image from its anchored corner (bottom-left for
+// standard slides, center for side-by-side/finale) — everything else about
+// its layout/position is untouched. Example: images: [{ src: '/foo.jpg', scale: 70 }]
+const getImageSrc = (image) => (typeof image === 'string' ? image : image.src);
+const getImageScale = (image) => {
+  if (typeof image === 'string') return 100;
+  const scale = Number(image.scale);
+  return Number.isFinite(scale) ? Math.min(100, Math.max(1, scale)) : 100;
+};
+
+// Spaces menu page: descriptive titles + a representative thumbnail per project.
+// Each entry links (by projectId) to the matching project in the Spaces section.
+const spacesMenu = [
+  { projectId: 1, title: 'ARCHITECTURAL CENTER FOR KANSAS CITY', image: '/archcenter/ac3.jpg' },
+  { projectId: 2, title: 'CONTEMPORARY GALLERY + FINE DINING', image: '/mixeduse/collage.jpg' },
+  { projectId: 3, title: 'REVISITING BAD PRESS MICRO EXHIBITION', image: '/exhibtion/t05.JPEG' },
+  { projectId: 4, title: 'FIELDHOUSE WELLNESS RETREAT CENTER', image: '/healing/preview_image.png' },
+  { projectId: 5, title: 'ARTS WALK CAFE PORCH WITH EXHIBITION', image: '/artsporch/AXON.jpg' },
+  { projectId: 6, title: 'CAMPUS ARTIST RESIDENCE SHIMOMURA', image: '/enclosure/1.JPEG' },
+].filter((item) => visibleProjects.some((project) => project.id === item.projectId));
 
 // Paintings data
 const paintings = [
@@ -282,18 +314,19 @@ const paintings = [
 const writings = [
   {
     id: 1,
-    title: 'WEIGHT',
-    subtitle: 'lessons from my second year of architecture',
+    title: 'LIEBESKIND; SYSTEMS OF LOGIC',
+    subtitle: 'mapping chamberworks, engaging musical annotations and algorithmic composition',
     content: `
-Attachment is heavier than ambition.
+Daniel Libeskind published 28 ink drawings in 1983 titled Chamber Works: Architectural Meditation on Themes from Heraclitus.
 
-The removal of ego must be supplemented by a removal of reverence in order to create. Holding work preciously removes the agency necessary for creativity.
 
-Over the past week, I’ve become increasingly comfortable throwing my own work away. Not because I believe it to be subpar, and not because I’ve grown cynical, but because I'm learning how to extract what matters and leave the rest behind. Protecting your work is a waste of energy, defending things that fail to constitute your work.
+Employing this bending and infinite analogy of musical compistion, he engages the pre-Socratic thought of Heraclitus and his dedication to the flux that defines the illogical condition of experience. 
 
-Running your hands through your hair you’ve just cut for the first time, there’s a brief, unsettling moment where something feels wrong. When you expect more to be there as there was more there. But almost without noticing, what replaces the loss is a strange, unexpected freedom.
+As designers, legibility is the highest demand. There is no value in making something that cannote understood. A clear message and image sells. So we deploy to fit needs.
 
-I’m not writing to argue that work should be thrown away more often, only that it should be allowed to change. Iteration should never be erasure, rather just attention. Build on what you have, refine what serves you, and let go of what doesn’t. In doing so, you make room for better work and stronger process.
+This logic ignores what we cannot explain, what fails to make sense with our given systems of scale. There is no concise way to express condition. So how do we annotate the illogical to read it to suite our understanding? How do we embrace the struggle of understanding? 
+
+Employing strategies of musician shorthand marks, I have been mapping the rules and logic of Libeskind framed by an engagement in the geometric rulings that define our value sets. Email me if you want to see the work.
     `
   },
 ];
@@ -302,9 +335,10 @@ I’m not writing to argue that work should be thrown away more often, only that
 const contact = {
   name: 'ALLINA DOUGHERTY',
   links: [
-    { label: 'INSTAGRAM', url: 'https://www.instagram.com/allina.dough/' },
+  { label: 'LINKEDIN', url: 'https://www.linkedin.com/in/allina-dougherty-090398326/' }, 
+  { label: 'INSTAGRAM', url: 'https://www.instagram.com/allina.dough/' },
     { label: 'PINTEREST', url: 'https://www.pinterest.com/allinaeden/_created' },
-    { label: 'LINKEDIN', url: 'https://www.linkedin.com/in/allina-dougherty-090398326/' },
+    
   ],
   experience: [
     {
@@ -414,6 +448,73 @@ function renderExperienceItem(item) {
   return item.text;
 }
 
+/* ===== SPACES SCROLL GATE =====
+   The landing page scrolls freely until the Spaces menu comes into view. At
+   that point the page eases into the menu and stops: the only way forward is
+   clicking a space or a nav item. Scrolling back up is always allowed, and
+   returning to the landing page re-arms the gate for the next approach.
+
+   armed    -> waiting for the user to scroll down toward the menu
+   snapping -> easing into the menu's locked position
+   locked   -> pinned on the menu until a selection is made
+   released -> a selection was made; normal scrolling                        */
+const GATE_ARMED = 'armed';
+const GATE_SNAPPING = 'snapping';
+const GATE_LOCKED = 'locked';
+const GATE_RELEASED = 'released';
+
+// How much of the menu must be in view before the page eases into it.
+const GATE_APPROACH_RATIO = 0.55;
+// Deltas below these are trackpad/momentum noise, not an intent to move on.
+const GATE_MIN_DOWN_DELTA = 2;
+const GATE_TOUCH_THRESHOLD = 6;
+// Distance back above the menu that counts as "returned to the landing page".
+const GATE_REARM_RATIO = 0.9;
+const GATE_FORWARD_KEYS = new Set(['ArrowDown', 'PageDown', 'End', ' ', 'Spacebar']);
+const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, [contenteditable]';
+
+function prefersReducedMotion() {
+  return typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    : false;
+}
+
+function scrollWindowTo(top, smooth) {
+  window.scrollTo({ top, behavior: smooth && !prefersReducedMotion() ? 'smooth' : 'auto' });
+}
+
+// Calls back once window scrolling has come to rest, and returns a canceller.
+// Frame-based rather than a fixed timeout so it tracks however long the
+// browser's own smooth-scroll animation happens to take.
+function watchScrollSettled(onSettled) {
+  const STABLE_FRAMES = 4;
+  const MIN_FRAMES = 8;
+  let lastY = window.scrollY;
+  let stableFrames = 0;
+  let frames = 0;
+  let rafId = 0;
+
+  const tick = () => {
+    const y = window.scrollY;
+    stableFrames = Math.abs(y - lastY) < 0.5 ? stableFrames + 1 : 0;
+    lastY = y;
+    frames += 1;
+
+    if (frames >= MIN_FRAMES && stableFrames >= STABLE_FRAMES) {
+      rafId = 0;
+      onSettled();
+      return;
+    }
+    rafId = requestAnimationFrame(tick);
+  };
+
+  rafId = requestAnimationFrame(tick);
+  return () => {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = 0;
+  };
+}
+
 function ScrollLinkedSidebar({ className, hidden, activeId, items, getId, renderItem }) {
   const resolvedActiveId = activeId ?? (items.length ? getId(items[0]) : null);
 
@@ -447,11 +548,59 @@ function App() {
   const writingAnchorRefs = useRef({});
   const anchorRefs = useRef({});
 
+  const [spacesGate, setSpacesGate] = useState(GATE_ARMED);
+  // Mirrored in a ref so the (once-installed) scroll/wheel/key listeners can
+  // read the current phase without being torn down and rebound on every change.
+  const spacesGateRef = useRef(GATE_ARMED);
+  const programmaticScrollRef = useRef(false);
+  const cancelSettleRef = useRef(null);
+  const lastScrollYRef = useRef(0);
+  const touchStartYRef = useRef(0);
+
+  const setSpacesGateState = useCallback((next) => {
+    if (spacesGateRef.current === next) return;
+    spacesGateRef.current = next;
+    setSpacesGate(next);
+  }, []);
+
+  // Where the menu holds the page: its top edge, plus any height that spills
+  // past the viewport so short screens can still reach the bottom of the grid.
+  const getSpacesMenuBounds = useCallback(() => {
+    const element = sectionRefs.current['spacesMenu'];
+    if (!element) return null;
+    const top = element.offsetTop;
+    return { top, maxY: top + Math.max(0, element.offsetHeight - window.innerHeight) };
+  }, []);
+
+  const cancelSettleWatch = useCallback(() => {
+    if (!cancelSettleRef.current) return;
+    cancelSettleRef.current();
+    cancelSettleRef.current = null;
+  }, []);
+
+  // Every programmatic scroll (nav, menu tiles, sidebars) runs through here so
+  // the gate ignores the movement it causes and settles in the right phase.
+  const runGuidedScroll = useCallback(
+    (scrollAction, nextGate) => {
+      if (nextGate) setSpacesGateState(nextGate);
+      programmaticScrollRef.current = true;
+      cancelSettleWatch();
+      scrollAction();
+      cancelSettleRef.current = watchScrollSettled(() => {
+        cancelSettleRef.current = null;
+        programmaticScrollRef.current = false;
+        lastScrollYRef.current = window.scrollY;
+      });
+    },
+    [cancelSettleWatch, setSpacesGateState]
+  );
+
   // Handle scroll to update active states
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
+      const spacesMenuEl = sectionRefs.current['spacesMenu'];
       const spacesEl = sectionRefs.current['spaces'];
       const paintingsEl = sectionRefs.current['paintings'];
       const wordsEl = sectionRefs.current['words'];
@@ -461,6 +610,9 @@ function App() {
       let currentSection;
       if (homeEl && scrollPosition < homeEl.offsetTop + homeEl.offsetHeight) {
         currentSection = 'home';
+      } else if (spacesMenuEl && spacesEl && scrollPosition >= spacesMenuEl.offsetTop && scrollPosition < spacesEl.offsetTop) {
+        // Spaces menu page: header nav is visible but the project sidebar is not.
+        currentSection = 'spacesMenu';
       } else if (spacesEl && wordsEl && scrollPosition >= spacesEl.offsetTop && scrollPosition < wordsEl.offsetTop) {
         currentSection = 'spaces';
       } else if (wordsEl && paintingsEl && scrollPosition >= wordsEl.offsetTop && scrollPosition < paintingsEl.offsetTop) {
@@ -477,13 +629,13 @@ function App() {
       // Spaces scroll-linked nav
       if (currentSection === 'spaces') {
         const { activeId } = getScrollLinkedState(
-          projects,
+          visibleProjects,
           projectSectionRefs,
           (project) => project.id
         );
         setActiveProject(activeId);
 
-        const project = projects.find((p) => p.id === activeId);
+        const project = visibleProjects.find((p) => p.id === activeId);
         if (project) {
           let matchedSub = null;
           for (const sub of project.subcategories.filter((s) => !s.isFinale)) {
@@ -525,11 +677,158 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Spaces scroll gate. Blocks only *forward* scroll intent at the menu, so
+  // reverse scrolling, clicking, hovering and focus all keep working normally.
+  useEffect(() => {
+    const isAtForwardEdge = () => {
+      const bounds = getSpacesMenuBounds();
+      return bounds ? window.scrollY >= bounds.maxY - 1 : false;
+    };
+
+    const startSnap = (bounds) => {
+      setSpacesGateState(GATE_SNAPPING);
+      cancelSettleWatch();
+      scrollWindowTo(bounds.top, true);
+      cancelSettleRef.current = watchScrollSettled(() => {
+        cancelSettleRef.current = null;
+        // An upward scroll during the ease-in cancels it; don't re-grab them.
+        if (spacesGateRef.current !== GATE_SNAPPING) return;
+        const settled = getSpacesMenuBounds();
+        if (settled && Math.abs(window.scrollY - settled.top) > 2) {
+          scrollWindowTo(settled.top, false);
+        }
+        setSpacesGateState(GATE_LOCKED);
+      });
+    };
+
+    const cancelSnap = () => {
+      if (spacesGateRef.current !== GATE_SNAPPING) return;
+      cancelSettleWatch();
+      scrollWindowTo(window.scrollY, false); // stops the in-flight smooth scroll
+      setSpacesGateState(GATE_ARMED);
+    };
+
+    const handleGateScroll = () => {
+      const y = window.scrollY;
+      const delta = y - lastScrollYRef.current;
+      lastScrollYRef.current = y;
+
+      const bounds = getSpacesMenuBounds();
+      if (!bounds) return;
+
+      const gate = spacesGateRef.current;
+      if (gate === GATE_SNAPPING) return;
+
+      if (gate === GATE_LOCKED) {
+        // Safety net for anything the input handlers can't intercept, e.g.
+        // dragging the scrollbar or momentum carried in from a fast flick.
+        if (y > bounds.maxY + 1) scrollWindowTo(bounds.maxY, false);
+        else if (y < bounds.top - 1) setSpacesGateState(GATE_ARMED);
+        return;
+      }
+
+      if (programmaticScrollRef.current) return;
+
+      if (gate === GATE_ARMED) {
+        if (y > bounds.maxY) {
+          // Overshot the menu entirely (scrollbar drag / hash jump).
+          scrollWindowTo(bounds.maxY, false);
+          setSpacesGateState(GATE_LOCKED);
+        } else if (
+          delta >= GATE_MIN_DOWN_DELTA &&
+          y >= bounds.top - window.innerHeight * GATE_APPROACH_RATIO
+        ) {
+          startSnap(bounds);
+        }
+        return;
+      }
+
+      if (gate === GATE_RELEASED && y < bounds.top - window.innerHeight * GATE_REARM_RATIO) {
+        setSpacesGateState(GATE_ARMED);
+      }
+    };
+
+    const handleWheel = (event) => {
+      const gate = spacesGateRef.current;
+      if (gate === GATE_SNAPPING) {
+        if (event.deltaY < 0) cancelSnap();
+        else event.preventDefault();
+        return;
+      }
+      if (gate === GATE_LOCKED && event.deltaY > 0 && isAtForwardEdge()) {
+        event.preventDefault();
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      const gate = spacesGateRef.current;
+      if (gate !== GATE_LOCKED && gate !== GATE_SNAPPING) return;
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (!GATE_FORWARD_KEYS.has(event.key)) return;
+      // Links and buttons own their own keys — Space/Enter must still activate
+      // a focused menu tile rather than being swallowed as a scroll attempt.
+      if (event.target?.closest?.(INTERACTIVE_SELECTOR)) return;
+      if (gate === GATE_SNAPPING || isAtForwardEdge()) event.preventDefault();
+    };
+
+    const handleTouchStart = (event) => {
+      touchStartYRef.current = event.touches[0]?.clientY ?? 0;
+    };
+
+    const handleTouchMove = (event) => {
+      const gate = spacesGateRef.current;
+      if (gate !== GATE_LOCKED && gate !== GATE_SNAPPING) return;
+
+      // Finger travelling up moves the page forward; down scrolls back.
+      const forward = touchStartYRef.current - (event.touches[0]?.clientY ?? 0);
+      if (forward > GATE_TOUCH_THRESHOLD) {
+        if (gate === GATE_SNAPPING || isAtForwardEdge()) event.preventDefault();
+      } else if (forward < -GATE_TOUCH_THRESHOLD && gate === GATE_SNAPPING) {
+        cancelSnap();
+      }
+    };
+
+    const handleResize = () => {
+      if (spacesGateRef.current !== GATE_LOCKED) return;
+      const bounds = getSpacesMenuBounds();
+      if (bounds && window.scrollY > bounds.maxY) scrollWindowTo(bounds.maxY, false);
+    };
+
+    // Reloading part-way down the page shouldn't yank the reader backwards.
+    lastScrollYRef.current = window.scrollY;
+    const initialBounds = getSpacesMenuBounds();
+    if (initialBounds) {
+      if (window.scrollY > initialBounds.maxY) setSpacesGateState(GATE_RELEASED);
+      else if (window.scrollY >= initialBounds.top) setSpacesGateState(GATE_LOCKED);
+    }
+
+    window.addEventListener('scroll', handleGateScroll, { passive: true });
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('scroll', handleGateScroll);
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('resize', handleResize);
+      cancelSettleWatch();
+    };
+  }, [cancelSettleWatch, getSpacesMenuBounds, setSpacesGateState]);
+
   const scrollToSection = (sectionId) => {
     const element = sectionRefs.current[sectionId];
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (!element) return;
+    // A nav choice is an intentional selection, so it releases the gate —
+    // except the logo, which returns above the menu and re-arms it instead.
+    runGuidedScroll(
+      () => element.scrollIntoView({ behavior: 'smooth' }),
+      sectionId === 'home' ? GATE_ARMED : GATE_RELEASED
+    );
   };
 
   // Scroll a plain (non-sticky) anchor element to the top of the viewport.
@@ -539,7 +838,9 @@ function App() {
   // pinned position, not its real flow position, which lands on the wrong one.
   const scrollToAnchor = (element) => {
     if (!element) return;
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Picking a space (or any sidebar entry) is the intentional selection that
+    // lets the page move past the menu.
+    runGuidedScroll(() => element.scrollIntoView({ behavior: 'smooth', block: 'start' }), GATE_RELEASED);
   };
 
   const scrollToSubcategory = (projectId, subId) => {
@@ -558,35 +859,11 @@ function App() {
     scrollToAnchor(projectAnchorRefs.current[projectId]);
   };
 
-  // Determine if title should be large (low opacity) or small (matching description)
-  const shouldUseLargeTitle = (projectId, subId) => {
-    // Ann Carson Design (id: 1)
-    // Arch Center (id: 1)
-    if (projectId === 1 && ['program', 'site-axon-map', 'reading-room', 'floorplans', 'gallery', 'center', 'auditorium'].includes(subId)) {
-      return true;
-    }
-    // ARTS PORCH (id: 5)
-    if (projectId === 5 && ['axon', 'floorplan', 'elev', 'side'].includes(subId)) {
-      return true;
-    }
-    // Revisiting Bad Press (id: 3): exhibition images
-    if (projectId === 3 && ['t01', 't02', 't03', 't04', 't05'].includes(subId)) {
-      return true;
-    }
-    // Mixed Use (id: 2): celebration, site, sections, interiors, finale
-    if (projectId === 2 && ['celebration', 'site', 'sections', 'interiors', 'finale'].includes(subId)) {
-      return true;
-    }
-    // Healing (id: 4): site, floorplans, process, sectioncuts
-    if (projectId === 4 && ['site', 'floorplans', 'process', 'sectioncuts'].includes(subId)) {
-      return true;
-    }
-    // Enclosure (id: 6): ideation, formexploration, section, floorplan
-    if (projectId === 6 && ['ideation', 'section', 'floorplan'].includes(subId)) {
-      return true;
-    }
-    return false;
-  };
+  // While the menu holds the page, everything below it is off-limits: `inert`
+  // keeps Tab from walking into content the user can't scroll to yet (which
+  // would otherwise fight the lock by scrolling the focused element into view).
+  const isSpacesGateHolding = spacesGate === GATE_LOCKED || spacesGate === GATE_SNAPPING;
+  const belowMenuInert = isSpacesGateHolding ? '' : undefined;
 
   return (
     <div className="App">
@@ -599,7 +876,7 @@ function App() {
           <a 
             href="#spaces" 
             onClick={(e) => { e.preventDefault(); scrollToSection('spaces'); }}
-            className={activeSection === 'spaces' ? 'active' : ''}
+            className={activeSection === 'spaces' || activeSection === 'spacesMenu' ? 'active' : ''}
           >
             SPACES
           </a>
@@ -654,6 +931,8 @@ function App() {
             autoplay
             objectFit="contain"
             ariaLabel="Allina Dougherty animated illustration"
+            cropTop={0.32}
+            cropBottom={0.3}
           />
           {/* Handwritten identity lockup (reuses the existing signed name asset). */}
           <div className="home-identity">
@@ -667,18 +946,53 @@ function App() {
           content or navigation appears while scrolling to Spaces. */}
       <div className="home-spacer" aria-hidden="true" />
 
+      {/* Spaces Menu Page — thumbnail index that links into the Spaces section */}
+      <section
+        id="spaces-menu"
+        className="section spaces-menu-section"
+        ref={(el) => (sectionRefs.current['spacesMenu'] = el)}
+      >
+        <div className="spaces-menu-grid">
+          {spacesMenu.map((item) => (
+            <button
+              key={item.projectId}
+              type="button"
+              className="spaces-menu-item"
+              onClick={() => scrollToProject(item.projectId)}
+              aria-label={`Go to project: ${item.title}`}
+            >
+              <div className="spaces-menu-thumb">
+                <img src={item.image} alt={item.title} className="spaces-menu-image" />
+              </div>
+              <div className="spaces-menu-caption">
+                <span className="spaces-menu-title">{item.title}</span>
+                <span className="spaces-menu-number">{item.projectId}.</span>
+              </div>
+            </button>
+          ))}
+        </div>
+        {/* The page deliberately stops here, so say what moves it on. */}
+        <p
+          className={`spaces-menu-hint ${isSpacesGateHolding ? 'is-visible' : ''}`}
+          aria-hidden={!isSpacesGateHolding}
+        >
+          Select a space to continue
+        </p>
+      </section>
+
       {/* Spaces Section */}
       <section 
         id="spaces" 
         className="section spaces-section"
         ref={(el) => (sectionRefs.current['spaces'] = el)}
+        inert={belowMenuInert}
       >
         {/* Fixed Sidebar Index */}
         <ScrollLinkedSidebar
           className="spaces-sidebar"
           hidden={activeSection !== 'spaces'}
           activeId={activeProject}
-          items={projects}
+          items={visibleProjects}
           getId={(project) => project.id}
           renderItem={(project, { variant }) => (
             <div className={`project-index ${variant === 'current' ? 'active-project' : ''}`}>
@@ -710,7 +1024,7 @@ function App() {
 
         {/* Main Content */}
         <div className="spaces-content">
-          {projects.map((project, projectIndex) => (
+          {visibleProjects.map((project, projectIndex) => (
             <div key={project.id}>
               <div
                 className="scroll-anchor"
@@ -735,7 +1049,7 @@ function App() {
                       ref={(el) => (anchorRefs.current[`${project.id}-${sub.id}`] = el)}
                     />
                     <div
-                      className={`subcategory-section ${subIndex === 0 && !project.introductionText ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''} ${sub.isTextBlock ? 'text-block-section' : ''}`}
+                      className={`subcategory-section ${subIndex === 0 && !project.introductionText ? 'first-subcategory' : ''} ${sub.isFinale ? 'finale-section' : ''} ${sub.isTextBlock ? 'text-block-section' : ''} ${!sub.isFinale && !sub.isTextBlock && sub.layout !== 'side-by-side' ? 'anchor-bottom-left' : ''}`}
                       ref={(el) => (subcategoryRefs.current[`${project.id}-${sub.id}`] = el)}
                     >
                       {sub.isTextBlock ? (
@@ -750,19 +1064,18 @@ function App() {
                       ) : (
                         <>
                           <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
-                            {sub.images.map((img, idx) => (
-                              <img
-                                key={idx}
-                                src={img}
-                                alt={`${project.title} - ${sub.name}`}
-                                className="project-image"
-                              />
-                            ))}
-                          </div>
-
-                          {/* Image Title Overlay */}
-                          <div className={shouldUseLargeTitle(project.id, sub.id) ? "image-title-overlay" : "image-title-overlay-small"}>
-                            {sub.name.toUpperCase()}
+                            {sub.images.map((img, idx) => {
+                              const scale = getImageScale(img);
+                              return (
+                                <img
+                                  key={idx}
+                                  src={getImageSrc(img)}
+                                  alt={`${project.title} - ${sub.name}`}
+                                  className="project-image"
+                                  style={scale < 100 ? { transform: `scale(${scale / 100})` } : undefined}
+                                />
+                              );
+                            })}
                           </div>
 
                           {/* Show description if exists */}
@@ -788,7 +1101,7 @@ function App() {
                 ))}
               </div>
               {/* White space break between projects */}
-              {projectIndex < projects.length - 1 && (
+              {projectIndex < visibleProjects.length - 1 && (
                 <div className="project-spacer"></div>
               )}
             </div>
@@ -801,6 +1114,7 @@ function App() {
         id="words" 
         className="section words-section"
         ref={(el) => (sectionRefs.current['words'] = el)}
+        inert={belowMenuInert}
       >
         {/* Fixed Sidebar Index for Words */}
         <ScrollLinkedSidebar
@@ -858,6 +1172,7 @@ function App() {
         id="paintings" 
         className="section paintings-section"
         ref={(el) => (sectionRefs.current['paintings'] = el)}
+        inert={belowMenuInert}
       >
         {/* Fixed Sidebar Index for Paintings */}
         <ScrollLinkedSidebar
@@ -937,6 +1252,7 @@ function App() {
         id="contact" 
         className="section contact-section"
         ref={(el) => (sectionRefs.current['contact'] = el)}
+        inert={belowMenuInert}
       >
         <div className="contact-content">
           {/* Identity + social links */}
