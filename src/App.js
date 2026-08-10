@@ -163,7 +163,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
       { 
         id: 'site', 
         name: 'Site', 
-        images: ['/mixeduse/Asset-8.jpg'],
+        images: ['/mixeduse/asset-8.jpg'],
         description: '1 - Site\n2 - Watkins History Museum\n3 - Douglas Courthouse\n4 - Granada Music Venue'
       },
       { 
