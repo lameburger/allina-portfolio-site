@@ -62,10 +62,18 @@ body {
 
 .main-nav {
   display: flex;
-  flex-wrap: wrap;
+  /* One unbroken row at every width — the links never stack. */
+  flex-wrap: nowrap;
   justify-content: flex-end;
-  gap: 0.85rem 1rem;
-  max-width: var(--nav-margin);
+  gap: 0.75em;
+  /* Header padding eats 2.5rem of the reserved gutter, so the nav itself gets
+     the rest — its left edge can never pass the content boundary. The links
+     inherit this size and the gap tracks it, so the row is sized off the width
+     it has to fit: the four labels plus gaps run about 21 characters' worth of
+     advance per em. It holds 0.65rem down to roughly 1180px and only shrinks
+     below that, where the gutter alone can't seat a full row. */
+  max-width: calc(var(--nav-margin) - 2.5rem);
+  font-size: clamp(0.5rem, calc((var(--nav-margin) - 2.5rem) / 21), 0.65rem);
   opacity: 1;
   transition: opacity 0.3s ease;
 }
@@ -78,9 +86,11 @@ body {
 .main-nav a {
   color: #000000;
   text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 0.08em;
+  font-size: inherit;
+  font-weight: 300;
+  letter-spacing: 0.035em;
+  white-space: nowrap;
+  flex: 0 0 auto;
   opacity: 0.4;
   transition: opacity 0.2s ease;
 }
@@ -100,7 +110,9 @@ body {
   bottom: 0;
   right: 0;
   max-width: var(--nav-margin);
-  padding: 0.75rem 2.5rem;
+  /* Right inset matches the nav's; no left inset, so the whole gutter minus
+     that inset is usable width for the address. */
+  padding: 0.75rem 2.5rem 0.75rem 0;
   z-index: 1000;
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -113,11 +125,16 @@ body {
   pointer-events: none;
 }
 
+/* The address is one unbreakable 29-character token, so it's sized off the
+   gutter it has to sit inside rather than a fixed value that overhangs the
+   content boundary at narrower desktop widths. ~21 characters' worth of
+   advance per em keeps a little headroom; it never grows past 0.8rem. */
 .fixed-footer .email {
-  font-size: 0.8rem;
+  font-size: clamp(0.55rem, calc((var(--nav-margin) - 2.5rem) / 21), 0.8rem);
   letter-spacing: 0.08em;
   color: #000000;
   font-weight: 400;
+  white-space: nowrap;
   pointer-events: auto;
 }
 
@@ -132,6 +149,8 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  /* The whole landing page is a click target that moves on to Spaces. */
+  cursor: pointer;
 }
 
 .home-content {
@@ -223,6 +242,9 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  /* The one page that opts out of the reserved right gutter: the grid is the
+     whole page here, so it centres on the viewport instead of sitting off to
+     the left of the nav and email. */
   padding: 8rem 2.5rem 6rem;
   background: #ffffff;
 }
@@ -473,6 +495,7 @@ body {
 .home-spacer {
   min-height: 100vh;
   background: #ffffff;
+  cursor: pointer;
 }
 
 .subcategory-section {
@@ -597,7 +620,9 @@ body {
   transform-origin: center;
 }
 
-/* Description styling */
+/* Description styling. The block's width/offset are measured in JS so it sits
+   directly under the rendered artwork (which `object-fit: contain` usually
+   leaves narrower than, and left of, the full content column). */
 .description-block {
   margin-top: 0.75rem;
   max-width: 100%;
@@ -610,6 +635,7 @@ body {
   font-weight: 400;
   letter-spacing: 0.01em;
   white-space: pre-line;
+  text-align: center;
 }
 
 .subcategory-description {
@@ -713,6 +739,9 @@ body {
 }
 
 .writing-layout {
+  /* Width of the text column, shared with the artwork beside it so the two
+     stay in step across breakpoints. */
+  --writing-col: 350px;
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
@@ -722,7 +751,7 @@ body {
 .writing-info {
   flex: 1;
   padding-top: 0;
-  max-width: 350px;
+  max-width: var(--writing-col);
 }
 
 .writing-display-title {
@@ -753,6 +782,36 @@ body {
 
 .writing-paragraph:last-child {
   margin-bottom: 0;
+}
+
+/* A zero-width flex item that only marks where the artwork starts — one gap
+   to the right of the text. Carrying no width of its own means the text
+   column still grows to exactly its max-width, as if nothing were beside it,
+   and stretching makes this box exactly as tall as the writing. */
+.writing-figure {
+  flex: 0 1 auto;
+  align-self: stretch;
+  position: relative;
+  width: 0;
+}
+
+/* Runs the full height of the writing: from the top of the title to the last
+   line of the closing paragraph. Taking it out of flow is what makes that
+   possible — an in-flow image wide enough to stand that tall would claim
+   space from the text column and reflow the copy. Width follows from the
+   artwork's own proportions, so it never distorts. The caps only bite on
+   short or narrow screens, where they hold it to one screenful and stop it
+   reaching the viewport edge. */
+.writing-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: auto;
+  max-height: calc(100vh - 8rem);
+  max-width: calc(100vw - var(--menu-margin) - var(--writing-col) - 4rem);
+  object-fit: contain;
+  object-position: left top;
 }
 
 /* ===== PAINTINGS SECTION ===== */
@@ -909,30 +968,32 @@ body {
 /* ===== CONTACT SECTION ===== */
 .contact-section {
   display: block;
-  padding: 8rem 2.5rem 6rem;
+  /* Right padding is the reserved gutter, so the columns stop where the nav
+     and email begin. */
+  padding: 8rem var(--nav-margin) 6rem 2.5rem;
   min-height: 100vh;
   background: #ffffff;
 }
 
 .contact-content {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 15rem));
-  column-gap: 3.5rem;
+  grid-template-columns: repeat(4, minmax(0, 14rem));
+  column-gap: 3rem;
+  row-gap: 3rem;
   align-items: start;
-  max-width: 60rem;
+  max-width: 68rem;
 }
 
 .contact-column {
   min-width: 0;
 }
 
-/* Shared uppercase typography for the contact grid */
+/* Shared uppercase typography for the contact grid. Entries set the size for
+   their own meta/note lines, which scale from it in `em`. */
 .contact-name,
 .contact-link,
 .contact-group-heading,
-.contact-group-item,
-.contact-merit,
-.contact-footnote {
+.contact-entry {
   font-size: 0.85rem;
   letter-spacing: 0.04em;
   line-height: 1.6;
@@ -961,7 +1022,7 @@ body {
   opacity: 0.5;
 }
 
-/* Column 2 — experience groups */
+/* Groups — a heading and the entries beneath it */
 .contact-group {
   margin-bottom: 1.6rem;
 }
@@ -976,36 +1037,36 @@ body {
   margin-bottom: 0;
 }
 
-.contact-group-item {
-  font-weight: 400;
-  color: #000000;
-  margin-bottom: 1rem;
-}
-
-.contact-group-item:last-child {
-  margin-bottom: 0;
-}
-
-/* Column 3 — merits & awards */
-.contact-merit-list {
+.contact-entry-list {
   list-style: none;
 }
 
-.contact-merit {
-  font-weight: 400;
-  color: #000000;
+.contact-entry {
+  margin-bottom: 1rem;
+}
+
+.contact-entry:last-child {
   margin-bottom: 0;
 }
 
-.contact-merit-year {
+.contact-entry-title {
+  font-weight: 400;
+  color: #000000;
+}
+
+/* Supporting lines: organisation, years, role. */
+.contact-entry-meta {
   color: #999999;
   font-style: italic;
 }
 
-.contact-footnote {
-  font-weight: 400;
-  color: #000000;
-  margin-top: 1.6rem;
+.contact-entry-note {
+  margin-top: 0.2rem;
+  font-size: 0.9em;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: #999999;
+  font-style: italic;
 }
 
 /* ===== RESPONSIVE - LARGE DESKTOP ===== */
@@ -1038,23 +1099,24 @@ body {
     max-height: 85vh;
   }
 
-  .painting-info,
-  .writing-info {
+  .painting-info {
     max-width: 420px;
   }
 
+  .writing-layout {
+    --writing-col: 420px;
+  }
+
   .contact-content {
-    grid-template-columns: repeat(3, minmax(0, 17rem));
-    column-gap: 4rem;
-    max-width: 68rem;
+    grid-template-columns: repeat(4, minmax(0, 16rem));
+    column-gap: 3.5rem;
+    max-width: 76rem;
   }
 
   .contact-name,
   .contact-link,
   .contact-group-heading,
-  .contact-group-item,
-  .contact-merit,
-  .contact-footnote {
+  .contact-entry {
     font-size: 0.9rem;
   }
 }
@@ -1094,9 +1156,12 @@ body {
     max-height: 88vh;
   }
 
-  .painting-info,
-  .writing-info {
+  .painting-info {
     max-width: 500px;
+  }
+
+  .writing-layout {
+    --writing-col: 500px;
   }
 
   .painting-display-title,
@@ -1115,17 +1180,15 @@ body {
   }
 
   .contact-content {
-    grid-template-columns: repeat(3, minmax(0, 20rem));
-    column-gap: 5rem;
-    max-width: 80rem;
+    grid-template-columns: repeat(4, minmax(0, 18rem));
+    column-gap: 4rem;
+    max-width: 84rem;
   }
 
   .contact-name,
   .contact-link,
   .contact-group-heading,
-  .contact-group-item,
-  .contact-merit,
-  .contact-footnote {
+  .contact-entry {
     font-size: 1rem;
     line-height: 1.7;
   }
@@ -1152,9 +1215,12 @@ body {
     width: 60%;
   }
 
-  .painting-info,
-  .writing-info {
+  .painting-info {
     max-width: 280px;
+  }
+
+  .writing-layout {
+    --writing-col: 280px;
   }
 
   .spaces-text-block-body {
@@ -1162,23 +1228,21 @@ body {
     font-size: 0.55rem;
   }
 
-  /* Contact — tighten the 3-column grid for tablet widths */
+  /* Contact — four columns won't hold at tablet widths, so pair them up */
   .contact-section {
-    padding: 7rem 1.5rem 5rem;
+    padding: 7rem var(--nav-margin) 5rem 1.5rem;
   }
 
   .contact-content {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 2rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2.5rem;
     max-width: 100%;
   }
 
   .contact-name,
   .contact-link,
   .contact-group-heading,
-  .contact-group-item,
-  .contact-merit,
-  .contact-footnote {
+  .contact-entry {
     font-size: 0.78rem;
   }
 }
@@ -1213,9 +1277,12 @@ body {
     height: 35px;
   }
 
+  /* No gutter here, so the row is sized against the viewport it shares with
+     the logo instead — still a single line, never stacked. */
   .main-nav {
     max-width: none;
-    gap: 0.75rem;
+    gap: 0.7em;
+    font-size: clamp(0.5rem, 1.5vw, 0.65rem);
   }
 
   .main-nav.hidden {
@@ -1225,8 +1292,7 @@ body {
   }
 
   .main-nav a {
-    font-size: 0.7rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
   }
 
   /* Footer */
@@ -1235,7 +1301,9 @@ body {
     padding: 0.5rem 0.75rem;
   }
 
-  .email {
+  /* Mobile drops the reserved gutter, so the address goes back to a flat size
+     (matched to the base rule's specificity so it actually takes effect). */
+  .fixed-footer .email {
     font-size: 0.6rem;
   }
 
@@ -1394,6 +1462,26 @@ body {
     padding: 0;
   }
 
+  /* No room for a column beside the text at this width, so the artwork drops
+     below it rather than squeezing the copy. */
+  .writing-layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .writing-figure {
+    align-self: flex-start;
+    position: static;
+    width: auto;
+  }
+
+  .writing-image {
+    position: static;
+    height: auto;
+    max-width: 100%;
+    max-height: 55vh;
+  }
+
   .painting-display-title,
   .writing-display-title {
     font-size: 1rem;
@@ -1419,9 +1507,7 @@ body {
   .contact-name,
   .contact-link,
   .contact-group-heading,
-  .contact-group-item,
-  .contact-merit,
-  .contact-footnote {
+  .contact-entry {
     font-size: 0.8rem;
   }
 }
@@ -1436,8 +1522,9 @@ body {
     height: 30px;
   }
 
-  .main-nav a {
-    font-size: 0.6rem;
+  .main-nav {
+    gap: 0.55em;
+    font-size: clamp(0.45rem, 2.1vw, 0.6rem);
   }
 
   .home-artwork {

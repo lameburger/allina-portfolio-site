@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, useCallback, Fragment } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo, Fragment } from 'react';
+import { flushSync } from 'react-dom';
 import './App.css';
 import AnimatedSequence from './AnimatedSequence';
 
@@ -14,12 +15,14 @@ const projects = [
         id: 'program',
         name: 'Program',
         images: ['/archcenter/graphic.png'],
+        description: 'Axonometeric massing diagram'
       },
       {
         id: 'site-axon-map',
         name: 'Site Axon',
         images: ['/archcenter/arteriemap.png', '/archcenter/ac1.png'],
         layout: 'side-by-side',
+        description: 'Sharing space with the KCAI ceramics and foundations studios, the Center finds itself admist a vibrant student body.',
         meta: {
           client: 'Peter Olshavsky',
           location: 'Museum District - Kansas City, MO',
@@ -30,15 +33,17 @@ const projects = [
         id: 'reading-room',
         name: 'Reading Room',
         images: ['/archcenter/ac2.5.jpg'],
+        description: 'A curved wall hugs a space for study anchored in the suspension of space. It becomes the invitation of a breaths held to defer full satisfaction of exhalation.',
       },
       {
         id: 'floorplans',
         name: 'Floor Plans',
         images: [
-          '/archcenter/asset1.png',
-          '/archcenter/asset2.png',
+          '/archcenter/fp1.png',
+          '/archcenter/fp2.png',
         ],
         layout: 'side-by-side',
+        description: 'A recangular first floor evolves on the second, bending as the narrative of architectue reflects changing desires. Legibility and order give way for the fluid movements that fuel us',
       },
       {
         id: 'gallery',
@@ -49,11 +54,13 @@ const projects = [
         id: 'center',
         name: 'Center',
         images: ['/archcenter/center.png'],
+        description: 'The courtyard is the void of desire, pierced by only by movement. We move for pursuit. Driven by envy and wanting, we interact with space through the framework of getting closer to what we want.',
       },
       {
         id: 'auditorium',
         name: 'Auditorium',
         images: ['/archcenter/ac5.png'],
+        description: 'Bring us to a corner, pushing a desire to look on',
       },
     ],
   },
@@ -93,7 +100,7 @@ const projects = [
     ],
   },
   {
-    id: 3,
+    id: 2,
     title: 'REVISITING BAD PRESS',
     introductionText:
       'When the shirt is worn, the residue of the orthogonal logic of efficiency registers on the surface of the body. The parallel creases and crisp, square corners of a clean, pressed shirt have become sought-after emblems of refinement. The byproduct of efficiency has become a new object of desire. But what if the practice of ironing could be freed from the aesthetics of efficiency altogether? Perhaps ironing could more aptly represent the postindustrial body by trading the image of the functional for that of the dysfunctional.',
@@ -117,6 +124,7 @@ const projects = [
       {
         id: 'studio-reflection',
         name: 'Studio Reflection',
+        duration: '2 weeks',
         isTextBlock: true,
         content: `As architectural education has become bureaucratic, hyper-professionalized, and increasingly corporatist in the last three decades, schooling's worth only seems to matter when pressed into service of these agendas. In this context, social critic Ivan Illich argues in Deschooling Society (1971), education becomes "the advertising agency which makes you believe that you need the society as it is." Yet this situation is not a closed issue. The nature of education, its roles, and one's place in it can be renegotiated ... whole educational domains are often left aside because they do not easily surrender to the instrumental accounting that underpins them. This motivates our studio's search for other historical possibilities ... It needs to be acknowledged that the promises of the "knowledge economy," which acted as the cultural context for the original work, have unsurprisingly come with intractable problems particularly for education. What arose was not by accident. The current culture of divided attention, distrustful surveillance, gradual de-skilling, and corporate subservience to mention only a few issues was designed. This creates a situation where there was a greater need to think about what Illich called "tools for conviviality" and their possibilities in education ... convivial tools run counter to the set of artifacts and relationships that demand escalation, create dependency, promote deskilling, and support "radical monopolies." Instead, they prioritize social needs in ways that are accessible and encourage individuals to exercise their own skills and creativity. While promoting this form of agency, they retain the ability to deflect power through the performance of a non-performance (e.g., opting out). As they accept limits, they aim to enrich social bonds through lively even joyful means ... For our studio, DS+R's dissident ironing pointed towards these kinds of convivial artifacts and relationships ... While the display may be of little use to someone untroubled by architectural speculation, the hope is that it conscripts an audience into a playful performance of ideas, feelings, and puzzlements. In fact, as Marie Kondo's opening quote wisely suggests, it was developed as an "act of caring," "an expression of love," and a giving thanks for modes of thinking and making out of sync with the supposedly "real world," wherever that begins and ends. Thus, even in our noisy times, perhaps an educational space that creates a genuinely humane and communicative setting might be glimpsed.
 
@@ -142,7 +150,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: 'MIXED USE',
     introductionText:
       'The project responds to a historic downtown context shaped by a masonry and the measured rhythm of brick storefronts along the street. The project treats movement as its primary subject rather than a byproduct of circulation. The ground floor holds a fine dining space in its most enclosed volume, opening itself under the framework of movement toward a public sculpture park anchored by a Richard Serra piece, collapsing the distance between private and shared ground. A single monumental stair reaches the gallery above, where light is calibrated to the art it falls on. The exterior holds the proportions of its historic neighbors, brick and punched window, even as the section behind the facade proposes something else: a building that returns light and motion to a downtown otherwise held by masonry.',
@@ -159,7 +167,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
           size: '8,725 sqft'
         }
       },
-      { id: 'movement', name: 'Movement', images: ['/mixeduse/collage.jpg'] },
+      { id: 'movement', name: 'Movement', images: ['/mixeduse/collage.jpg'], description: 'Historic masonry and processions of commerce frame movement behind storefronts. In between, energy peeling in thgrough the live music scene and nightlife ' },
       { 
         id: 'site', 
         name: 'Site', 
@@ -170,7 +178,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
         id: 'floorplan', 
         name: 'Floor Plan', 
         images: ['/mixeduse/Asset 2.jpg'],
-        description: 'Throughout the iterative design process, the relationship between the new structure and the preexisting historical context became central. Sat next to the heavy masonry courthouse and Watkins history building demanded a response. The answer was the removal of form, by placing something so transparent and formless next to the stoneworks. This allowed the historical forms to shine while still matching the precedents of storefronts so critical to the vernacular of Mass St.'
+        description:'The answer was the transparent form, by placing something transparent next to the stoneworks, the historical forms remain accesible. A second form retreats to fufill reveals in and out of the gallery and restaurant.'
       },
       { id: 'sections', name: 'Sections', images: ['/mixeduse/New Model.png'] },
       { 
@@ -192,7 +200,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
     id: 4,
     title: 'HEALING',
     introductionText:
-      "Set within Clinton Lake's oak-hickory forest and restored prairie near Lawrence, Kansas, the project is a satellite therapy space built to host workshops, group sessions, and retreats while protecting the privacy that therapeutic practice requires. Its V-shaped massing runs from open to closed, so a visitor descending the nature trail moves through a gradient rather than a single threshold. The roofline carries the argument: low and heavy over limestone-wrapped private rooms, rising into glass where the building opens toward Clinton Lake and a shared dining space. Privacy is built through proportion and material rather than walls alone, leaving the surrounding landscape to do the restorative work the program depends on.",
+      "Set within Clinton Lake's oak forest and restored prairie, the project is a satellite therapy space built to host workshops, group sessions, and retreats while protecting the privacy that therapeutic practice requires. Its V-shaped massing runs from open to closed, so a visitor descending the nature trail, moves through a gradient rather than a single threshold. The roofline carries the argument. Low and heavy over limestone-wrapped private rooms, rising into glass where the shared space opens toward Clinton Lake and a shared dining space. Privacy is built through proportion and material rather than walls alone, leaving the surrounding landscape to do the restorative work the program depends on.",
     subcategories: [
       { 
         id: 'healing', 
@@ -206,7 +214,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
           duration: '4 weeks'
         }
       },
-      { id: 'site', name: 'Site', images: ['/healing/site.jpg'] },
+      { id: 'site', name: 'Site', images: ['/healing/site.jpg'], description: 'Past Clinton Boat Ramp 3, the site sits on a seculded shore of Clinton Lake.'},
       { id: 'floorplans', name: 'Floor Plans', images: ['/healing/floorplan_1.png'] },
       { 
         id: 'process', 
@@ -214,12 +222,12 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
         images: ['/healing/process_1.JPEG', '/healing/process_2.JPEG'],
         layout: 'side-by-side'
       },
-      { id: 'sectioncuts', name: 'Section Cuts', images: ['/healing/sectioncut_1.png'] },
+      { id: 'sectioncuts', name: 'Section Cuts', images: ['/healing/sectioncut_1.png'], description: 'Low and heavy over limestone-wrapped private rooms, rising into glass where the shared space opens toward Clinton Lake.' },
       { 
         id: 'therapeutic', 
         name: 'Therapeutic Design', 
         images: ['/healing/preview_image_2.png'], 
-        description: 'In conjoining the two spaces, the entry vestibule gives the therapist a chance to introduce visitors to the space. By providing a dedicated entry that transparently offers visual opportunities to understand what lies on either side of the building, visitors can acclimate, especially if they are unsure or weary of approaching therapy. The angle of the two buildings is designed to maximize lakeside views, enhancing the therapeutic experience in the public spaces. Simultaneously, the "V" shape promotes a natural guide to encourage visitors into the building\'s embrace.' 
+        description: 'In conjoining the two spaces, the entry vestibule gives the therapist a chance to introduce visitors to the space. By providing a dedicated entry that transparently offers visual opportunities to understand what lies on either side of the building, visitors can acclimate.' 
       },
     ],
   },
@@ -267,12 +275,58 @@ const getImageScale = (image) => {
   return Number.isFinite(scale) ? Math.min(100, Math.max(1, scale)) : 100;
 };
 
+// Visible artwork box of an <img>, in viewport coordinates. `object-fit:
+// contain` letterboxes the picture inside its element, so the painted area is
+// usually narrower than the element — and on standard slides it is pinned to
+// the element's left edge rather than centred.
+function getRenderedImageSpan(image) {
+  const rect = image.getBoundingClientRect();
+  if (!rect.width || !rect.height) return null;
+
+  const { naturalWidth, naturalHeight } = image;
+  const style = window.getComputedStyle(image);
+  // `cover` fills (and overflows) the element, so the element box *is* the
+  // visible artwork; only `contain` leaves empty margins worth measuring.
+  if (!naturalWidth || !naturalHeight || style.objectFit !== 'contain') {
+    return { left: rect.left, right: rect.right };
+  }
+
+  const scale = Math.min(rect.width / naturalWidth, rect.height / naturalHeight);
+  const width = naturalWidth * scale;
+  const slack = rect.width - width;
+  const position = style.objectPosition.split(' ')[0] || '50%';
+  const offset = position.endsWith('%')
+    ? (parseFloat(position) / 100) * slack
+    : parseFloat(position) || 0;
+
+  return { left: rect.left + offset, right: rect.left + offset + width };
+}
+
+// Artwork span of a whole image group, as an offset/width relative to the
+// group's own box. Side-by-side pairs span from the first image's left edge
+// to the second's right edge.
+function getArtworkSpan(group) {
+  const groupRect = group.getBoundingClientRect();
+  let left = Infinity;
+  let right = -Infinity;
+
+  group.querySelectorAll('img').forEach((image) => {
+    const span = getRenderedImageSpan(image);
+    if (!span) return;
+    left = Math.min(left, span.left);
+    right = Math.max(right, span.right);
+  });
+
+  if (!Number.isFinite(left) || !Number.isFinite(right)) return null;
+  return { offset: left - groupRect.left, width: right - left };
+}
+
 // Spaces menu page: descriptive titles + a representative thumbnail per project.
 // Each entry links (by projectId) to the matching project in the Spaces section.
 const spacesMenu = [
   { projectId: 1, title: 'ARCHITECTURAL CENTER FOR KANSAS CITY', image: '/archcenter/ac3.jpg' },
-  { projectId: 2, title: 'CONTEMPORARY GALLERY + FINE DINING', image: '/mixeduse/collage.jpg' },
-  { projectId: 3, title: 'REVISITING BAD PRESS MICRO EXHIBITION', image: '/exhibtion/t05.JPEG' },
+  { projectId: 2, title: 'REVISITING BAD PRESS MICRO EXHIBITION', image: '/exhibtion/t05.JPEG' },
+  { projectId: 3, title: 'CONTEMPORARY GALLERY + FINE DINING', image: '/mixeduse/collage.jpg' },
   { projectId: 4, title: 'FIELDHOUSE WELLNESS RETREAT CENTER', image: '/healing/preview_image.png' },
   { projectId: 5, title: 'ARTS WALK CAFE PORCH WITH EXHIBITION', image: '/artsporch/AXON.jpg' },
   { projectId: 6, title: 'CAMPUS ARTIST RESIDENCE SHIMOMURA', image: '/enclosure/1.JPEG' },
@@ -316,15 +370,16 @@ const writings = [
     id: 1,
     title: 'LIEBESKIND; SYSTEMS OF LOGIC',
     subtitle: 'mapping chamberworks, engaging musical annotations and algorithmic composition',
+    image: '/images/libe.png',
     content: `
 Daniel Libeskind published 28 ink drawings in 1983 titled Chamber Works: Architectural Meditation on Themes from Heraclitus.
 
 
 Employing this bending and infinite analogy of musical compistion, he engages the pre-Socratic thought of Heraclitus and his dedication to the flux that defines the illogical condition of experience. 
 
-As designers, legibility is the highest demand. There is no value in making something that cannote understood. A clear message and image sells. So we deploy to fit needs.
+As designers, legibility is the highest demand. There is no value in making something that cannot be understood. A clear message and image sells. So we deploy to fit needs.
 
-This logic ignores what we cannot explain, what fails to make sense with our given systems of scale. There is no concise way to express condition. So how do we annotate the illogical to read it to suite our understanding? How do we embrace the struggle of understanding? 
+This logic ignores what we cannot explain, what fails to make sense with our given systems of scale. There is no concise way to express condition. So how do we annotate the illogical to read? How do we embrace the struggle of understanding? 
 
 Employing strategies of musician shorthand marks, I have been mapping the rules and logic of Libeskind framed by an engagement in the geometric rulings that define our value sets. Email me if you want to see the work.
     `
@@ -332,54 +387,137 @@ Employing strategies of musician shorthand marks, I have been mapping the rules 
 ];
 
 // Contact data
+// Contact data — one array per column, each holding groups. A group is a
+// heading plus either social links (the identity block) or a list of entries.
+// An entry is a title, optional italic meta lines (organisation, years, or a
+// role), and an optional note. Meta lines may be a plain string or
+// `{ text, url }` to link one out.
 const contact = {
-  name: 'ALLINA DOUGHERTY',
-  links: [
-  { label: 'LINKEDIN', url: 'https://www.linkedin.com/in/allina-dougherty-090398326/' }, 
-  { label: 'INSTAGRAM', url: 'https://www.instagram.com/allina.dough/' },
-    { label: 'PINTEREST', url: 'https://www.pinterest.com/allinaeden/_created' },
-    
-  ],
-  experience: [
-    {
-      heading: 'CURRENTLY,',
-      items: [
-        'M.ARCH, GRADUATE RESEARCH ASSISTANT',
-        {
-          text: 'AMBASSADOR/EDUCATOR AT THE SPENCER MUSEUM OF ART, LAWRENCE, KS',
-          linkText: 'SPENCER MUSEUM OF ART',
-          url: 'https://spencerart.ku.edu/',
-        },
-      ],
-    },
-    {
-      heading: 'PREVIOUSLY,',
-      items: ['ARCHITECTURAL INTERN WITH JHET ARCHITECTS, DALLAS, TX'],
-    },
-  ],
-  merits: {
-    heading: 'MERITS, AWARDS +',
-    items: [
+  columns: [
+    [
       {
-        text: 'UNIVERSITY SCHOLAR',
-        year: '2026',
-        url: 'https://news.ku.edu/news/article/2026-cohort-of-university-scholars-announced',
+        heading: 'ALLINA DOUGHERTY',
+        links: [
+          { label: 'LINKEDIN', url: 'https://www.linkedin.com/in/allina-dougherty-090398326/' },
+          { label: 'PINTEREST', url: 'https://www.pinterest.com/allinaeden/_created' },
+        ],
       },
       {
-        text: 'UNDERGRADUATE RESEARCH AWARD RECIPIENT',
-        year: '2026',
-        url: 'https://engr.ku.edu/news/article/20-ku-students-receive-undergraduate-research-awards-for-summer-and-fall-2026',
+        heading: 'CURRENTLY,',
+        entries: [
+          {
+            title: 'HONORS M.ARCH, GRADUATE RESEARCH ASSISTANT',
+            meta: ['THE UNIVERSITY OF KANSAS'],
+          },
+        ],
       },
-      { text: "UNIVERSITY OF KANSAS SCHOOL OF ARCHITECTURE DEAN'S LIST", year: '2024, 2025, 2026' },
       {
-        text: 'ANDERSON KNIGHT PRAIRIE DREAMS MURAL COMPETITION',
-        year: '2023',
-        url: 'https://www.linkedin.com/posts/akarchitects_work-students-illustration-activity-7080210181816516608-FTgq/',
+        heading: 'EXPERIENCE,',
+        entries: [
+          {
+            title: 'STUDENT EDUCATOR+ AMBASSADOR',
+            meta: [
+              { text: 'THE SPENCER MUSEUM OF ART', url: 'https://spencerart.ku.edu/' },
+              '2025-',
+            ],
+            note: 'Presenting tours for K-12 students, adapting and engaging through storytelling to create an inclusive and discovery-driven environment.',
+          },
+          {
+            title: 'ARCHITECTURAL INTERN',
+            meta: ['JHET ARCHITECTS, DALLAS, TX', '2025, 2026'],
+            note: 'Aiding in Construction Documentation/Administration in Revit, contributing to 19 projects, across 3 states, totaling over 2,500,000 sq ft.',
+          },
+        ],
       },
-      { text: 'MANHATTAN HIGH SCHOOL COMMENCEMENT SPEAKER', year: '2024' },
     ],
-    footnote: { text: 'A MEDIOCRE EMO GRUNGE BAND', year: '2025, 2026' },
-  },
+    [
+      {
+        heading: 'MERITS, AWARDS+',
+        entries: [
+          {
+            title: 'UNIVERSITY SCHOLAR',
+            url: 'https://news.ku.edu/news/article/2026-cohort-of-university-scholars-announced',
+            meta: ['2026'],
+            note: '1 of 20 students selected for participation in mentorship and a interdisciplinary seminar.',
+          },
+          {
+            title: 'UNDERGRADUATE RESEARCH AWARD RECIPIENT',
+            url: 'https://engr.ku.edu/news/article/20-ku-students-receive-undergraduate-research-awards-for-summer-and-fall-2026',
+            meta: ['2026, CURF INSTITUTE'],
+          },
+          {
+            title: "UNIVERSITY OF KANSAS SCHOOL OF ARCHITECTURE DEAN'S LIST",
+            meta: ['2024, 2025, 2026'],
+          },
+          {
+            title: 'FIRST ROBOTICS DEANS LIST',
+            url: 'https://www.thebluealliance.com/team/5968/history',
+            meta: ['2023'],
+            note: 'Built a $45,000 sponsorship pipeline from corporate and private donors, reversing a 10-year losing streak and qualifying my robotics team for international competition.',
+          },
+          {
+            title: 'ANDERSON KNIGHT PRAIRIE DREAMS MURAL COMPETITION',
+            url: 'https://www.linkedin.com/posts/akarchitects_work-students-illustration-activity-7080210181816516608-FTgq/',
+            meta: ['2023'],
+            note: 'My work was selected for a permanent mural at the Anderson Knight Architecture office.',
+          },
+        ],
+      },
+    ],
+    [
+      {
+        heading: 'ENGAGEMENTS',
+        entries: [
+          {
+            title: 'KULTURA PUBLICATION',
+            url: 'https://www.instagram.com/ku.ltura/',
+            meta: ['2026-'],
+            note: "Founding member, grade level representative of KU's architecture student publication, primarily aiding in visuals and graphic development.",
+          },
+          {
+            title: 'INTERVIEW COACHING',
+            url: 'https://www.thebluealliance.com/team/5968/history',
+            meta: ['2024-'],
+            note: 'After my success, I began coaching awards nominees. I did prep sessions with two students helping them earn invitations to international competition in back to back years.',
+          },
+          {
+            title: 'TAEJO',
+            url: 'https://www.instagram.com/taejo400ppi/',
+            meta: ['2025-'],
+            note: 'I play guitar, bass, and sing in an emo grunge band. We write and record original music. I also really enjoy screen printing my own merch in my kitchen.',
+          },
+        ],
+      },
+    ],
+    [
+      {
+        heading: 'DIGITAL SKILLS',
+        entries: [
+          { title: 'ADOBE SUITE, FIGMA, CANVA', meta: ['Graphics'] },
+          { title: 'RHINO, REVIT, SKETCHUP', meta: ['3D Modeling'] },
+          { title: 'ENSCAPE, D5', meta: ['Rendering'] },
+          { title: 'JAVASCRIPT, JAVA, PYTHON', meta: ['Coding, I made this website'] },
+        ],
+      },
+      {
+        heading: 'REFERENCES',
+        entries: [
+          {
+            title: 'PETER OLSHAVSKY, PH.D, ASSOCIATE PROFESSOR OF ARCHITECTURE',
+            url: 'https://www.linkedin.com/in/peter-olshavsky-ph-d-5131a6159/',
+            meta: ['polsahvsky[at]ku[dot]edu'],
+          },
+          {
+            title: 'ELYSE TUCKER, CEO, JHET ARCHITECTS',
+            url: "https://www.linkedin.com/in/elyse-tucker-b1346b29/",
+            meta: ['elyse.tucker[at]jhetarchitects[dot]com'],
+
+          
+          },
+        ],
+      },
+    ],
+  ],
 };
 
 function getScrollAnchor() {
@@ -432,20 +570,59 @@ function ContactExternalLink({ href, children }) {
   );
 }
 
-// Renders an experience item, wrapping an optional substring in an external link.
-function renderExperienceItem(item) {
-  if (typeof item === 'string') return item;
-  if (item.linkText && item.url) {
-    const [before, after] = item.text.split(item.linkText);
-    return (
-      <>
-        {before}
-        <ContactExternalLink href={item.url}>{item.linkText}</ContactExternalLink>
-        {after}
-      </>
-    );
-  }
-  return item.text;
+// A single contact entry: title, then any italic meta lines, then a note.
+function ContactEntry({ entry }) {
+  return (
+    <li className="contact-entry">
+      <p className="contact-entry-title">
+        {entry.url ? (
+          <ContactExternalLink href={entry.url}>{entry.title}</ContactExternalLink>
+        ) : (
+          entry.title
+        )}
+      </p>
+      {entry.meta?.map((line) => (
+        <p key={typeof line === 'string' ? line : line.text} className="contact-entry-meta">
+          {typeof line === 'string' ? (
+            line
+          ) : (
+            <ContactExternalLink href={line.url}>{line.text}</ContactExternalLink>
+          )}
+        </p>
+      ))}
+      {entry.note && <p className="contact-entry-note">{entry.note}</p>}
+    </li>
+  );
+}
+
+// A heading plus its contents. The identity group leads with the name and
+// social links; every other group is a list of entries.
+function ContactGroup({ group }) {
+  return (
+    <div className="contact-group">
+      {group.links ? (
+        <>
+          <h2 className="contact-name">{group.heading}</h2>
+          <ul className="contact-links">
+            {group.links.map((link) => (
+              <li key={link.label}>
+                <ContactExternalLink href={link.url}>{link.label}</ContactExternalLink>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <h3 className="contact-group-heading">{group.heading}</h3>
+      )}
+      {group.entries && (
+        <ul className="contact-entry-list">
+          {group.entries.map((entry) => (
+            <ContactEntry key={entry.title} entry={entry} />
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
 
 /* ===== SPACES SCROLL GATE =====
@@ -472,6 +649,10 @@ const GATE_TOUCH_THRESHOLD = 6;
 const GATE_REARM_RATIO = 0.9;
 const GATE_FORWARD_KEYS = new Set(['ArrowDown', 'PageDown', 'End', ' ', 'Spacebar']);
 const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, [contenteditable]';
+
+// The focused single-project view is a desktop refinement: below this width the
+// sidebars are hidden entirely and Spaces stays the full scrollable stack.
+const DESKTOP_QUERY = '(min-width: 769px)';
 
 function prefersReducedMotion() {
   return typeof window.matchMedia === 'function'
@@ -548,6 +729,40 @@ function App() {
   const writingAnchorRefs = useRef({});
   const anchorRefs = useRef({});
 
+  // The project opened from the Spaces menu. On desktop, Spaces then shows
+  // only this project (and its index) until SPACES is clicked in the nav.
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [isDesktop, setIsDesktop] = useState(() => window.matchMedia(DESKTOP_QUERY).matches);
+
+  useEffect(() => {
+    const media = window.matchMedia(DESKTOP_QUERY);
+    const sync = (event) => setIsDesktop(event.matches);
+    setIsDesktop(media.matches);
+    media.addEventListener('change', sync);
+    return () => media.removeEventListener('change', sync);
+  }, []);
+
+  // Drives both the sidebar index and the content column, so the two can never
+  // disagree about what's on screen.
+  const shownProjects = useMemo(() => {
+    if (!isDesktop || selectedProjectId === null) return visibleProjects;
+    const focused = visibleProjects.find((project) => project.id === selectedProjectId);
+    return focused ? [focused] : visibleProjects;
+  }, [isDesktop, selectedProjectId]);
+
+  const isProjectFocused = shownProjects !== visibleProjects;
+
+  // Mirrored for the scroll gate's listeners, which run outside React's
+  // render cycle and must not be rebound every time these change.
+  const focusedProjectIdRef = useRef(null);
+  const activeSectionRef = useRef('home');
+
+  // Measured artwork spans, keyed `${projectId}-${subId}`, used to sit each
+  // description centred under its image instead of across the content column.
+  const [descriptionBoxes, setDescriptionBoxes] = useState({});
+  const imageGroupRefs = useRef({});
+  const measureFrameRef = useRef(0);
+
   const [spacesGate, setSpacesGate] = useState(GATE_ARMED);
   // Mirrored in a ref so the (once-installed) scroll/wheel/key listeners can
   // read the current phase without being torn down and rebound on every change.
@@ -556,6 +771,58 @@ function App() {
   const cancelSettleRef = useRef(null);
   const lastScrollYRef = useRef(0);
   const touchStartYRef = useRef(0);
+
+  const measureDescriptionBoxes = useCallback(() => {
+    setDescriptionBoxes((previous) => {
+      const next = {};
+      let changed = false;
+
+      Object.entries(imageGroupRefs.current).forEach(([key, group]) => {
+        const span = group ? getArtworkSpan(group) : null;
+        if (!span) return;
+        next[key] = span;
+        const before = previous[key];
+        if (
+          !before ||
+          Math.abs(before.offset - span.offset) > 0.5 ||
+          Math.abs(before.width - span.width) > 0.5
+        ) {
+          changed = true;
+        }
+      });
+
+      const sameCount = Object.keys(next).length === Object.keys(previous).length;
+      return !changed && sameCount ? previous : next;
+    });
+  }, []);
+
+  // Images arrive at different times and every re-measure reads layout, so
+  // batch requests into a single frame.
+  const scheduleDescriptionMeasure = useCallback(() => {
+    if (measureFrameRef.current) return;
+    measureFrameRef.current = requestAnimationFrame(() => {
+      measureFrameRef.current = 0;
+      measureDescriptionBoxes();
+    });
+  }, [measureDescriptionBoxes]);
+
+  useEffect(() => {
+    scheduleDescriptionMeasure();
+    window.addEventListener('resize', scheduleDescriptionMeasure);
+    // Backstop for images already decoded before their onLoad was attached.
+    window.addEventListener('load', scheduleDescriptionMeasure);
+
+    return () => {
+      window.removeEventListener('resize', scheduleDescriptionMeasure);
+      window.removeEventListener('load', scheduleDescriptionMeasure);
+      if (measureFrameRef.current) cancelAnimationFrame(measureFrameRef.current);
+    };
+  }, [scheduleDescriptionMeasure]);
+
+  useEffect(() => {
+    focusedProjectIdRef.current = isProjectFocused ? selectedProjectId : null;
+    activeSectionRef.current = activeSection;
+  }, [activeSection, isProjectFocused, selectedProjectId]);
 
   const setSpacesGateState = useCallback((next) => {
     if (spacesGateRef.current === next) return;
@@ -581,7 +848,7 @@ function App() {
   // Every programmatic scroll (nav, menu tiles, sidebars) runs through here so
   // the gate ignores the movement it causes and settles in the right phase.
   const runGuidedScroll = useCallback(
-    (scrollAction, nextGate) => {
+    (scrollAction, nextGate, onSettled) => {
       if (nextGate) setSpacesGateState(nextGate);
       programmaticScrollRef.current = true;
       cancelSettleWatch();
@@ -590,6 +857,7 @@ function App() {
         cancelSettleRef.current = null;
         programmaticScrollRef.current = false;
         lastScrollYRef.current = window.scrollY;
+        if (onSettled) onSettled();
       });
     },
     [cancelSettleWatch, setSpacesGateState]
@@ -629,13 +897,13 @@ function App() {
       // Spaces scroll-linked nav
       if (currentSection === 'spaces') {
         const { activeId } = getScrollLinkedState(
-          visibleProjects,
+          shownProjects,
           projectSectionRefs,
           (project) => project.id
         );
         setActiveProject(activeId);
 
-        const project = visibleProjects.find((p) => p.id === activeId);
+        const project = shownProjects.find((p) => p.id === activeId);
         if (project) {
           let matchedSub = null;
           for (const sub of project.subcategories.filter((s) => !s.isFinale)) {
@@ -675,14 +943,37 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [shownProjects]);
 
   // Spaces scroll gate. Blocks only *forward* scroll intent at the menu, so
   // reverse scrolling, clicking, hovering and focus all keep working normally.
   useEffect(() => {
-    const isAtForwardEdge = () => {
-      const bounds = getSpacesMenuBounds();
-      return bounds ? window.scrollY >= bounds.maxY - 1 : false;
+    // A focused project is a dead end: the last slide is as far as scrolling
+    // goes, and the way onward is the header nav. Only
+    // applies while the reader is actually in Spaces, so a nav jump to Words
+    // isn't dragged back afterwards.
+    const getProjectStop = () => {
+      const projectId = focusedProjectIdRef.current;
+      if (projectId === null || activeSectionRef.current !== 'spaces') return null;
+      const section = projectSectionRefs.current[projectId];
+      if (!section) return null;
+      // Stop with the final slide filling the viewport.
+      return Math.max(0, section.offsetTop + section.offsetHeight - window.innerHeight);
+    };
+
+    // Furthest the reader may scroll right now, or null when unrestricted.
+    const getForwardStop = () => {
+      const gate = spacesGateRef.current;
+      if (gate === GATE_LOCKED || gate === GATE_SNAPPING) {
+        const bounds = getSpacesMenuBounds();
+        return bounds ? bounds.maxY : null;
+      }
+      return getProjectStop();
+    };
+
+    const isAtForwardStop = () => {
+      const stop = getForwardStop();
+      return stop !== null && window.scrollY >= stop - 1;
     };
 
     const startSnap = (bounds) => {
@@ -743,8 +1034,14 @@ function App() {
         return;
       }
 
-      if (gate === GATE_RELEASED && y < bounds.top - window.innerHeight * GATE_REARM_RATIO) {
-        setSpacesGateState(GATE_ARMED);
+      if (gate === GATE_RELEASED) {
+        if (y < bounds.top - window.innerHeight * GATE_REARM_RATIO) {
+          setSpacesGateState(GATE_ARMED);
+          return;
+        }
+        // Backstop for momentum or a scrollbar drag past the last slide.
+        const stop = getProjectStop();
+        if (stop !== null && delta > 0 && y > stop + 1) scrollWindowTo(stop, false);
       }
     };
 
@@ -755,20 +1052,16 @@ function App() {
         else event.preventDefault();
         return;
       }
-      if (gate === GATE_LOCKED && event.deltaY > 0 && isAtForwardEdge()) {
-        event.preventDefault();
-      }
+      if (event.deltaY > 0 && isAtForwardStop()) event.preventDefault();
     };
 
     const handleKeyDown = (event) => {
-      const gate = spacesGateRef.current;
-      if (gate !== GATE_LOCKED && gate !== GATE_SNAPPING) return;
       if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
       if (!GATE_FORWARD_KEYS.has(event.key)) return;
       // Links and buttons own their own keys — Space/Enter must still activate
       // a focused menu tile rather than being swallowed as a scroll attempt.
       if (event.target?.closest?.(INTERACTIVE_SELECTOR)) return;
-      if (gate === GATE_SNAPPING || isAtForwardEdge()) event.preventDefault();
+      if (spacesGateRef.current === GATE_SNAPPING || isAtForwardStop()) event.preventDefault();
     };
 
     const handleTouchStart = (event) => {
@@ -777,21 +1070,18 @@ function App() {
 
     const handleTouchMove = (event) => {
       const gate = spacesGateRef.current;
-      if (gate !== GATE_LOCKED && gate !== GATE_SNAPPING) return;
-
       // Finger travelling up moves the page forward; down scrolls back.
       const forward = touchStartYRef.current - (event.touches[0]?.clientY ?? 0);
       if (forward > GATE_TOUCH_THRESHOLD) {
-        if (gate === GATE_SNAPPING || isAtForwardEdge()) event.preventDefault();
+        if (gate === GATE_SNAPPING || isAtForwardStop()) event.preventDefault();
       } else if (forward < -GATE_TOUCH_THRESHOLD && gate === GATE_SNAPPING) {
         cancelSnap();
       }
     };
 
     const handleResize = () => {
-      if (spacesGateRef.current !== GATE_LOCKED) return;
-      const bounds = getSpacesMenuBounds();
-      if (bounds && window.scrollY > bounds.maxY) scrollWindowTo(bounds.maxY, false);
+      const stop = getForwardStop();
+      if (stop !== null && window.scrollY > stop) scrollWindowTo(stop, false);
     };
 
     // Reloading part-way down the page shouldn't yank the reader backwards.
@@ -824,11 +1114,30 @@ function App() {
     const element = sectionRefs.current[sectionId];
     if (!element) return;
     // A nav choice is an intentional selection, so it releases the gate —
-    // except the logo, which returns above the menu and re-arms it instead.
+    // except the logo and SPACES, which head back above the Spaces
+    // content and re-arm it instead. Dropping the focused project is deferred
+    // until the return scroll lands, so the content doesn't re-expand mid-flight.
+    const backToMenu = sectionId === 'spacesMenu';
     runGuidedScroll(
       () => element.scrollIntoView({ behavior: 'smooth' }),
-      sectionId === 'home' ? GATE_ARMED : GATE_RELEASED
+      backToMenu || sectionId === 'home' ? GATE_ARMED : GATE_RELEASED,
+      backToMenu
+        ? () => {
+            setSelectedProjectId(null);
+            setSpacesGateState(GATE_LOCKED);
+          }
+        : undefined
     );
+  };
+
+  // The landing page is one big invitation to move on: a click anywhere on it
+  // (or on the white space that follows) carries the reader to the Spaces menu,
+  // where the gate takes over and holds until they choose a project. Dragging
+  // out a text selection isn't a click, so it doesn't count.
+  const handleLandingClick = () => {
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed) return;
+    scrollToSection('spacesMenu');
   };
 
   // Scroll a plain (non-sticky) anchor element to the top of the viewport.
@@ -856,7 +1165,19 @@ function App() {
   };
 
   const scrollToProject = (projectId) => {
+    // Commit the selection before measuring: on desktop this drops the other
+    // projects from the column, so the anchor has to be read after that
+    // relayout or the scroll lands at the pre-filter position.
+    flushSync(() => setSelectedProjectId(projectId));
     scrollToAnchor(projectAnchorRefs.current[projectId]);
+  };
+
+  // Pins a description to the measured artwork above it. Falls back to the
+  // full content column until the image has loaded and been measured.
+  const getDescriptionStyle = (projectId, subId) => {
+    const box = descriptionBoxes[`${projectId}-${subId}`];
+    if (!box) return undefined;
+    return { width: `${box.width}px`, marginLeft: `${box.offset}px` };
   };
 
   // While the menu holds the page, everything below it is off-limits: `inert`
@@ -874,8 +1195,8 @@ function App() {
         </a>
         <nav className={`main-nav ${activeSection === 'home' ? 'hidden' : ''}`}>
           <a 
-            href="#spaces" 
-            onClick={(e) => { e.preventDefault(); scrollToSection('spaces'); }}
+            href="#spaces-menu" 
+            onClick={(e) => { e.preventDefault(); scrollToSection('spacesMenu'); }}
             className={activeSection === 'spaces' || activeSection === 'spacesMenu' ? 'active' : ''}
           >
             SPACES
@@ -895,11 +1216,11 @@ function App() {
             PAINTINGS
           </a>
           <a 
-            href="#contact" 
+            href="#profile" 
             onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
             className={activeSection === 'contact' ? 'active' : ''}
           >
-            CONTACT
+            PROFILE
           </a>
         </nav>
       </header>
@@ -914,6 +1235,7 @@ function App() {
         id="home" 
         className="section home-section"
         ref={(el) => (sectionRefs.current['home'] = el)}
+        onClick={handleLandingClick}
       >
         <div className="home-content">
           {/* Frame-sequence hero: autoplay in view, seamless ping-pong loop,
@@ -944,7 +1266,7 @@ function App() {
 
       {/* Full-screen white space so the hero clears out before any other
           content or navigation appears while scrolling to Spaces. */}
-      <div className="home-spacer" aria-hidden="true" />
+      <div className="home-spacer" aria-hidden="true" onClick={handleLandingClick} />
 
       {/* Spaces Menu Page — thumbnail index that links into the Spaces section */}
       <section
@@ -992,7 +1314,7 @@ function App() {
           className="spaces-sidebar"
           hidden={activeSection !== 'spaces'}
           activeId={activeProject}
-          items={visibleProjects}
+          items={shownProjects}
           getId={(project) => project.id}
           renderItem={(project, { variant }) => (
             <div className={`project-index ${variant === 'current' ? 'active-project' : ''}`}>
@@ -1024,7 +1346,7 @@ function App() {
 
         {/* Main Content */}
         <div className="spaces-content">
-          {visibleProjects.map((project, projectIndex) => (
+          {shownProjects.map((project, projectIndex) => (
             <div key={project.id}>
               <div
                 className="scroll-anchor"
@@ -1063,7 +1385,14 @@ function App() {
                         </div>
                       ) : (
                         <>
-                          <div className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}>
+                          <div
+                            className={`image-group ${sub.layout === 'side-by-side' ? 'side-by-side' : ''}`}
+                            ref={(el) => {
+                              if (sub.description) {
+                                imageGroupRefs.current[`${project.id}-${sub.id}`] = el;
+                              }
+                            }}
+                          >
                             {sub.images.map((img, idx) => {
                               const scale = getImageScale(img);
                               return (
@@ -1073,6 +1402,7 @@ function App() {
                                   alt={`${project.title} - ${sub.name}`}
                                   className="project-image"
                                   style={scale < 100 ? { transform: `scale(${scale / 100})` } : undefined}
+                                  onLoad={scheduleDescriptionMeasure}
                                 />
                               );
                             })}
@@ -1080,7 +1410,10 @@ function App() {
 
                           {/* Show description if exists */}
                           {sub.description && (
-                            <div className="description-block">
+                            <div
+                              className="description-block"
+                              style={getDescriptionStyle(project.id, sub.id)}
+                            >
                               <p className="project-description">{sub.description}</p>
                             </div>
                           )}
@@ -1101,7 +1434,7 @@ function App() {
                 ))}
               </div>
               {/* White space break between projects */}
-              {projectIndex < visibleProjects.length - 1 && (
+              {projectIndex < shownProjects.length - 1 && (
                 <div className="project-spacer"></div>
               )}
             </div>
@@ -1160,6 +1493,15 @@ function App() {
                       ))}
                     </div>
                   </div>
+                  {writing.image && (
+                    <div className="writing-figure">
+                      <img
+                        src={writing.image}
+                        alt={writing.title}
+                        className="writing-image"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -1247,67 +1589,22 @@ function App() {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Profile Section — labelled PROFILE in the nav; the internal key and
+          styles stay `contact`, as this is the contact/CV page. */}
       <section 
-        id="contact" 
+        id="profile" 
         className="section contact-section"
         ref={(el) => (sectionRefs.current['contact'] = el)}
         inert={belowMenuInert}
       >
         <div className="contact-content">
-          {/* Identity + social links */}
-          <div className="contact-column contact-column-identity">
-            <h2 className="contact-name">{contact.name}</h2>
-            <ul className="contact-links">
-              {contact.links.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-link"
-                  >
-                    {link.label}
-                  </a>
-                </li>
+          {contact.columns.map((groups) => (
+            <div key={groups[0].heading} className="contact-column">
+              {groups.map((group) => (
+                <ContactGroup key={group.heading} group={group} />
               ))}
-            </ul>
-          </div>
-
-          {/* Experience */}
-          <div className="contact-column contact-column-experience">
-            {contact.experience.map((group) => (
-              <div key={group.heading} className="contact-group">
-                <h3 className="contact-group-heading">{group.heading}</h3>
-                {group.items.map((item, idx) => (
-                  <p key={idx} className="contact-group-item">{renderExperienceItem(item)}</p>
-                ))}
-              </div>
-            ))}
-          </div>
-
-          {/* Merits & awards */}
-          <div className="contact-column contact-column-merits">
-            <h3 className="contact-group-heading">{contact.merits.heading}</h3>
-            <ul className="contact-merit-list">
-              {contact.merits.items.map((merit, idx) => (
-                <li key={idx} className="contact-merit">
-                  {merit.url ? (
-                    <ContactExternalLink href={merit.url}>{merit.text}</ContactExternalLink>
-                  ) : (
-                    merit.text
-                  )}{' '}
-                  <span className="contact-merit-year">{merit.year}</span>
-                </li>
-              ))}
-            </ul>
-            {contact.merits.footnote && (
-              <p className="contact-footnote">
-                {contact.merits.footnote.text}{' '}
-                <span className="contact-merit-year">{contact.merits.footnote.year}</span>
-              </p>
-            )}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
     </div>
