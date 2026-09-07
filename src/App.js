@@ -30,12 +30,6 @@ const projects = [
         },
       },
       {
-        id: 'reading-room',
-        name: 'Reading Room',
-        images: ['/archcenter/ac2.5.jpg'],
-        description: 'A curved wall hugs a space for study anchored in the suspension of space. It becomes the invitation of a breaths held to defer full satisfaction of exhalation.',
-      },
-      {
         id: 'floorplans',
         name: 'Floor Plans',
         images: [
@@ -46,21 +40,27 @@ const projects = [
         description: 'A recangular first floor evolves on the second, bending as the narrative of architectue reflects changing desires. Legibility and order give way for the fluid movements that fuel us',
       },
       {
+        id: 'reading-room',
+        name: 'Reading Room',
+        images: ['/archcenter/ac2.5.jpg'],
+        description: 'A curved wall hugs a space for study anchored in the suspension of space. It becomes the invitation of a breaths held to defer full satisfaction of exhalation.',
+      },
+      {
         id: 'gallery',
         name: 'Gallery',
         images: ['/archcenter/ac3.jpg'],
-      },
-      {
-        id: 'center',
-        name: 'Center',
-        images: ['/archcenter/center.png'],
-        description: 'The courtyard is the void of desire, pierced by only by movement. We move for pursuit. Driven by envy and wanting, we interact with space through the framework of getting closer to what we want.',
       },
       {
         id: 'auditorium',
         name: 'Auditorium',
         images: ['/archcenter/ac5.png'],
         description: 'Bring us to a corner, pushing a desire to look on',
+      },
+      {
+        id: 'center',
+        name: 'Center',
+        images: ['/archcenter/center.png'],
+        description: 'The courtyard is the void of desire, pierced by only by movement. We move for pursuit. Driven by envy and wanting, we interact with space through the framework of getting closer to what we want.',
       },
     ],
   },
