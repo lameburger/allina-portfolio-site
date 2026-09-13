@@ -354,7 +354,7 @@ const paintings = [
     materials: 'Acrylic on canvas'
   },
   {
-    id: 7,
+    id: 3,
     title: 'RINGS',
     displayTitle: 'RINGS',
     image: '/works/work5.png',
@@ -375,7 +375,7 @@ const writings = [
 Daniel Libeskind published 28 ink drawings in 1983 titled Chamber Works: Architectural Meditation on Themes from Heraclitus.
 
 
-Employing this bending and infinite analogy of musical compistion, he engages the pre-Socratic thought of Heraclitus and his dedication to the flux that defines the illogical condition of experience. 
+Employing this bending and infinite analogy of musical compistion, he engages the pre-Socratic thought of Heraclitus a dedication to the flux that defines the illogical condition of experience. 
 
 As designers, legibility is the highest demand. There is no value in making something that cannot be understood. A clear message and image sells. So we deploy to fit needs.
 
@@ -406,7 +406,7 @@ const contact = {
         heading: 'CURRENTLY,',
         entries: [
           {
-            title: 'HONORS M.ARCH, GRADUATE RESEARCH ASSISTANT',
+            title: 'HONORS M.ARCH, GRADUATE RESEARCH ASSISTANT, STUDIO MENTOR',
             meta: ['THE UNIVERSITY OF KANSAS'],
           },
         ],
@@ -496,7 +496,6 @@ const contact = {
           { title: 'ADOBE SUITE, FIGMA, CANVA', meta: ['Graphics'] },
           { title: 'RHINO, REVIT, SKETCHUP', meta: ['3D Modeling'] },
           { title: 'ENSCAPE, D5', meta: ['Rendering'] },
-          { title: 'JAVASCRIPT, JAVA, PYTHON', meta: ['Coding, I made this website'] },
         ],
       },
       {
