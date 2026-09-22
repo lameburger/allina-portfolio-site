@@ -390,7 +390,7 @@ Employing strategies of musician shorthand marks, I have been mapping the rules 
     subtitle: 'a tale of two cities',
     layout: 'two-column',
     content: `
-Every town is a diagram of what somebody, somewhere, decided a good life should look like. The Waltons and Mr. Miller
+Every town is a diagram of what somebody, somewhere, decided a good life should look like. The Waltons and Mr. Miller came up with two different diagrams of what a good life should look like approaches.
 
 The Object
 
