@@ -388,6 +388,7 @@ Employing strategies of musician shorthand marks, I have been mapping the rules 
     id: 2,
     title: 'THE OBJECT AND THE MECHANISM',
     subtitle: 'a tale of two cities',
+    layout: 'two-column',
     content: `
 Every town is a diagram of what somebody, somewhere, decided a good life should look like. The Waltons and Mr. Miller
 
@@ -1508,7 +1509,7 @@ function App() {
                 className="writing-section"
                 ref={(el) => (writingRefs.current[writing.id] = el)}
               >
-                <div className="writing-layout">
+                <div className={`writing-layout ${writing.layout === 'two-column' ? 'two-column' : ''}`}>
                   <div className="writing-info">
                     <h3 className="writing-display-title">{writing.title}</h3>
                     <p className="writing-subtitle">{writing.subtitle}</p>

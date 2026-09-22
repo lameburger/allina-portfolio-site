@@ -678,7 +678,9 @@ body {
   cursor: pointer;
   transition: opacity 0.2s ease;
   opacity: 0.5;
-  pointer-events: none;
+  /* Inherited from the sidebar, which switches its own events off while
+     hidden — so a title is clickable exactly when it's on screen. */
+  pointer-events: inherit;
 }
 
 .writing-index:hover {
@@ -705,7 +707,7 @@ body {
 }
 
 .writing-title {
-  font-size: 0.85rem;
+  font-size: 0.765rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   color: #000000;
@@ -752,6 +754,18 @@ body {
   flex: 1;
   padding-top: 0;
   max-width: var(--writing-col);
+}
+
+/* Long pieces run as a pair of columns instead of one tall ribbon. The column
+   widens to hold both halves at roughly the single-column measure, which only
+   works because a two-column piece carries no artwork beside it. */
+.writing-layout.two-column {
+  --writing-col: min(100%, 46rem);
+}
+
+.two-column .writing-text {
+  columns: 2;
+  column-gap: 2.5rem;
 }
 
 .writing-display-title {
@@ -1467,6 +1481,11 @@ body {
   .writing-layout {
     flex-direction: column;
     gap: 2rem;
+  }
+
+  /* A phone is barely one column wide, let alone two. */
+  .two-column .writing-text {
+    columns: auto;
   }
 
   .writing-figure {
