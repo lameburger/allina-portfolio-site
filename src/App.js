@@ -15,14 +15,14 @@ const projects = [
         id: 'program',
         name: 'Program',
         images: ['/archcenter/graphic.png'],
-        description: 'Axonometeric massing diagram'
+        description: 'Axonometric massing diagram'
       },
       {
         id: 'site-axon-map',
         name: 'Site Axon',
         images: ['/archcenter/arteriemap.png', '/archcenter/ac1.png'],
         layout: 'side-by-side',
-        description: 'Sharing space with the KCAI ceramics and foundations studios, the Center finds itself admist a vibrant student body.',
+        description: 'Sharing space with the KCAI ceramics and foundations studios, the Center finds itself amidst a vibrant student body.',
         meta: {
           client: 'Peter Olshavsky',
           location: 'Museum District - Kansas City, MO',
@@ -37,7 +37,7 @@ const projects = [
           '/archcenter/fp2.png',
         ],
         layout: 'side-by-side',
-        description: 'A recangular first floor evolves on the second, bending as the narrative of architectue reflects changing desires. Legibility and order give way for the fluid movements that fuel us',
+        description: 'A rectangular first floor evolves on the second, bending as the narrative of architecture reflects changing desires. Legibility and order give way for the fluid movements that fuel us',
       },
       {
         id: 'reading-room',
@@ -60,7 +60,7 @@ const projects = [
         id: 'center',
         name: 'Center',
         images: ['/archcenter/center.png'],
-        description: 'The courtyard is the void of desire, pierced by only by movement. We move for pursuit. Driven by envy and wanting, we interact with space through the framework of getting closer to what we want.',
+        description: 'The courtyard is the void of desire, pierced only by movement. We move for pursuit. Driven by envy and wanting, we interact with space through the framework of getting closer to what we want.',
       },
     ],
   },
@@ -68,13 +68,13 @@ const projects = [
     id: 5,
     title: 'ARTS PORCH',
     introductionText:
-      "Arts porch and Cafe placed along Kansas City's Art Walk initiative. Boasting a terrace with installation capablilites, it's point grid runs the course of the building growing and mapping an ever-changing art's landscape.",
+      "Arts porch and Cafe placed along Kansas City's Art Walk initiative. Boasting a terrace with installation capabilities, its point grid runs the course of the building growing and mapping an ever-changing art's landscape.",
     subcategories: [
       {
         id: 'axon',
         name: 'Axonometric',
         images: ['/artsporch/AXON.jpg'],
-        description: "A cafe and pavillion presents itself as a place of rest on KC's Arterie Artswalk that connects KCAI and the Nelson Museum of Art to the streetcars.",
+        description: "A cafe and pavilion presents itself as a place of rest on KC's Arterie Artswalk that connects KCAI and the Nelson Museum of Art to the streetcars.",
         meta: {
           client: 'Peter Olshavsky',
           location: 'Kansas City, MO',
@@ -167,7 +167,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
           size: '8,725 sqft'
         }
       },
-      { id: 'movement', name: 'Movement', images: ['/mixeduse/collage.jpg'], description: 'Historic masonry and processions of commerce frame movement behind storefronts. In between, energy peeling in thgrough the live music scene and nightlife ' },
+      { id: 'movement', name: 'Movement', images: ['/mixeduse/collage.jpg'], description: 'Historic masonry and processions of commerce frame movement behind storefronts. In between, energy peeling in through the live music scene and nightlife ' },
       { 
         id: 'site', 
         name: 'Site', 
@@ -178,7 +178,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
         id: 'floorplan', 
         name: 'Floor Plan', 
         images: ['/mixeduse/Asset 2.jpg'],
-        description:'The answer was the transparent form, by placing something transparent next to the stoneworks, the historical forms remain accesible. A second form retreats to fufill reveals in and out of the gallery and restaurant.'
+        description:'The answer was the transparent form, by placing something transparent next to the stoneworks, the historical forms remain accessible. A second form retreats to fulfill reveals in and out of the gallery and restaurant.'
       },
       { id: 'sections', name: 'Sections', images: ['/mixeduse/New Model.png'] },
       { 
@@ -214,7 +214,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
           duration: '4 weeks'
         }
       },
-      { id: 'site', name: 'Site', images: ['/healing/site.jpg'], description: 'Past Clinton Boat Ramp 3, the site sits on a seculded shore of Clinton Lake.'},
+      { id: 'site', name: 'Site', images: ['/healing/site.jpg'], description: 'Past Clinton Boat Ramp 3, the site sits on a secluded shore of Clinton Lake.'},
       { id: 'floorplans', name: 'Floor Plans', images: ['/healing/floorplan_1.png'] },
       { 
         id: 'process', 
@@ -375,13 +375,39 @@ const writings = [
 Daniel Libeskind published 28 ink drawings in 1983 titled Chamber Works: Architectural Meditation on Themes from Heraclitus.
 
 
-Employing this bending and infinite analogy of musical compistion, he engages the pre-Socratic thought of Heraclitus a dedication to the flux that defines the illogical condition of experience. 
+Employing this bending and infinite analogy of musical composition, he engages the pre-Socratic thought of Heraclitus a dedication to the flux that defines the illogical condition of experience. 
 
 As designers, legibility is the highest demand. There is no value in making something that cannot be understood. A clear message and image sells. So we deploy to fit needs.
 
 This logic ignores what we cannot explain, what fails to make sense with our given systems of scale. There is no concise way to express condition. So how do we annotate the illogical to read? How do we embrace the struggle of understanding? 
 
 Employing strategies of musician shorthand marks, I have been mapping the rules and logic of Libeskind framed by an engagement in the geometric rulings that define our value sets. Email me if you want to see the work.
+    `
+  },
+  {
+    id: 2,
+    title: 'THE OBJECT AND THE MECHANISM',
+    subtitle: 'a tale of two cities',
+    content: `
+Every town is a diagram of what somebody, somewhere, decided a good life should look like. The Waltons and Mr. Miller
+
+The Object
+
+Everything you could want exists in one town in the Northwest Arkansas.
+
+Moshe Safdie's Crystal Bridges is an cemented arts institutions placed delicately in a ring of nature trails you can bike. A Frank Lloyd Wright home was purchased and transplanted into the complex. Buckminster Fuller's Fly's Eye dome bought and stitched into the fabric of the museum. You'll find it not far from the 350 acre new Walmart Home Office. In fact, it's close enough for a Walmart employee to visit over lunch. And if art museums aren't for you, you'll find miles of trails that seem to sprout up overnight. Visiting any restaurant there you'll find the same Pinterest curated textures and patterns wallpapering popular and widely pleasing cuisine.
+
+Bentonville places before you with a salon style gallery wall, a sea of frames, and asks only that you agree it is beautiful. They are daring you to complain in the face of its curation. The city is designing itself to eradicate anything that doesn't fit into its carefully calibrated utopia. But what do the Waltons think you want? What satisfaction is fulfilled when everything is built for you, without you? If every want is met, what is left for you to find? What is left to aspire for?
+
+The Mechanism
+
+Columbus has no single beautiful museum. No surrounding web of bike trails. Investments in flagships are disinteresting to this master plan. Irwin Miller funded the construction of various public works like the fire station, public library, and schools. The only stipulation is that they must select from a list of the great modernists. Across the street from I.M. Pei's Cleo Rogers Memorial Library sits Eliel Saarinen's First Christian Church, one of the first modern churches built in America. Richard Meier, Cesar Pelli, Kevin Roche, Harry Weese and Venturi all boast buildings within this township of 50,000. The density of 60+ landmark buildings situates the entire city as its own museum of modern architecture. Here, the design process is still based in a patron based system but invokes a different control. Miller curates a list of possible encounters that aren't predictable, even though his list is handpicked.
+
+While my preferences may be clear, Bentonville and Columbus aren't radically different. Both still are paying to decide what you are allowed to want. It's the Waltons that curate the product while Miller curates the list of authors, letting them individually answer. Miller is letting each end result offer different theses for modernity.
+
+That's the diagram. Each town decides what "good" means before you move in. Neither town answer well. Because neither answer whether you should want the thing or I want to keep wanting it?
+
+Every set of drawings I make is a bet about which kind of town I want to build. I draw to disengage with the master planning set before me by a standardized architectural education. I believe an education that triumphs the student who professionalizes themselves into the monocrop of architectural graduates is an education that disengages with the necessity of wanting. A student who doesn't want more is a student who will fail to live and design creatively. A student who wants more risks not getting approved for the list.
     `
   },
 ];
@@ -438,7 +464,7 @@ const contact = {
             title: 'UNIVERSITY SCHOLAR',
             url: 'https://news.ku.edu/news/article/2026-cohort-of-university-scholars-announced',
             meta: ['2026'],
-            note: '1 of 20 students selected for participation in mentorship and a interdisciplinary seminar.',
+            note: '1 of 20 students selected for participation in mentorship and an interdisciplinary seminar.',
           },
           {
             title: 'UNDERGRADUATE RESEARCH AWARD RECIPIENT',
@@ -504,7 +530,7 @@ const contact = {
           {
             title: 'PETER OLSHAVSKY, PH.D, ASSOCIATE PROFESSOR OF ARCHITECTURE',
             url: 'https://www.linkedin.com/in/peter-olshavsky-ph-d-5131a6159/',
-            meta: ['polsahvsky[at]ku[dot]edu'],
+            meta: ['polshavsky[at]ku[dot]edu'],
           },
           {
             title: 'ELYSE TUCKER, CEO, JHET ARCHITECTS',
