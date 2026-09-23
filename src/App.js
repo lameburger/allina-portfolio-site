@@ -390,7 +390,7 @@ Employing strategies of musician shorthand marks, I have been mapping the rules 
     subtitle: 'a tale of two cities',
     layout: 'two-column',
     content: `
-Every town is a diagram of what somebody, somewhere, decided a good life should look like. The Waltons and Mr. Miller came up with two different diagrams of what a good life should look like approaches.
+Every town is a diagram of what somebody, somewhere, decided a good life should look like. The Waltons and Miller came up with two approaches.
 
 The Object
 
@@ -398,11 +398,13 @@ Everything you could want exists in one town in the Northwest Arkansas.
 
 Moshe Safdie's Crystal Bridges is an cemented arts institutions placed delicately in a ring of nature trails you can bike. A Frank Lloyd Wright home was purchased and transplanted into the complex. Buckminster Fuller's Fly's Eye dome bought and stitched into the fabric of the museum. You'll find it not far from the 350 acre new Walmart Home Office. In fact, it's close enough for a Walmart employee to visit over lunch. And if art museums aren't for you, you'll find miles of trails that seem to sprout up overnight. Visiting any restaurant there you'll find the same Pinterest curated textures and patterns wallpapering popular and widely pleasing cuisine.
 
-Bentonville places before you with a salon style gallery wall, a sea of frames, and asks only that you agree it is beautiful. They are daring you to complain in the face of its curation. The city is designing itself to eradicate anything that doesn't fit into its carefully calibrated utopia. But what do the Waltons think you want? What satisfaction is fulfilled when everything is built for you, without you? If every want is met, what is left for you to find? What is left to aspire for?
+Bentonville places before you with a salon style gallery wall, a sea of frames, and tells you that it is beautiful. They are daring you to complain in the face of its curation. The city is designing itself to eradicate anything that doesn't fit into its calibrated utopia. But what do the Waltons know about what you want? What satisfaction is fulfilled when everything is built for you, without you? If every want is met, what is left for you to find? 
 
 The Mechanism
 
-Columbus has no single beautiful museum. No surrounding web of bike trails. Investments in flagships are disinteresting to this master plan. Irwin Miller funded the construction of various public works like the fire station, public library, and schools. The only stipulation is that they must select from a list of the great modernists. Across the street from I.M. Pei's Cleo Rogers Memorial Library sits Eliel Saarinen's First Christian Church, one of the first modern churches built in America. Richard Meier, Cesar Pelli, Kevin Roche, Harry Weese and Venturi all boast buildings within this township of 50,000. The density of 60+ landmark buildings situates the entire city as its own museum of modern architecture. Here, the design process is still based in a patron based system but invokes a different control. Miller curates a list of possible encounters that aren't predictable, even though his list is handpicked.
+Columbus has no single beautiful museum. No surrounding web of bike trails. 
+
+Irwin Miller funded the construction of fire stations, a public library, and schools. The only stipulation is that they must be authored by a modernist architect from his short list. Across the street from I.M. Pei's Cleo Rogers Memorial Library just happens to sit across from Eliel Saarinen's First Christian Church, one of the first modern churches built in America. Meier, Pelli, Roche, Weese and Venturi all boast buildings within this township of 50,000. The density of 60+ landmark buildings situates the entire city as its own museum of modern architecture. The design process invokes a different control. Miller curates a list of possible encounters that aren't predictable.
 
 While my preferences may be clear, Bentonville and Columbus aren't radically different. Both still are paying to decide what you are allowed to want. It's the Waltons that curate the product while Miller curates the list of authors, letting them individually answer. Miller is letting each end result offer different theses for modernity.
 
@@ -412,6 +414,141 @@ Every set of drawings I make is a bet about which kind of town I want to build. 
     `
   },
 ];
+
+// ===== DEEP LINKS =====
+// The site stays one continuous scroll, but every project, painting and
+// writing is addressable, so a single URL can open the page already sitting on
+// it — e.g. #/words/the-object-and-the-mechanism. The hash is path-shaped
+// rather than a bare element id on purpose: a bare id makes the browser
+// perform its own jump on load, which lands at the pre-image-load position and
+// fights the scroll below. Slugs come from titles, so there is no second list
+// to keep in step.
+const slugify = (value) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+const slugsById = (items) => new Map(items.map((item) => [item.id, slugify(item.title)]));
+const idsBySlug = (slugMap) => new Map([...slugMap].map(([id, slug]) => [slug, id]));
+
+const projectSlugs = slugsById(visibleProjects);
+const writingSlugs = slugsById(writings);
+const paintingSlugs = slugsById(paintings);
+const projectIds = idsBySlug(projectSlugs);
+const writingIds = idsBySlug(writingSlugs);
+const paintingIds = idsBySlug(paintingSlugs);
+
+// Section landing pages, keyed by the internal section name.
+const SECTION_ROUTES = {
+  home: '/',
+  spacesMenu: '/spaces',
+  spaces: '/spaces',
+  words: '/words',
+  paintings: '/paintings',
+  contact: '/profile',
+};
+
+const GROUP_SECTIONS = {
+  spaces: 'spacesMenu',
+  words: 'words',
+  paintings: 'paintings',
+  profile: 'contact',
+};
+
+const GROUP_LOOKUPS = {
+  spaces: { ids: projectIds, kind: 'project' },
+  words: { ids: writingIds, kind: 'writing' },
+  paintings: { ids: paintingIds, kind: 'painting' },
+};
+
+// '#/words/the-object-and-the-mechanism' -> { kind: 'writing', id: 2 }
+// Unknown slugs resolve to nothing rather than guessing, so a stale link just
+// opens the landing page instead of jumping somewhere arbitrary.
+function parseDeepLink(hash) {
+  const [, group, slug] = (hash || '').replace(/^#/, '').split('/');
+  if (!group) return null;
+
+  if (slug) {
+    const lookup = GROUP_LOOKUPS[group];
+    if (!lookup || !lookup.ids.has(slug)) return null;
+    return { kind: lookup.kind, id: lookup.ids.get(slug) };
+  }
+
+  const section = GROUP_SECTIONS[group];
+  return section ? { kind: 'section', id: section } : null;
+}
+
+// The address for whatever is currently on screen.
+function formatDeepLink({ section, projectId, writingId, paintingId }) {
+  if (section === 'spaces' && projectSlugs.has(projectId)) {
+    return `#/spaces/${projectSlugs.get(projectId)}`;
+  }
+  if (section === 'words' && writingSlugs.has(writingId)) {
+    return `#/words/${writingSlugs.get(writingId)}`;
+  }
+  if (section === 'paintings' && paintingSlugs.has(paintingId)) {
+    return `#/paintings/${paintingSlugs.get(paintingId)}`;
+  }
+  const route = SECTION_ROUTES[section];
+  return route ? `#${route}` : null;
+}
+
+// Parks an element at the top of the viewport and keeps it there while the
+// page settles. A deep link lands before the artwork above the target has
+// decoded, so the target's real offset moves repeatedly for a second or two
+// afterwards; re-aligning each frame is what makes the link land accurately.
+// Ends as soon as the position holds still, the reader takes over, or the
+// deadline passes — whichever comes first.
+function holdInView(getElement, onDone) {
+  const DEADLINE_MS = 6000;
+  const STABLE_FRAMES = 12;
+  const started = performance.now();
+  let stableFrames = 0;
+  let lastTop = null;
+  let rafId = 0;
+  let finished = false;
+
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = 0;
+    window.removeEventListener('wheel', finish);
+    window.removeEventListener('touchstart', finish);
+    window.removeEventListener('keydown', finish);
+    onDone();
+  };
+
+  const tick = () => {
+    const element = getElement();
+    if (element) {
+      const top = element.getBoundingClientRect().top + window.scrollY;
+      const moved = lastTop === null || Math.abs(top - lastTop) > 0.5;
+      const drifted = Math.abs(window.scrollY - top) > 0.5;
+      if (moved || drifted) {
+        lastTop = top;
+        stableFrames = 0;
+        window.scrollTo({ top, behavior: 'auto' });
+      } else {
+        stableFrames += 1;
+      }
+    }
+
+    if (stableFrames >= STABLE_FRAMES || performance.now() - started > DEADLINE_MS) {
+      finish();
+      return;
+    }
+    rafId = requestAnimationFrame(tick);
+  };
+
+  window.addEventListener('wheel', finish, { passive: true });
+  window.addEventListener('touchstart', finish, { passive: true });
+  window.addEventListener('keydown', finish);
+  rafId = requestAnimationFrame(tick);
+
+  return finish;
+}
 
 // Contact data
 // Contact data — one array per column, each holding groups. A group is a
@@ -794,6 +931,9 @@ function App() {
   // read the current phase without being torn down and rebound on every change.
   const spacesGateRef = useRef(GATE_ARMED);
   const programmaticScrollRef = useRef(false);
+  // Canceller for an in-flight deep-link landing; also the flag that says one
+  // is still settling, so the URL sync below doesn't overwrite the link.
+  const deepLinkHoldRef = useRef(null);
   const cancelSettleRef = useRef(null);
   const lastScrollYRef = useRef(0);
   const touchStartYRef = useRef(0);
@@ -1198,6 +1338,82 @@ function App() {
     scrollToAnchor(projectAnchorRefs.current[projectId]);
   };
 
+  // Opens whatever the URL points at. Arriving by link is as deliberate a
+  // choice as picking from the menu, so the gate steps aside rather than
+  // dragging the reader back up — unless the link is for the menu itself.
+  const applyDeepLink = useCallback(
+    (target) => {
+      if (!target) return;
+      if (deepLinkHoldRef.current) {
+        deepLinkHoldRef.current();
+        deepLinkHoldRef.current = null;
+      }
+
+      let getElement;
+      if (target.kind === 'project') {
+        // Same reason as scrollToProject: focusing the project rewrites the
+        // column, so commit it before anything reads a position.
+        flushSync(() => setSelectedProjectId(target.id));
+        getElement = () => projectAnchorRefs.current[target.id];
+      } else if (target.kind === 'writing') {
+        getElement = () => writingAnchorRefs.current[target.id];
+      } else if (target.kind === 'painting') {
+        getElement = () => paintingAnchorRefs.current[target.id];
+      } else {
+        getElement = () => sectionRefs.current[target.id];
+      }
+
+      const landsOnMenu = target.kind === 'section' && target.id === 'spacesMenu';
+      setSpacesGateState(landsOnMenu ? GATE_LOCKED : GATE_RELEASED);
+
+      cancelSettleWatch();
+      programmaticScrollRef.current = true;
+      deepLinkHoldRef.current = holdInView(getElement, () => {
+        deepLinkHoldRef.current = null;
+        programmaticScrollRef.current = false;
+        lastScrollYRef.current = window.scrollY;
+      });
+    },
+    [cancelSettleWatch, setSpacesGateState]
+  );
+
+  useEffect(() => {
+    applyDeepLink(parseDeepLink(window.location.hash));
+    // Fires only for hashes the reader changes (pasting a link into the same
+    // tab, or back/forward); our own replaceState below never triggers it.
+    const handleHashChange = () => applyDeepLink(parseDeepLink(window.location.hash));
+    window.addEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      if (deepLinkHoldRef.current) {
+        deepLinkHoldRef.current();
+        deepLinkHoldRef.current = null;
+      }
+    };
+  }, [applyDeepLink]);
+
+  // Keeps the address bar on whatever is in view, so the URL is always ready
+  // to copy. replaceState rather than pushState: scrolling shouldn't fill the
+  // back button with every piece the reader passed on the way down.
+  useEffect(() => {
+    if (deepLinkHoldRef.current) return;
+    const hash = formatDeepLink({
+      section: activeSection,
+      projectId: activeProject,
+      writingId: activeWriting,
+      paintingId: activePainting,
+    });
+    if (!hash) return;
+    // The landing page is the bare URL, with no hash trailing behind it.
+    const desired = hash === '#/' ? '' : hash;
+    if (window.location.hash === desired) return;
+    window.history.replaceState(
+      null,
+      '',
+      desired || window.location.pathname + window.location.search
+    );
+  }, [activeSection, activeProject, activeWriting, activePainting]);
+
   // Pins a description to the measured artwork above it. Falls back to the
   // full content column until the image has loaded and been measured.
   const getDescriptionStyle = (projectId, subId) => {
@@ -1216,33 +1432,33 @@ function App() {
     <div className="App">
       {/* Fixed Header */}
       <header className="fixed-header">
-        <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>
+        <a href="#/" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>
           <img src="/images/eden.png" alt="Eden" className="logo" />
         </a>
         <nav className={`main-nav ${activeSection === 'home' ? 'hidden' : ''}`}>
           <a 
-            href="#spaces-menu" 
+            href="#/spaces" 
             onClick={(e) => { e.preventDefault(); scrollToSection('spacesMenu'); }}
             className={activeSection === 'spaces' || activeSection === 'spacesMenu' ? 'active' : ''}
           >
             SPACES
           </a>
           <a 
-            href="#words" 
+            href="#/words" 
             onClick={(e) => { e.preventDefault(); scrollToSection('words'); }}
             className={activeSection === 'words' ? 'active' : ''}
           >
             WORDS
           </a>
           <a 
-            href="#paintings" 
+            href="#/paintings" 
             onClick={(e) => { e.preventDefault(); scrollToSection('paintings'); }}
             className={activeSection === 'paintings' ? 'active' : ''}
           >
             PAINTINGS
           </a>
           <a 
-            href="#profile" 
+            href="#/profile" 
             onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
             className={activeSection === 'contact' ? 'active' : ''}
           >
@@ -1519,7 +1735,7 @@ function App() {
                       ))}
                     </div>
                   </div>
-                  {writing.image && (
+                  {writing.image && isDesktop && (
                     <div className="writing-figure">
                       <img
                         src={writing.image}

@@ -1476,29 +1476,9 @@ body {
     padding: 0;
   }
 
-  /* No room for a column beside the text at this width, so the artwork drops
-     below it rather than squeezing the copy. */
-  .writing-layout {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
   /* A phone is barely one column wide, let alone two. */
   .two-column .writing-text {
     columns: auto;
-  }
-
-  .writing-figure {
-    align-self: flex-start;
-    position: static;
-    width: auto;
-  }
-
-  .writing-image {
-    position: static;
-    height: auto;
-    max-width: 100%;
-    max-height: 55vh;
   }
 
   .painting-display-title,
