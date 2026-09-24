@@ -10,6 +10,10 @@
    sized at any desktop width. Mobile (<=768px) opts out — see that
    breakpoint, which hides the sidebars and goes full-width. */
 :root {
+  /* 1% of the viewport height. `vh` is never used directly: stableViewport.js
+     overwrites this with a pixel value that ignores mobile browser chrome so
+     the sticky slides above the reader can't change height mid-scroll. */
+  --vhu: 1vh;
   --menu-margin: clamp(210px, 22vw, 340px);
   --nav-margin: clamp(230px, 21vw, 320px);
   /* Fixed clearance below the header, and above the viewport bottom, that
@@ -17,7 +21,7 @@
      to — so every image lands on the same baseline no matter its own
      height/aspect ratio. */
   --image-anchor-top: 7rem;
-  --image-anchor-bottom: 16vh;
+  --image-anchor-bottom: calc(16 * var(--vhu));
 }
 
 * {
@@ -33,7 +37,7 @@ body {
 }
 
 .App {
-  min-height: 100vh;
+  min-height: calc(100 * var(--vhu));
 }
 
 /* ===== FIXED HEADER ===== */
@@ -140,7 +144,7 @@ body {
 
 /* ===== SECTIONS ===== */
 .section {
-  min-height: 100vh;
+  min-height: calc(100 * var(--vhu));
 }
 
 /* ===== HOME SECTION ===== */
@@ -160,7 +164,7 @@ body {
 }
 
 .home-artwork {
-  max-height: 70vh;
+  max-height: calc(70 * var(--vhu));
   max-width: 55vw;
   width: auto;
   height: auto;
@@ -231,7 +235,7 @@ body {
   /* Cropped to the artwork's actual ink bounds (source frames have large blank
      margins above/below); ratio = 7856 / (5908 * 0.38 visible-height fraction). */
   aspect-ratio: 7856 / 2245;
-  height: min(13.3vh, 12.9vw);
+  height: min(calc(13.3 * var(--vhu)), 12.9vw);
   max-width: 46vw;
 }
 
@@ -241,7 +245,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: calc(100 * var(--vhu));
   /* The one page that opts out of the reserved right gutter: the grid is the
      whole page here, so it centres on the viewport instead of sitting off to
      the left of the nav and email. */
@@ -383,7 +387,7 @@ body {
   z-index: 100;
   opacity: 1;
   transition: opacity 0.3s ease;
-  max-height: 80vh;
+  max-height: calc(80 * var(--vhu));
   overflow-y: auto;
   pointer-events: auto;
   padding-left: 2rem;
@@ -493,7 +497,7 @@ body {
 /* Full-screen white-space break (between projects, and after the hero) */
 .project-spacer,
 .home-spacer {
-  min-height: 100vh;
+  min-height: calc(100 * var(--vhu));
   background: #ffffff;
   cursor: pointer;
 }
@@ -501,7 +505,7 @@ body {
 .subcategory-section {
   position: sticky;
   top: 0;
-  min-height: 100vh;
+  min-height: calc(100 * var(--vhu));
   background: #ffffff;
   display: flex;
   flex-direction: column;
@@ -541,8 +545,8 @@ body {
 
 /* In-spaces text block — multi-column, viewport-fit layout */
 .text-block-section {
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: calc(100 * var(--vhu));
+  max-height: calc(100 * var(--vhu));
   padding: 2.5rem 0 1.5rem;
   overflow: hidden;
   justify-content: flex-start;
@@ -602,7 +606,7 @@ body {
 
 .image-group.side-by-side .project-image {
   width: 48%;
-  height: 45vh;
+  height: calc(45 * var(--vhu));
   object-fit: cover;
 }
 
@@ -611,7 +615,7 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  max-height: 75vh;
+  max-height: calc(75 * var(--vhu));
   object-fit: contain;
   /* Default anchor for the per-image `scale` transform (side-by-side pairs
      and the finale recap keep their existing centered treatment when
@@ -733,7 +737,7 @@ body {
 .writing-section {
   position: sticky;
   top: 0;
-  min-height: 100vh;
+  min-height: calc(100 * var(--vhu));
   background: #ffffff;
   display: flex;
   align-items: center;
@@ -822,7 +826,7 @@ body {
   left: 0;
   height: 100%;
   width: auto;
-  max-height: calc(100vh - 8rem);
+  max-height: calc(calc(100 * var(--vhu)) - 8rem);
   max-width: calc(100vw - var(--menu-margin) - var(--writing-col) - 4rem);
   object-fit: contain;
   object-position: left top;
@@ -908,7 +912,7 @@ body {
 .painting-section {
   position: sticky;
   top: 0;
-  min-height: 100vh;
+  min-height: calc(100 * var(--vhu));
   background: #ffffff;
   display: flex;
   align-items: center;
@@ -933,7 +937,7 @@ body {
   /* Explicit: the intrinsic width/height attributes reserve the aspect ratio
      before load, and `auto` keeps the attribute height from being honoured. */
   height: auto;
-  max-height: 78vh;
+  max-height: calc(78 * var(--vhu));
   object-fit: contain;
 }
 
@@ -965,7 +969,7 @@ body {
 .painting-overlay-item {
   position: sticky;
   top: 0;
-  min-height: 100vh;
+  min-height: calc(100 * var(--vhu));
   background: #ffffff;
   display: flex;
   align-items: center;
@@ -978,7 +982,7 @@ body {
 
 .painting-overlay-item .painting-image {
   width: 75%;
-  max-height: 80vh;
+  max-height: calc(80 * var(--vhu));
   object-fit: contain;
 }
 
@@ -988,7 +992,7 @@ body {
   /* Right padding is the reserved gutter, so the columns stop where the nav
      and email begin. */
   padding: 8rem var(--nav-margin) 6rem 2.5rem;
-  min-height: 100vh;
+  min-height: calc(100 * var(--vhu));
   background: #ffffff;
 }
 
@@ -1089,12 +1093,12 @@ body {
 /* ===== RESPONSIVE - LARGE DESKTOP ===== */
 @media (min-width: 1440px) {
   .home-artwork {
-    max-height: 75vh;
+    max-height: calc(75 * var(--vhu));
     max-width: 60vw;
   }
 
   .home-animation {
-    height: min(14.25vh, 12.5vw);
+    height: min(calc(14.25 * var(--vhu)), 12.5vw);
   }
 
   .spaces-text-block-body {
@@ -1103,17 +1107,17 @@ body {
   }
 
   .project-image {
-    max-height: 80vh;
+    max-height: calc(80 * var(--vhu));
   }
 
   .painting-image {
     width: 60%;
-    max-height: 82vh;
+    max-height: calc(82 * var(--vhu));
   }
 
   .painting-overlay-item .painting-image {
     width: 80%;
-    max-height: 85vh;
+    max-height: calc(85 * var(--vhu));
   }
 
   .painting-info {
@@ -1141,12 +1145,12 @@ body {
 /* ===== RESPONSIVE - EXTRA LARGE DESKTOP ===== */
 @media (min-width: 1920px) {
   .home-artwork {
-    max-height: 80vh;
+    max-height: calc(80 * var(--vhu));
     max-width: 65vw;
   }
 
   .home-animation {
-    height: min(15.2vh, 12.2vw);
+    height: min(calc(15.2 * var(--vhu)), 12.2vw);
   }
 
   .spaces-text-block-body {
@@ -1156,21 +1160,21 @@ body {
   }
 
   .project-image {
-    max-height: 85vh;
+    max-height: calc(85 * var(--vhu));
   }
 
   .image-group.side-by-side .project-image {
-    height: 55vh;
+    height: calc(55 * var(--vhu));
   }
 
   .painting-image {
     width: 65%;
-    max-height: 85vh;
+    max-height: calc(85 * var(--vhu));
   }
 
   .painting-overlay-item .painting-image {
     width: 85%;
-    max-height: 88vh;
+    max-height: calc(88 * var(--vhu));
   }
 
   .painting-info {
@@ -1326,12 +1330,12 @@ body {
 
   /* Home */
   .home-artwork {
-    max-height: 45vh;
+    max-height: calc(45 * var(--vhu));
     max-width: 90vw;
   }
 
   .home-animation {
-    height: min(8.55vh, 15.6vw);
+    height: min(calc(8.55 * var(--vhu)), 15.6vw);
     max-width: 45vw;
   }
 
@@ -1374,7 +1378,7 @@ body {
 
   /* Images */
   .project-image {
-    max-height: 60vh;
+    max-height: calc(60 * var(--vhu));
   }
 
   /* Bottom-left anchor is a desktop refinement only; mobile keeps the
@@ -1406,7 +1410,7 @@ body {
 
   .subcategory-section.anchor-bottom-left .project-image {
     height: auto;
-    max-height: 60vh;
+    max-height: calc(60 * var(--vhu));
     object-position: center;
     transform-origin: center;
   }
@@ -1418,7 +1422,7 @@ body {
   .image-group.side-by-side .project-image {
     width: 100%;
     height: auto;
-    max-height: 50vh;
+    max-height: calc(50 * var(--vhu));
   }
 
   /* Descriptions */
@@ -1444,12 +1448,12 @@ body {
   .painting-section,
   .painting-overlay-item {
     padding: 2rem 0;
-    min-height: 80vh;
+    min-height: calc(80 * var(--vhu));
   }
 
   .text-block-section {
     max-height: none;
-    min-height: 80vh;
+    min-height: calc(80 * var(--vhu));
     overflow: visible;
   }
 
@@ -1470,7 +1474,7 @@ body {
   .painting-overlay-item .painting-image {
     width: 100%;
     max-width: 100%;
-    max-height: 55vh;
+    max-height: calc(55 * var(--vhu));
   }
 
   .painting-info,
@@ -1530,11 +1534,11 @@ body {
   }
 
   .home-artwork {
-    max-height: 40vh;
+    max-height: calc(40 * var(--vhu));
   }
 
   .home-animation {
-    height: min(7.6vh, 15.6vw);
+    height: min(calc(7.6 * var(--vhu)), 15.6vw);
   }
 
   .home-name {

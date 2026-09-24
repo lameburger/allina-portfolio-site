@@ -3,6 +3,7 @@ import { flushSync } from 'react-dom';
 import './App.css';
 import AnimatedSequence from './AnimatedSequence';
 import imageDimensions from './imageDimensions.json';
+import { installStableViewportUnit, isTouchOnlyDevice } from './stableViewport';
 
 // Project data structure with descriptions
 const projects = [
@@ -821,15 +822,6 @@ const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, [contenteditab
 // sidebars are hidden entirely and Spaces stays the full scrollable stack.
 const DESKTOP_QUERY = '(min-width: 769px)';
 
-// Touch-only devices (phones, tablets, in-app browsers) get the browser's
-// native scrolling untouched: the Spaces gate fights momentum scrolling and
-// viewport-chrome resizes there and produces backward jumps.
-function isTouchOnlyDevice() {
-  return typeof window.matchMedia === 'function'
-    ? window.matchMedia('(hover: none) and (pointer: coarse)').matches
-    : false;
-}
-
 function prefersReducedMotion() {
   return typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -1124,8 +1116,15 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [shownProjects]);
 
+  // Pin the viewport-height unit the stylesheet lays out with, so mobile
+  // browser chrome collapsing mid-scroll can't reflow the page (see
+  // stableViewport.js).
+  useEffect(() => installStableViewportUnit(), []);
+
   // Spaces scroll gate. Blocks only *forward* scroll intent at the menu, so
   // reverse scrolling, clicking, hovering and focus all keep working normally.
+  // Touch-only devices (phones, tablets, in-app browsers) get the browser's
+  // native scrolling untouched: the gate fights momentum scrolling there.
   useEffect(() => {
     if (isTouchOnlyDevice()) return undefined;
 
