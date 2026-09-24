@@ -390,25 +390,24 @@ Employing strategies of musician shorthand marks, I have been mapping the rules 
     subtitle: 'a tale of two cities',
     layout: 'two-column',
     content: `
-Every town is a diagram of what somebody, somewhere, decided a good life should look like. The Waltons and Miller came up with two approaches.
+Every town is a diagram of what somebody, somewhere, decided a good life should look like. 
+
 
 The Object
 
-Everything you could want exists in one town in the Northwest Arkansas.
+Everything you could want exists in one town in the Northwest Arkansas. 
 
-Moshe Safdie's Crystal Bridges is an cemented arts institutions placed delicately in a ring of nature trails you can bike. A Frank Lloyd Wright home was purchased and transplanted into the complex. Buckminster Fuller's Fly's Eye dome bought and stitched into the fabric of the museum. You'll find it not far from the 350 acre new Walmart Home Office. In fact, it's close enough for a Walmart employee to visit over lunch. And if art museums aren't for you, you'll find miles of trails that seem to sprout up overnight. Visiting any restaurant there you'll find the same Pinterest curated textures and patterns wallpapering popular and widely pleasing cuisine.
+Moshe Safdie's Crystal Bridges is an cemented arts institutions placed delicately in a ring of nature trails. A Frank Lloyd Wright home was purchased and transplanted onto the grounds. Buckminster Fuller's dome bought and stitched into the fabric of the museum. It's not far from the new 350 acre Walmart Home Office. In fact, it's close enough for a Walmart employee to visit over lunch. And if art museums aren't for you, visiting any restaurant there, you'll find the Pinterest curated patterns wallpapering popular and widely pleasing cuisine.
 
-Bentonville places before you with a salon style gallery wall, a sea of frames, and tells you that it is beautiful. They are daring you to complain in the face of its curation. The city is designing itself to eradicate anything that doesn't fit into its calibrated utopia. But what do the Waltons know about what you want? What satisfaction is fulfilled when everything is built for you, without you? If every want is met, what is left for you to find? 
+Bentonville is showing you a salon style gallery wall, a sea of frames, and asks that you agree it is beautiful. They are daring you to complain in the face of its curation. The city is designing itself into a carefully calibrated utopia for their workers. The Waltons are attempting to redesign desire. For what satisfaction is fulfilled when everything is built for you, without you? If every want is met, what is left for you to find?
 
 The Mechanism
 
-Columbus has no single beautiful museum. No surrounding web of bike trails. 
+Columbus has no single beautiful museum. No surrounding web of bike trails. Irwin Miller funded the construction of the fire station, public library, and schools. The only stipulation is that they must select from a list of the great modernists. Across the street from the I.M Pei's public library sits Eliel Saarinen's tower that belongs to one of the first modern churches ever built in America. Richard Meier, Cesar Pelli, Kevin Roche, Harry Weese and Venturi all boast buildings within this township of 50,000. The entire city becomes its own museum with a density of 60+ landmark buildings. Here, the design process is still based in a patron based but it invokes a different control. Miller was curating a list of possible encounters that aren't predictable.
 
-Irwin Miller funded the construction of fire stations, a public library, and schools. The only stipulation is that they must be authored by a modernist architect from his short list. Across the street from I.M. Pei's Cleo Rogers Memorial Library just happens to sit across from Eliel Saarinen's First Christian Church, one of the first modern churches built in America. Meier, Pelli, Roche, Weese and Venturi all boast buildings within this township of 50,000. The density of 60+ landmark buildings situates the entire city as its own museum of modern architecture. The design process invokes a different control. Miller curates a list of possible encounters that aren't predictable.
+While my preferences may be clear, Bentonville and Columbus aren't radically different. Both are paying to decide what you are allowed to want. It's the Waltons that curate the product, while Miller picks the list of authors, letting them individually answer. Miller is letting each end result offer different theses for modernity.
 
-While my preferences may be clear, Bentonville and Columbus aren't radically different. Both still are paying to decide what you are allowed to want. It's the Waltons that curate the product while Miller curates the list of authors, letting them individually answer. Miller is letting each end result offer different theses for modernity.
-
-That's the diagram. Each town decides what "good" means before you move in. Neither town answer well. Because neither answer whether you should want the thing or I want to keep wanting it?
+That's the diagram. Each town decides what "good" means before you get there. Neither town answer well. Because neither answer whether you should want the thing or want to keep wanting it.
 
 Every set of drawings I make is a bet about which kind of town I want to build. I draw to disengage with the master planning set before me by a standardized architectural education. I believe an education that triumphs the student who professionalizes themselves into the monocrop of architectural graduates is an education that disengages with the necessity of wanting. A student who doesn't want more is a student who will fail to live and design creatively. A student who wants more risks not getting approved for the list.
     `
