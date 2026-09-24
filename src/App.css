@@ -930,6 +930,9 @@ body {
 
 .painting-image {
   width: 58%;
+  /* Explicit: the intrinsic width/height attributes reserve the aspect ratio
+     before load, and `auto` keeps the attribute height from being honoured. */
+  height: auto;
   max-height: 78vh;
   object-fit: contain;
 }

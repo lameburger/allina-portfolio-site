@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo, Fragment } from 'rea
 import { flushSync } from 'react-dom';
 import './App.css';
 import AnimatedSequence from './AnimatedSequence';
+import imageDimensions from './imageDimensions.json';
 
 // Project data structure with descriptions
 const projects = [
@@ -14,13 +15,13 @@ const projects = [
       {
         id: 'program',
         name: 'Program',
-        images: ['/archcenter/graphic.png'],
+        images: ['/archcenter/graphic.webp'],
         description: 'Axonometric massing diagram'
       },
       {
         id: 'site-axon-map',
         name: 'Site Axon',
-        images: ['/archcenter/arteriemap.png', '/archcenter/ac1.png'],
+        images: ['/archcenter/arteriemap.webp', '/archcenter/ac1.webp'],
         layout: 'side-by-side',
         description: 'Sharing space with the KCAI ceramics and foundations studios, the Center finds itself amidst a vibrant student body.',
         meta: {
@@ -33,8 +34,8 @@ const projects = [
         id: 'floorplans',
         name: 'Floor Plans',
         images: [
-          '/archcenter/fp1.png',
-          '/archcenter/fp2.png',
+          '/archcenter/fp1.webp',
+          '/archcenter/fp2.webp',
         ],
         layout: 'side-by-side',
         description: 'A rectangular first floor evolves on the second, bending as the narrative of architecture reflects changing desires. Legibility and order give way for the fluid movements that fuel us',
@@ -42,24 +43,24 @@ const projects = [
       {
         id: 'reading-room',
         name: 'Reading Room',
-        images: ['/archcenter/ac2.5.jpg'],
+        images: ['/archcenter/ac2.5.webp'],
         description: 'A curved wall hugs a space for study anchored in the suspension of space. It becomes the invitation of a breaths held to defer full satisfaction of exhalation.',
       },
       {
         id: 'gallery',
         name: 'Gallery',
-        images: ['/archcenter/ac3.jpg'],
+        images: ['/archcenter/ac3.webp'],
       },
       {
         id: 'auditorium',
         name: 'Auditorium',
-        images: ['/archcenter/ac5.png'],
+        images: ['/archcenter/ac5.webp'],
         description: 'Bring us to a corner, pushing a desire to look on',
       },
       {
         id: 'center',
         name: 'Center',
-        images: ['/archcenter/center.png'],
+        images: ['/archcenter/center.webp'],
         description: 'The courtyard is the void of desire, pierced only by movement. We move for pursuit. Driven by envy and wanting, we interact with space through the framework of getting closer to what we want.',
       },
     ],
@@ -73,7 +74,7 @@ const projects = [
       {
         id: 'axon',
         name: 'Axonometric',
-        images: ['/artsporch/AXON.jpg'],
+        images: ['/artsporch/AXON.webp'],
         description: "A cafe and pavilion presents itself as a place of rest on KC's Arterie Artswalk that connects KCAI and the Nelson Museum of Art to the streetcars.",
         meta: {
           client: 'Peter Olshavsky',
@@ -84,18 +85,18 @@ const projects = [
       {
         id: 'floorplan',
         name: 'Floor Plan',
-        images: ['/artsporch/floorplan.png'],
+        images: ['/artsporch/floorplan.webp'],
         description: 'Informed by a grid that acts as a form of logic and measurement, the building form is locked by formalization'
       },
       {
         id: 'elev',
         name: 'North Entry Elevation',
-        images: ['/artsporch/elev.png']
+        images: ['/artsporch/elev.webp']
       },
       {
         id: 'side',
         name: 'Terrace',
-        images: ['/artsporch/side.png']
+        images: ['/artsporch/side.webp']
       },
     ],
   },
@@ -110,7 +111,7 @@ const projects = [
       {
         id: 't01',
         name: '01',
-        images: ['/exhibtion/t01.JPEG'],
+        images: ['/exhibtion/t01.webp'],
         meta: {
           client: 'Peter Olshavsky',
           location: 'University of Kansas',
@@ -119,7 +120,7 @@ const projects = [
       {
         id: 't02',
         name: '02',
-        images: ['/exhibtion/t02.JPEG'],
+        images: ['/exhibtion/t02.webp'],
       },
       {
         id: 'studio-reflection',
@@ -135,17 +136,17 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
       {
         id: 't03',
         name: '03',
-        images: ['/exhibtion/t03.jpeg'],
+        images: ['/exhibtion/t03.webp'],
       },
       {
         id: 't04',
         name: '04',
-        images: ['/exhibtion/t04.jpeg'],
+        images: ['/exhibtion/t04.webp'],
       },
       {
         id: 't05',
         name: '05',
-        images: ['/exhibtion/t05.JPEG'],
+        images: ['/exhibtion/t05.webp'],
       },
     ],
   },
@@ -159,7 +160,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
       { 
         id: 'celebration', 
         name: 'Celebration', 
-        images: ['/mixeduse/Asset 1.jpg'],
+        images: ['/mixeduse/Asset 1.webp'],
         description: 'Fine dining connected to a sculpture garden below a contemporary art gallery.',
         meta: {
           client: 'Bryan Gross',
@@ -167,31 +168,31 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
           size: '8,725 sqft'
         }
       },
-      { id: 'movement', name: 'Movement', images: ['/mixeduse/collage.jpg'], description: 'Historic masonry and processions of commerce frame movement behind storefronts. In between, energy peeling in through the live music scene and nightlife ' },
+      { id: 'movement', name: 'Movement', images: ['/mixeduse/collage.webp'], description: 'Historic masonry and processions of commerce frame movement behind storefronts. In between, energy peeling in through the live music scene and nightlife ' },
       { 
         id: 'site', 
         name: 'Site', 
-        images: ['/mixeduse/asset-8.jpg'],
+        images: ['/mixeduse/asset-8.webp'],
         description: '1 - Site\n2 - Watkins History Museum\n3 - Douglas Courthouse\n4 - Granada Music Venue'
       },
       { 
         id: 'floorplan', 
         name: 'Floor Plan', 
-        images: ['/mixeduse/Asset 2.jpg'],
+        images: ['/mixeduse/Asset 2.webp'],
         description:'The answer was the transparent form, by placing something transparent next to the stoneworks, the historical forms remain accessible. A second form retreats to fulfill reveals in and out of the gallery and restaurant.'
       },
-      { id: 'sections', name: 'Sections', images: ['/mixeduse/New Model.png'] },
+      { id: 'sections', name: 'Sections', images: ['/mixeduse/New Model.webp'] },
       { 
         id: 'interiors', 
         name: 'Interiors', 
-        images: ['/mixeduse/Asset 5.jpg', '/mixeduse/Asset 6.jpg'],
+        images: ['/mixeduse/Asset 5.webp', '/mixeduse/Asset 6.webp'],
         layout: 'side-by-side',
         description: 'Understanding the transparent form as defining logic, the stairs become the central focus visually and structurally. Acting as a shelter for the outdoor dining and becoming the spotlit movement, the stairs act as the only intrusion to the pure rectangular form. As the stairs punch in, the motif of ascension becomes a hopeful guide to encourage visitors of the restaurant to pierce the boundary and travel up the stairs to the gallery.'
       },
       {
         id: 'finale',
         name: 'Finale',
-        images: ['/mixeduse/asset-9.jpg'],
+        images: ['/mixeduse/asset-9.webp'],
         isFinale: true
       },
     ],
@@ -205,7 +206,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
       { 
         id: 'healing', 
         name: 'Healing', 
-        images: ['/healing/preview_image.png'],
+        images: ['/healing/preview_image.webp'],
         description: 'A therapy space designed to provide comfort, clarity, and restoration through architecture that responds to both the landscape and the human need for sanctuary.',
         meta: {
           client: 'Bryan Gross',
@@ -214,19 +215,19 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
           duration: '4 weeks'
         }
       },
-      { id: 'site', name: 'Site', images: ['/healing/site.jpg'], description: 'Past Clinton Boat Ramp 3, the site sits on a secluded shore of Clinton Lake.'},
-      { id: 'floorplans', name: 'Floor Plans', images: ['/healing/floorplan_1.png'] },
+      { id: 'site', name: 'Site', images: ['/healing/site.webp'], description: 'Past Clinton Boat Ramp 3, the site sits on a secluded shore of Clinton Lake.'},
+      { id: 'floorplans', name: 'Floor Plans', images: ['/healing/floorplan_1.webp'] },
       { 
         id: 'process', 
         name: 'Process', 
-        images: ['/healing/process_1.JPEG', '/healing/process_2.JPEG'],
+        images: ['/healing/process_1.webp', '/healing/process_2.webp'],
         layout: 'side-by-side'
       },
-      { id: 'sectioncuts', name: 'Section Cuts', images: ['/healing/sectioncut_1.png'], description: 'Low and heavy over limestone-wrapped private rooms, rising into glass where the shared space opens toward Clinton Lake.' },
+      { id: 'sectioncuts', name: 'Section Cuts', images: ['/healing/sectioncut_1.webp'], description: 'Low and heavy over limestone-wrapped private rooms, rising into glass where the shared space opens toward Clinton Lake.' },
       { 
         id: 'therapeutic', 
         name: 'Therapeutic Design', 
-        images: ['/healing/preview_image_2.png'], 
+        images: ['/healing/preview_image_2.webp'], 
         description: 'In conjoining the two spaces, the entry vestibule gives the therapist a chance to introduce visitors to the space. By providing a dedicated entry that transparently offers visual opportunities to understand what lies on either side of the building, visitors can acclimate.' 
       },
     ],
@@ -241,7 +242,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
       { 
         id: 'ideation', 
         name: 'Ideation', 
-        images: ['/enclosure/1.JPEG'],
+        images: ['/enclosure/1.webp'],
         description: 'A gallery and small living studio for Roger Shimomura, a celebrated Japanese American artist.',
         meta: {
           client: 'Anne Patterson',
@@ -249,8 +250,8 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
           size: '1,150 sqft'
         }
       },
-      { id: 'section', name: 'Section', images: ['/enclosure/section_1.png'] },
-      { id: 'floorplan', name: 'Floor Plan', images: ['/enclosure/floorplan.png'] },
+      { id: 'section', name: 'Section', images: ['/enclosure/section_1.webp'] },
+      { id: 'floorplan', name: 'Floor Plan', images: ['/enclosure/floorplan.webp'] },
     ],
   },
 ];
@@ -269,6 +270,10 @@ const visibleProjects = projects.filter((project) => !project.hidden);
 // standard slides, center for side-by-side/finale) — everything else about
 // its layout/position is untouched. Example: images: [{ src: '/foo.jpg', scale: 70 }]
 const getImageSrc = (image) => (typeof image === 'string' ? image : image.src);
+// Intrinsic pixel size (generated from public/ into imageDimensions.json) so
+// the browser can reserve the image's box before it loads instead of shifting
+// the layout when a multi-megabyte file finally arrives.
+const getImageDimensions = (src) => imageDimensions[src] || {};
 const getImageScale = (image) => {
   if (typeof image === 'string') return 100;
   const scale = Number(image.scale);
@@ -324,12 +329,12 @@ function getArtworkSpan(group) {
 // Spaces menu page: descriptive titles + a representative thumbnail per project.
 // Each entry links (by projectId) to the matching project in the Spaces section.
 const spacesMenu = [
-  { projectId: 1, title: 'ARCHITECTURAL CENTER FOR KANSAS CITY', image: '/archcenter/ac3.jpg' },
-  { projectId: 2, title: 'REVISITING BAD PRESS MICRO EXHIBITION', image: '/exhibtion/t05.JPEG' },
-  { projectId: 3, title: 'CONTEMPORARY GALLERY + FINE DINING', image: '/mixeduse/collage.jpg' },
-  { projectId: 4, title: 'FIELDHOUSE WELLNESS RETREAT CENTER', image: '/healing/preview_image.png' },
-  { projectId: 5, title: 'ARTS WALK CAFE PORCH WITH EXHIBITION', image: '/artsporch/AXON.jpg' },
-  { projectId: 6, title: 'CAMPUS ARTIST RESIDENCE SHIMOMURA', image: '/enclosure/1.JPEG' },
+  { projectId: 1, title: 'ARCHITECTURAL CENTER FOR KANSAS CITY', image: '/archcenter/ac3.webp' },
+  { projectId: 2, title: 'REVISITING BAD PRESS MICRO EXHIBITION', image: '/exhibtion/t05.webp' },
+  { projectId: 3, title: 'CONTEMPORARY GALLERY + FINE DINING', image: '/mixeduse/collage.webp' },
+  { projectId: 4, title: 'FIELDHOUSE WELLNESS RETREAT CENTER', image: '/healing/preview_image.webp' },
+  { projectId: 5, title: 'ARTS WALK CAFE PORCH WITH EXHIBITION', image: '/artsporch/AXON.webp' },
+  { projectId: 6, title: 'CAMPUS ARTIST RESIDENCE SHIMOMURA', image: '/enclosure/1.webp' },
 ].filter((item) => visibleProjects.some((project) => project.id === item.projectId));
 
 // Paintings data
@@ -338,7 +343,7 @@ const paintings = [
     id: 1,
     title: 'RADIO TOWERS',
     displayTitle: 'RADIO TOWERS',
-    images: ['/works/rt/1.JPG', '/works/rt/3.JPG', '/works/rt/5.JPG'],
+    images: ['/works/rt/1.webp', '/works/rt/3.webp', '/works/rt/5.webp'],
     isMultiImage: true,
     description: "The red lights that radiate in the empty space of the sky as to shout, in a steady rhythm, as to say I am here. Still and forever. These silent reminders in a flattened midwest stand as the sole figure prolating out of the earth and far into the sky.",
     size: '29 x 48 inches',
@@ -348,7 +353,7 @@ const paintings = [
     id: 2,
     title: 'CYCLE',
     displayTitle: 'CYCLE',
-    image: '/works/fly.JPG',
+    image: '/works/fly.webp',
     description: "Faced with imposing limits, the fly is an uncomfortable confrontation. With short life spans the life cycle of a fly inspired this hostile and uncomfortable presentation of a fly.",
     size: '29.5 x 40 inches',
     materials: 'Acrylic on canvas'
@@ -357,7 +362,7 @@ const paintings = [
     id: 3,
     title: 'RINGS',
     displayTitle: 'RINGS',
-    image: '/works/work5.png',
+    image: '/works/work5.webp',
     description: "While seasons change, trees hold fast firmly watching everything around them change. Unmoving themselves, this removed experience of time and change inspired a hand carved linoleum print.",
     size: '18 x 12 inches',
     materials: 'Linoleum Print, Speedball ink, Illustration Board'
@@ -370,7 +375,7 @@ const writings = [
     id: 1,
     title: 'LIEBESKIND; SYSTEMS OF LOGIC',
     subtitle: 'mapping chamberworks, engaging musical annotations and algorithmic composition',
-    image: '/images/libe.png',
+    image: '/images/libe.webp',
     content: `
 Daniel Libeskind published 28 ink drawings in 1983 titled Chamber Works: Architectural Meditation on Themes from Heraclitus.
 
@@ -816,6 +821,15 @@ const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, [contenteditab
 // sidebars are hidden entirely and Spaces stays the full scrollable stack.
 const DESKTOP_QUERY = '(min-width: 769px)';
 
+// Touch-only devices (phones, tablets, in-app browsers) get the browser's
+// native scrolling untouched: the Spaces gate fights momentum scrolling and
+// viewport-chrome resizes there and produces backward jumps.
+function isTouchOnlyDevice() {
+  return typeof window.matchMedia === 'function'
+    ? window.matchMedia('(hover: none) and (pointer: coarse)').matches
+    : false;
+}
+
 function prefersReducedMotion() {
   return typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -1113,6 +1127,8 @@ function App() {
   // Spaces scroll gate. Blocks only *forward* scroll intent at the menu, so
   // reverse scrolling, clicking, hovering and focus all keep working normally.
   useEffect(() => {
+    if (isTouchOnlyDevice()) return undefined;
+
     // A focused project is a dead end: the last slide is as far as scrolling
     // goes, and the way onward is the header nav. Only
     // applies while the reader is actually in Spaces, so a nav jump to Words
@@ -1229,24 +1245,25 @@ function App() {
       if (spacesGateRef.current === GATE_SNAPPING || isAtForwardStop()) event.preventDefault();
     };
 
+    // Touch handlers only matter on hybrid devices (touch laptops etc.) now
+    // that touch-only devices skip the gate entirely.
     const handleTouchStart = (event) => {
       touchStartYRef.current = event.touches[0]?.clientY ?? 0;
     };
 
     const handleTouchMove = (event) => {
       const gate = spacesGateRef.current;
-      // Finger travelling up moves the page forward; down scrolls back.
-      const forward = touchStartYRef.current - (event.touches[0]?.clientY ?? 0);
-      if (forward > GATE_TOUCH_THRESHOLD) {
+      // Direction is measured from the finger's *previous* position, not where
+      // the touch began, so reversing mid-gesture is seen as reversing.
+      const currentY = event.touches[0]?.clientY ?? 0;
+      const forward = touchStartYRef.current - currentY;
+      if (Math.abs(forward) <= GATE_TOUCH_THRESHOLD) return;
+      touchStartYRef.current = currentY;
+      if (forward > 0) {
         if (gate === GATE_SNAPPING || isAtForwardStop()) event.preventDefault();
-      } else if (forward < -GATE_TOUCH_THRESHOLD && gate === GATE_SNAPPING) {
+      } else if (gate === GATE_SNAPPING) {
         cancelSnap();
       }
-    };
-
-    const handleResize = () => {
-      const stop = getForwardStop();
-      if (stop !== null && window.scrollY > stop) scrollWindowTo(stop, false);
     };
 
     // Reloading part-way down the page shouldn't yank the reader backwards.
@@ -1262,7 +1279,10 @@ function App() {
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('resize', handleResize);
+    // Deliberately no resize handler: viewport height changes (mobile browser
+    // chrome, in-app browsers, window resizes) must never move the scroll
+    // position on their own. The scroll handler re-evaluates the stops on the
+    // reader's next scroll.
 
     return () => {
       window.removeEventListener('scroll', handleGateScroll);
@@ -1270,7 +1290,6 @@ function App() {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('resize', handleResize);
       cancelSettleWatch();
     };
   }, [cancelSettleWatch, getSpacesMenuBounds, setSpacesGateState]);
@@ -1487,7 +1506,7 @@ function App() {
             frameCount={5}
             startIndex={10}
             prefix="frame-"
-            ext="jpg"
+            ext="webp"
             fps={3}
             pingPong
             loop
@@ -1525,7 +1544,13 @@ function App() {
               aria-label={`Go to project: ${item.title}`}
             >
               <div className="spaces-menu-thumb">
-                <img src={item.image} alt={item.title} className="spaces-menu-image" />
+                <img
+                  src={item.image}
+                  {...getImageDimensions(item.image)}
+                  decoding="async"
+                  alt={item.title}
+                  className="spaces-menu-image"
+                />
               </div>
               <div className="spaces-menu-caption">
                 <span className="spaces-menu-title">{item.title}</span>
@@ -1640,6 +1665,9 @@ function App() {
                                 <img
                                   key={idx}
                                   src={getImageSrc(img)}
+                                  {...getImageDimensions(getImageSrc(img))}
+                                  loading="lazy"
+                                  decoding="async"
                                   alt={`${project.title} - ${sub.name}`}
                                   className="project-image"
                                   style={scale < 100 ? { transform: `scale(${scale / 100})` } : undefined}
@@ -1738,6 +1766,9 @@ function App() {
                     <div className="writing-figure">
                       <img
                         src={writing.image}
+                        {...getImageDimensions(writing.image)}
+                        loading="lazy"
+                        decoding="async"
                         alt={writing.title}
                         className="writing-image"
                       />
@@ -1800,7 +1831,14 @@ function App() {
                   {painting.images.map((img, idx) => (
                     <div key={idx} className="painting-overlay-item">
                       <div className="painting-layout">
-                        <img src={img} alt={`${painting.title} ${idx + 1}`} className="painting-image" />
+                        <img
+                          src={img}
+                          {...getImageDimensions(img)}
+                          loading="lazy"
+                          decoding="async"
+                          alt={`${painting.title} ${idx + 1}`}
+                          className="painting-image"
+                        />
                         {idx === 0 && (
                           <div className="painting-info">
                             <h3 className="painting-display-title">{painting.displayTitle}</h3>
@@ -1813,8 +1851,11 @@ function App() {
                 </div>
               ) : (
                 <div className="painting-layout">
-                  <img 
-                    src={painting.image} 
+                  <img
+                    src={painting.image}
+                    {...getImageDimensions(painting.image)}
+                    loading="lazy"
+                    decoding="async"
                     alt={painting.title}
                     className="painting-image"
                   />
