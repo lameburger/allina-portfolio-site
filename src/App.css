@@ -519,6 +519,20 @@ body {
   text-align: center;
 }
 
+.project-introduction-title {
+  max-width: 34rem;
+  margin: 0 auto 1.5rem;
+  padding: 0 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: #444;
+  font-weight: 400;
+  /* double the tracking and word gaps of .project-introduction-copy */
+  letter-spacing: 0.02em;
+  word-spacing: 0.25em;
+  text-align: center;
+}
+
 .project-introduction-copy {
   max-width: 34rem;
   margin: 0 auto;
@@ -1081,6 +1095,28 @@ body {
   font-style: italic;
 }
 
+/* Experience role line: role and dates read left, location right. The columns
+   are narrower than the two halves combined, so the location wraps onto its
+   own line — still right-aligned — before the two can collide. */
+.contact-entry-role {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 0.75rem;
+  color: #999999;
+  font-style: italic;
+}
+
+.contact-entry-location {
+  margin-left: auto;
+  text-align: right;
+}
+
+/* One accomplishment per line; the note margin spaces them. */
+.contact-entry-description {
+  list-style: none;
+}
+
 .contact-entry-note {
   margin-top: 0.2rem;
   font-size: 0.9em;
@@ -1395,6 +1431,10 @@ body {
     text-align: center;
   }
 
+  .project-introduction-title {
+    margin: 0 auto 1.5rem;
+  }
+
   .project-introduction-copy {
     margin: 0 auto;
   }
@@ -1515,6 +1555,12 @@ body {
   .contact-group-heading,
   .contact-entry {
     font-size: 0.8rem;
+  }
+
+  /* The single-column flow is much wider than the entry text, so cap the role
+     line instead of throwing the location out to the viewport edge. */
+  .contact-entry-role {
+    max-width: 24rem;
   }
 }
 

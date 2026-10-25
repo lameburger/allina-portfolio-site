@@ -10,26 +10,33 @@ const projects = [
   {
     id: 1,
     title: 'ARCH CENTER',
+    introductionTitle: 'COURTYARD',
     introductionText:
-      'Creating a Center for Architecture in Kansas City\'s Arts district required an educational space that removes barrier. This project takes an undefined courtyard as its starting condition, a built space and the unbuilt. Its theoretical ground draws on Anne Carson\'s reading of Eros, in which desire is structured around a void that never closes, both drawing force from that same absence. This becomes structural with a single stairwell pierces the courtyard, remains the sole passage between floors. Circulation moves in orbit around this void, pulled outward toward in quiet spaces such as the gallery and reading room. Only to then be drawn back into to carry visitors across the distance. The architecture withholds arrival, asking its occupants to want the space before they are given it.',
+      'This project begins with a courtyard as its starting condition, a built space that engages the unbuilt. The theoretical ground draws on Anne Carson\'s reading of Eros, in which desire is structured around a void that never closes. The path between the galleries orbit around this void. Circulation within the defined space bores the abscence with a single stairwell that pierces the courtyard. The intention is to withhold the satisfaction of arrival, asking its occupants to want the space before they are given it.',
     subcategories: [
       {
-        id: 'program',
-        name: 'Program',
-        images: ['/archcenter/graphic.webp'],
-        description: 'Axonometric massing diagram'
+        id: 'reading-room',
+        name: 'Reading Room',
+        images: ['/archcenter/ac2.5.webp'],
+        description: 'The built and unbuilt know boundary only by tasting the edge.',
       },
       {
         id: 'site-axon-map',
         name: 'Site Axon',
         images: ['/archcenter/arteriemap.webp', '/archcenter/ac1.webp'],
         layout: 'side-by-side',
-        description: 'Sharing space with the KCAI ceramics and foundations studios, the Center finds itself amidst a vibrant student body.',
+        description: 'Sharing space with the KCAI ceramics and foundations studios, the Center opens itself to a vibrant student body in the southern face of the building.',
         meta: {
           client: 'Peter Olshavsky',
           location: 'Museum District - Kansas City, MO',
           size: '27,000 sqft',
         },
+      },
+      {
+        id: 'program',
+        name: 'Program',
+        images: ['/archcenter/graphic.webp'],
+        description: 'Axonometric massing diagram'
       },
       {
         id: 'floorplans',
@@ -39,13 +46,7 @@ const projects = [
           '/archcenter/fp2.webp',
         ],
         layout: 'side-by-side',
-        description: 'A rectangular first floor evolves on the second, bending as the narrative of architecture reflects changing desires. Legibility and order give way for the fluid movements that fuel us',
-      },
-      {
-        id: 'reading-room',
-        name: 'Reading Room',
-        images: ['/archcenter/ac2.5.webp'],
-        description: 'A curved wall hugs a space for study anchored in the suspension of space. It becomes the invitation of a breaths held to defer full satisfaction of exhalation.',
+        description: 'A  strong rectangular first floor begins to bend on the second, turning as the narrative of architecture reflects changing desires. Legibility and order give way for the fluidity',
       },
       {
         id: 'gallery',
@@ -56,19 +57,19 @@ const projects = [
         id: 'auditorium',
         name: 'Auditorium',
         images: ['/archcenter/ac5.webp'],
-        description: 'Bring us to a corner, pushing a desire to look on',
       },
       {
         id: 'center',
         name: 'Center',
         images: ['/archcenter/center.webp'],
-        description: 'The courtyard is the void of desire, pierced only by movement. We move for pursuit. Driven by envy and wanting, we interact with space through the framework of getting closer to what we want.',
+        description: 'The courtyard is the void of desire, pierced only by movement. Driven by envy and wanting, we interact with space hoping to getting closer to what we want.',
       },
     ],
   },
   {
     id: 5,
     title: 'ARTS PORCH',
+    introductionTitle: 'INSTALLATION',
     introductionText:
       "Arts porch and Cafe placed along Kansas City's Art Walk initiative. Boasting a terrace with installation capabilities, its point grid runs the course of the building growing and mapping an ever-changing art's landscape.",
     subcategories: [
@@ -104,6 +105,7 @@ const projects = [
   {
     id: 2,
     title: 'REVISITING BAD PRESS',
+    introductionTitle: 'FOLDING',
     introductionText:
       'When the shirt is worn, the residue of the orthogonal logic of efficiency registers on the surface of the body. The parallel creases and crisp, square corners of a clean, pressed shirt have become sought-after emblems of refinement. The byproduct of efficiency has become a new object of desire. But what if the practice of ironing could be freed from the aesthetics of efficiency altogether? Perhaps ironing could more aptly represent the postindustrial body by trading the image of the functional for that of the dysfunctional.',
     introductionCredits:
@@ -154,6 +156,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
   {
     id: 3,
     title: 'MIXED USE',
+    introductionTitle: 'LIGHT',
     introductionText:
       'The project responds to a historic downtown context shaped by a masonry and the measured rhythm of brick storefronts along the street. The project treats movement as its primary subject rather than a byproduct of circulation. The ground floor holds a fine dining space in its most enclosed volume, opening itself under the framework of movement toward a public sculpture park anchored by a Richard Serra piece, collapsing the distance between private and shared ground. A single monumental stair reaches the gallery above, where light is calibrated to the art it falls on. The exterior holds the proportions of its historic neighbors, brick and punched window, even as the section behind the facade proposes something else: a building that returns light and motion to a downtown otherwise held by masonry.',
  
@@ -201,6 +204,7 @@ As a studio, (Vanessa Barni, Segan Bettenhausen, Will Blaisdell, Luke Brueggeman
   {
     id: 4,
     title: 'HEALING',
+    introductionTitle: 'SHARING',
     introductionText:
       "Set within Clinton Lake's oak forest and restored prairie, the project is a satellite therapy space built to host workshops, group sessions, and retreats while protecting the privacy that therapeutic practice requires. Its V-shaped massing runs from open to closed, so a visitor descending the nature trail, moves through a gradient rather than a single threshold. The roofline carries the argument. Low and heavy over limestone-wrapped private rooms, rising into glass where the shared space opens toward Clinton Lake and a shared dining space. Privacy is built through proportion and material rather than walls alone, leaving the surrounding landscape to do the restorative work the program depends on.",
     subcategories: [
@@ -352,6 +356,15 @@ const paintings = [
   },
   {
     id: 2,
+    title: 'STUDY',
+    displayTitle: 'STUDY',
+    image: '/works/study.webp',
+    size: '11 x 17 inches',
+    materials: 'Digital',
+    description: 'An exploration of positive and negative space. They are not polka dots.',
+  },
+  {
+    id: 3,
     title: 'CYCLE',
     displayTitle: 'CYCLE',
     image: '/works/fly.webp',
@@ -360,7 +373,7 @@ const paintings = [
     materials: 'Acrylic on canvas'
   },
   {
-    id: 3,
+    id: 4,
     title: 'RINGS',
     displayTitle: 'RINGS',
     image: '/works/work5.webp',
@@ -416,6 +429,22 @@ While my preferences may be clear, Bentonville and Columbus aren't radically dif
 That's the diagram. Each town decides what "good" means before you get there. Neither town answer well. Because neither answer whether you should want the thing or want to keep wanting it.
 
 Every set of drawings I make is a bet about which kind of town I want to build. I draw to disengage with the master planning set before me by a standardized architectural education. I believe an education that triumphs the student who professionalizes themselves into the monocrop of architectural graduates is an education that disengages with the necessity of wanting. A student who doesn't want more is a student who will fail to live and design creatively. A student who wants more risks not getting approved for the list.
+    `
+  },
+  {
+    id: 3,
+    title: 'WEIGHT',
+    subtitle: 'lessons from my second year of architecture',
+    content: `
+Attachment is heavier than ambition.
+
+The removal of ego must be supplemented by a removal of reverence in order to create. Holding work preciously removes the agency necessary for creativity.
+
+Over the past week, I’ve become increasingly comfortable throwing my own work away. Not because I believe it to be subpar, and not because I’ve grown cynical, but because I'm learning how to extract what matters and leave the rest behind. Protecting your work is a waste of energy, defending things that fail to constitute your work.
+
+Running your hands through your hair you’ve just cut for the first time, there’s a brief, unsettling moment where something feels wrong. When you expect more to be there as there was more there. But almost without noticing, what replaces the loss is a strange, unexpected freedom.
+
+I’m not writing to argue that work should be thrown away more often, only that it should be allowed to change. Iteration should never be erasure, rather just attention. Build on what you have, refine what serves you, and let go of what doesn’t. In doing so, you make room for better work and stronger process.
     `
   },
 ];
@@ -561,6 +590,9 @@ function holdInView(getElement, onDone) {
 // An entry is a title, optional italic meta lines (organisation, years, or a
 // role), and an optional note. Meta lines may be a plain string or
 // `{ text, url }` to link one out.
+// Experience entries instead lead with an `organization` and add a role line
+// (`role`, `dates`, `location`) plus a `description` of one line per
+// accomplishment; `url` links the organisation name out.
 const contact = {
   columns: [
     [
@@ -584,17 +616,25 @@ const contact = {
         heading: 'EXPERIENCE,',
         entries: [
           {
-            title: 'STUDENT EDUCATOR+ AMBASSADOR',
-            meta: [
-              { text: 'THE SPENCER MUSEUM OF ART', url: 'https://spencerart.ku.edu/' },
-              '2025-',
+            organization: 'SPENCER MUSEUM OF ART',
+            url: 'https://spencerart.ku.edu/',
+            role: 'STUDENT AMBASSADOR',
+            dates: '2025 - PRESENT',
+            location: 'LAWRENCE, KS',
+            description: [
+              'Leading inquiry-based tours of museum galleries and exhibitions specifically designed for elementary school groups',
             ],
-            note: 'Presenting tours for K-12 students, adapting and engaging through storytelling to create an inclusive and discovery-driven environment.',
           },
           {
-            title: 'ARCHITECTURAL INTERN',
-            meta: ['JHET ARCHITECTS, DALLAS, TX', '2025, 2026'],
-            note: 'Aiding in Construction Documentation/Administration in Revit, contributing to 19 projects, across 3 states, totaling over 2,500,000 sq ft.',
+            organization: 'JHET ARCHITECTS',
+            role: 'ARCHITECTURAL INTERN',
+            dates: '2025 - 2026',
+            location: 'DALLAS, TX',
+            description: [
+              'Produced construction documents with Revit and Bluebeam for 23 different projects, totaling to 1.8 million sqft, from SD to CD',
+              'Researched AI trends informing new data center design and development',
+              'Documented site conditions and issued field reports',
+            ],
           },
         ],
       },
@@ -738,17 +778,35 @@ function ContactExternalLink({ href, children }) {
   );
 }
 
-// A single contact entry: title, then any italic meta lines, then a note.
+// A single contact entry: a lead line (an organisation for experience, a title
+// everywhere else), then the role line or any italic meta lines, then a note.
 function ContactEntry({ entry }) {
+  const lead = entry.organization ?? entry.title;
+
   return (
     <li className="contact-entry">
       <p className="contact-entry-title">
         {entry.url ? (
-          <ContactExternalLink href={entry.url}>{entry.title}</ContactExternalLink>
+          <ContactExternalLink href={entry.url}>{lead}</ContactExternalLink>
         ) : (
-          entry.title
+          lead
         )}
       </p>
+      {entry.role && (
+        <p className="contact-entry-role">
+          <span>{[entry.role, entry.dates].filter(Boolean).join(', ')}</span>
+          {entry.location && <span className="contact-entry-location">{entry.location}</span>}
+        </p>
+      )}
+      {entry.description && (
+        <ul className="contact-entry-description">
+          {entry.description.map((line) => (
+            <li key={line} className="contact-entry-note">
+              {line}
+            </li>
+          ))}
+        </ul>
+      )}
       {entry.meta?.map((line) => (
         <p key={typeof line === 'string' ? line : line.text} className="contact-entry-meta">
           {typeof line === 'string' ? (
@@ -785,7 +843,7 @@ function ContactGroup({ group }) {
       {group.entries && (
         <ul className="contact-entry-list">
           {group.entries.map((entry) => (
-            <ContactEntry key={entry.title} entry={entry} />
+            <ContactEntry key={entry.organization ?? entry.title} entry={entry} />
           ))}
         </ul>
       )}
@@ -1623,6 +1681,9 @@ function App() {
               >
                 {project.introductionText && (
                   <div className="subcategory-section project-introduction first-subcategory">
+                    {project.introductionTitle && (
+                      <h2 className="project-introduction-title">{project.introductionTitle}</h2>
+                    )}
                     <p className="project-introduction-copy">{project.introductionText}</p>
                     {project.introductionCredits && (
                       <p className="project-introduction-credits">{project.introductionCredits}</p>
