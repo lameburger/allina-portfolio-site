@@ -584,146 +584,52 @@ function holdInView(getElement, onDone) {
   return finish;
 }
 
-// Contact data
-// Contact data — one array per column, each holding groups. A group is a
-// heading plus either social links (the identity block) or a list of entries.
-// An entry is a title, optional italic meta lines (organisation, years, or a
-// role), and an optional note. Meta lines may be a plain string or
-// `{ text, url }` to link one out.
-// Experience entries instead lead with an `organization` and add a role line
-// (`role`, `dates`, `location`) plus a `description` of one line per
-// accomplishment; `url` links the organisation name out.
-const contact = {
-  columns: [
-    [
-      {
-        heading: 'ALLINA DOUGHERTY',
-        links: [
-          { label: 'LINKEDIN', url: 'https://www.linkedin.com/in/allina-dougherty-090398326/' },
-          { label: 'PINTEREST', url: 'https://www.pinterest.com/allinaeden/_created' },
-        ],
-      },
-      {
-        heading: 'CURRENTLY,',
-        entries: [
-          {
-            title: 'HONORS M.ARCH, GRADUATE RESEARCH ASSISTANT, STUDIO MENTOR',
-            meta: ['THE UNIVERSITY OF KANSAS'],
-          },
-        ],
-      },
-      {
-        heading: 'EXPERIENCE,',
-        entries: [
-          {
-            organization: 'SPENCER MUSEUM OF ART',
-            url: 'https://spencerart.ku.edu/',
-            role: 'STUDENT AMBASSADOR',
-            dates: '2025 - PRESENT',
-            location: 'LAWRENCE, KS',
-            description: [
-              'Leading inquiry-based tours of museum galleries and exhibitions specifically designed for elementary school groups',
-            ],
-          },
-          {
-            organization: 'JHET ARCHITECTS',
-            role: 'ARCHITECTURAL INTERN',
-            dates: '2025 - 2026',
-            location: 'DALLAS, TX',
-            description: [
-              'Produced construction documents with Revit and Bluebeam for 23 different projects, totaling to 1.8 million sqft, from SD to CD',
-              'Researched AI trends informing new data center design and development',
-              'Documented site conditions and issued field reports',
-            ],
-          },
-        ],
-      },
-    ],
-    [
-      {
-        heading: 'MERITS, AWARDS+',
-        entries: [
-          {
-            title: 'UNIVERSITY SCHOLAR',
-            url: 'https://news.ku.edu/news/article/2026-cohort-of-university-scholars-announced',
-            meta: ['2026'],
-            note: '1 of 20 students selected for participation in mentorship and an interdisciplinary seminar.',
-          },
-          {
-            title: 'UNDERGRADUATE RESEARCH AWARD RECIPIENT',
-            url: 'https://engr.ku.edu/news/article/20-ku-students-receive-undergraduate-research-awards-for-summer-and-fall-2026',
-            meta: ['2026, CURF INSTITUTE'],
-          },
-          {
-            title: "UNIVERSITY OF KANSAS SCHOOL OF ARCHITECTURE DEAN'S LIST",
-            meta: ['2024, 2025, 2026'],
-          },
-          {
-            title: 'FIRST ROBOTICS DEANS LIST',
-            url: 'https://www.thebluealliance.com/team/5968/history',
-            meta: ['2023'],
-            note: 'Built a $45,000 sponsorship pipeline from corporate and private donors, reversing a 10-year losing streak and qualifying my robotics team for international competition.',
-          },
-          {
-            title: 'ANDERSON KNIGHT PRAIRIE DREAMS MURAL COMPETITION',
-            url: 'https://www.linkedin.com/posts/akarchitects_work-students-illustration-activity-7080210181816516608-FTgq/',
-            meta: ['2023'],
-            note: 'My work was selected for a permanent mural at the Anderson Knight Architecture office.',
-          },
-        ],
-      },
-    ],
-    [
-      {
-        heading: 'ENGAGEMENTS',
-        entries: [
-          {
-            title: 'KULTURA PUBLICATION',
-            url: 'https://www.instagram.com/ku.ltura/',
-            meta: ['2026-'],
-            note: "Founding member, grade level representative of KU's architecture student publication, primarily aiding in visuals and graphic development.",
-          },
-          {
-            title: 'INTERVIEW COACHING',
-            url: 'https://www.thebluealliance.com/team/5968/history',
-            meta: ['2024-'],
-            note: 'After my success, I began coaching awards nominees. I did prep sessions with two students helping them earn invitations to international competition in back to back years.',
-          },
-          {
-            title: 'TAEJO',
-            url: 'https://www.instagram.com/taejo400ppi/',
-            meta: ['2025-'],
-            note: 'I play guitar, bass, and sing in an emo grunge band. We write and record original music. I also really enjoy screen printing my own merch in my kitchen.',
-          },
-        ],
-      },
-    ],
-    [
-      {
-        heading: 'DIGITAL SKILLS',
-        entries: [
-          { title: 'ADOBE SUITE, FIGMA, CANVA', meta: ['Graphics'] },
-          { title: 'RHINO, REVIT, SKETCHUP', meta: ['3D Modeling'] },
-          { title: 'ENSCAPE, D5', meta: ['Rendering'] },
-        ],
-      },
-      {
-        heading: 'REFERENCES',
-        entries: [
-          {
-            title: 'PETER OLSHAVSKY, PH.D, ASSOCIATE PROFESSOR OF ARCHITECTURE',
-            url: 'https://www.linkedin.com/in/peter-olshavsky-ph-d-5131a6159/',
-            meta: ['polshavsky[at]ku[dot]edu'],
-          },
-          {
-            title: 'ELYSE TUCKER, CEO, JHET ARCHITECTS',
-            url: "https://www.linkedin.com/in/elyse-tucker-b1346b29/",
-            meta: ['elyse.tucker[at]jhetarchitects[dot]com'],
+// Looked up rather than hardcoded so the research paragraph's link follows the
+// piece if its id or title slug changes.
+const libeskindWritingId = writings.find((writing) => writing.title.startsWith('LIEBESKIND'))?.id;
 
-          
-          },
-        ],
+// Contact data - the identity block (name, social links, resume) plus the
+// profile biography. A bio paragraph is an array of segments: a plain string,
+// `{ text, url }` for a bold phrase that links out, or `{ text, writingId }`
+// for one that links to a piece in Words.
+const contact = {
+  name: 'ALLINA DOUGHERTY',
+  links: [
+    { label: 'LINKEDIN', url: 'https://www.linkedin.com/in/allina-dougherty-090398326/' },
+    { label: 'PINTEREST', url: 'https://www.pinterest.com/allinaeden/_created' },
+  ],
+  resumeUrl: '/works/Allina_Dougherty_Resume_.pdf',
+  bio: [
+    [
+      "I'm an Honors B.Arch ",
+      {
+        text: 'University Scholar',
+        url: 'https://news.ku.edu/news/article/2026-cohort-of-university-scholars-announced',
       },
+      ' at the University of Kansas.',
+    ],
+    [
+      'On campus, I am a student ambassador for the ',
+      { text: 'Spencer Museum of Art', url: 'https://spencerart.ku.edu/' },
+      ", where I give docent tours for students K-12. My interest in education doesn't end there. I also am a studio mentor for a delightful group of first year architecture students.",
+    ],
+    [
+      'In my research, I am exploring ',
+      {
+        text: 'non-representational abstraction through musical systems and notation',
+        writingId: libeskindWritingId,
+      },
+      ". I am using the structures of music as a lens of understanding experience that has been abstracted in visual formats. This has lead me to create a program that utilizes canny edge detection to take measurements of dense abstract drawings and provide data to pull out in visual mappings. Through this process I've been developing my own visual language for 28 mappings of Libeskind Chamber works drawings. For this work I received an ",
+      {
+        text: 'Undergraduate Research Award',
+        url: 'https://engr.ku.edu/news/article/20-ku-students-receive-undergraduate-research-awards-for-summer-and-fall-2026',
+      },
+      ' from the CURF Institute.',
+    ],
+    [
+      'I also sing and play bass in an ',
+      { text: 'emo band', url: 'https://www.instagram.com/taejo400ppi/' },
+      '.',
     ],
   ],
 };
@@ -770,83 +676,52 @@ function getScrollLinkedState(items, sectionRefs, getId) {
   return { activeId, progress };
 }
 
-function ContactExternalLink({ href, children }) {
+function ContactExternalLink({ href, children, className = 'contact-link' }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="contact-link">
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
       {children}
     </a>
   );
 }
 
-// A single contact entry: a lead line (an organisation for experience, a title
-// everywhere else), then the role line or any italic meta lines, then a note.
-function ContactEntry({ entry }) {
-  const lead = entry.organization ?? entry.title;
-
+// The profile biography: one paragraph per array of segments, where a segment
+// is either a plain string or a bold phrase that links out.
+function ContactBio({ paragraphs, onWritingClick }) {
   return (
-    <li className="contact-entry">
-      <p className="contact-entry-title">
-        {entry.url ? (
-          <ContactExternalLink href={entry.url}>{lead}</ContactExternalLink>
-        ) : (
-          lead
-        )}
-      </p>
-      {entry.role && (
-        <p className="contact-entry-role">
-          <span>{[entry.role, entry.dates].filter(Boolean).join(', ')}</span>
-          {entry.location && <span className="contact-entry-location">{entry.location}</span>}
-        </p>
-      )}
-      {entry.description && (
-        <ul className="contact-entry-description">
-          {entry.description.map((line) => (
-            <li key={line} className="contact-entry-note">
-              {line}
-            </li>
-          ))}
-        </ul>
-      )}
-      {entry.meta?.map((line) => (
-        <p key={typeof line === 'string' ? line : line.text} className="contact-entry-meta">
-          {typeof line === 'string' ? (
-            line
-          ) : (
-            <ContactExternalLink href={line.url}>{line.text}</ContactExternalLink>
-          )}
+    <div className="contact-bio">
+      {paragraphs.map((segments) => (
+        <p key={segments[0]} className="contact-bio-paragraph">
+          {segments.map((segment) => {
+            if (typeof segment === 'string') return segment;
+            // Scrolls in place like the nav does; the href stays so the piece
+            // is still copyable and middle-clickable.
+            if (segment.writingId) {
+              return (
+                <a
+                  key={segment.text}
+                  className="contact-bio-link"
+                  href={formatDeepLink({ section: 'words', writingId: segment.writingId })}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onWritingClick(segment.writingId);
+                  }}
+                >
+                  {segment.text}
+                </a>
+              );
+            }
+            return (
+              <ContactExternalLink
+                key={segment.url}
+                href={segment.url}
+                className="contact-bio-link"
+              >
+                {segment.text}
+              </ContactExternalLink>
+            );
+          })}
         </p>
       ))}
-      {entry.note && <p className="contact-entry-note">{entry.note}</p>}
-    </li>
-  );
-}
-
-// A heading plus its contents. The identity group leads with the name and
-// social links; every other group is a list of entries.
-function ContactGroup({ group }) {
-  return (
-    <div className="contact-group">
-      {group.links ? (
-        <>
-          <h2 className="contact-name">{group.heading}</h2>
-          <ul className="contact-links">
-            {group.links.map((link) => (
-              <li key={link.label}>
-                <ContactExternalLink href={link.url}>{link.label}</ContactExternalLink>
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <h3 className="contact-group-heading">{group.heading}</h3>
-      )}
-      {group.entries && (
-        <ul className="contact-entry-list">
-          {group.entries.map((entry) => (
-            <ContactEntry key={entry.organization ?? entry.title} entry={entry} />
-          ))}
-        </ul>
-      )}
     </div>
   );
 }
@@ -1940,13 +1815,25 @@ function App() {
         inert={belowMenuInert}
       >
         <div className="contact-content">
-          {contact.columns.map((groups) => (
-            <div key={groups[0].heading} className="contact-column">
-              {groups.map((group) => (
-                <ContactGroup key={group.heading} group={group} />
+          <div className="contact-identity">
+            <h2 className="contact-name">{contact.name}</h2>
+            <ul className="contact-links">
+              {contact.links.map((link) => (
+                <li key={link.label}>
+                  <ContactExternalLink href={link.url}>{link.label}</ContactExternalLink>
+                </li>
               ))}
-            </div>
-          ))}
+            </ul>
+            <a
+              className="contact-resume"
+              href={contact.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              DOWNLOAD RESUME
+            </a>
+          </div>
+          <ContactBio paragraphs={contact.bio} onWritingClick={scrollToWriting} />
         </div>
       </section>
     </div>

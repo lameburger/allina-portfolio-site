@@ -1003,38 +1003,39 @@ body {
 /* ===== CONTACT SECTION ===== */
 .contact-section {
   display: block;
-  /* Right padding is the reserved gutter, so the columns stop where the nav
+  /* The left inset is a variable so the biography column can subtract it and
+     still land on --menu-margin. */
+  --contact-pad-left: 2.5rem;
+  /* Right padding is the reserved gutter, so the content stops where the nav
      and email begin. */
-  padding: 8rem var(--nav-margin) 6rem 2.5rem;
+  padding: 8rem var(--nav-margin) 6rem var(--contact-pad-left);
   min-height: calc(100 * var(--vhu));
   background: #ffffff;
 }
 
+/* Identity on the left, biography on the right. The first column is sized so
+   the biography's left edge lands on --menu-margin, the same spine the
+   paintings' artwork starts from. */
 .contact-content {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 14rem));
-  column-gap: 3rem;
+  grid-template-columns: calc(var(--menu-margin) - var(--contact-pad-left)) minmax(0, 1fr);
+  column-gap: 0;
   row-gap: 3rem;
   align-items: start;
-  max-width: 68rem;
 }
 
-.contact-column {
+.contact-identity {
   min-width: 0;
 }
 
-/* Shared uppercase typography for the contact grid. Entries set the size for
-   their own meta/note lines, which scale from it in `em`. */
+/* Shared uppercase typography for the identity block */
 .contact-name,
-.contact-link,
-.contact-group-heading,
-.contact-entry {
+.contact-link {
   font-size: 0.85rem;
   letter-spacing: 0.04em;
   line-height: 1.6;
 }
 
-/* Column 1 — identity + social links */
 .contact-name {
   font-weight: 700;
   color: #000000;
@@ -1057,73 +1058,50 @@ body {
   opacity: 0.5;
 }
 
-/* Groups — a heading and the entries beneath it */
-.contact-group {
-  margin-bottom: 1.6rem;
-}
-
-.contact-group:last-child {
-  margin-bottom: 0;
-}
-
-.contact-group-heading {
-  font-weight: 700;
+/* Resume download, beneath the social links */
+.contact-resume {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid #000000;
   color: #000000;
-  margin-bottom: 0;
+  text-decoration: none;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.contact-entry-list {
-  list-style: none;
+.contact-resume:hover {
+  background-color: #000000;
+  color: #ffffff;
 }
 
-.contact-entry {
-  margin-bottom: 1rem;
+/* Biography — prose, sized to match the Spaces introduction copy */
+.contact-bio {
+  max-width: 38rem;
 }
 
-.contact-entry:last-child {
-  margin-bottom: 0;
-}
-
-.contact-entry-title {
-  font-weight: 400;
-  color: #000000;
-}
-
-/* Supporting lines: organisation, years, role. */
-.contact-entry-meta {
-  color: #999999;
-  font-style: italic;
-}
-
-/* Experience role line: role and dates read left, location right. The columns
-   are narrower than the two halves combined, so the location wraps onto its
-   own line — still right-aligned — before the two can collide. */
-.contact-entry-role {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0 0.75rem;
-  color: #999999;
-  font-style: italic;
-}
-
-.contact-entry-location {
-  margin-left: auto;
-  text-align: right;
-}
-
-/* One accomplishment per line; the note margin spaces them. */
-.contact-entry-description {
-  list-style: none;
-}
-
-.contact-entry-note {
-  margin-top: 0.2rem;
-  font-size: 0.9em;
-  line-height: 1.5;
+.contact-bio-paragraph {
+  font-size: 0.95rem;
+  line-height: 1.85;
   letter-spacing: 0.01em;
-  color: #999999;
-  font-style: italic;
+  color: #444444;
+  font-weight: 400;
+}
+
+.contact-bio-paragraph + .contact-bio-paragraph {
+  margin-top: 1.5rem;
+}
+
+.contact-bio-link {
+  color: #000000;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.contact-bio-link:hover {
+  opacity: 0.5;
 }
 
 /* ===== RESPONSIVE - LARGE DESKTOP ===== */
@@ -1164,16 +1142,8 @@ body {
     --writing-col: 420px;
   }
 
-  .contact-content {
-    grid-template-columns: repeat(4, minmax(0, 16rem));
-    column-gap: 3.5rem;
-    max-width: 76rem;
-  }
-
   .contact-name,
-  .contact-link,
-  .contact-group-heading,
-  .contact-entry {
+  .contact-link {
     font-size: 0.9rem;
   }
 }
@@ -1236,16 +1206,8 @@ body {
     font-size: 0.95rem;
   }
 
-  .contact-content {
-    grid-template-columns: repeat(4, minmax(0, 18rem));
-    column-gap: 4rem;
-    max-width: 84rem;
-  }
-
   .contact-name,
-  .contact-link,
-  .contact-group-heading,
-  .contact-entry {
+  .contact-link {
     font-size: 1rem;
     line-height: 1.7;
   }
@@ -1287,19 +1249,12 @@ body {
 
   /* Contact — four columns won't hold at tablet widths, so pair them up */
   .contact-section {
-    padding: 7rem var(--nav-margin) 5rem 1.5rem;
-  }
-
-  .contact-content {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 2.5rem;
-    max-width: 100%;
+    --contact-pad-left: 1.5rem;
+    padding: 7rem var(--nav-margin) 5rem var(--contact-pad-left);
   }
 
   .contact-name,
-  .contact-link,
-  .contact-group-heading,
-  .contact-entry {
+  .contact-link {
     font-size: 0.78rem;
   }
 }
@@ -1543,24 +1498,20 @@ body {
     padding: 6rem 1.25rem 5rem;
   }
 
+  /* The sidebars are hidden and the content runs full width, so the biography
+     stacks under the identity block instead of sitting beside it. */
   .contact-content {
     grid-template-columns: 1fr;
     row-gap: 2.5rem;
-    column-gap: 0;
-    max-width: 100%;
   }
 
   .contact-name,
-  .contact-link,
-  .contact-group-heading,
-  .contact-entry {
+  .contact-link {
     font-size: 0.8rem;
   }
 
-  /* The single-column flow is much wider than the entry text, so cap the role
-     line instead of throwing the location out to the viewport edge. */
-  .contact-entry-role {
-    max-width: 24rem;
+  .contact-bio {
+    max-width: 100%;
   }
 }
 
